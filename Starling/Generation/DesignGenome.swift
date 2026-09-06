@@ -108,8 +108,9 @@ enum DesignGenome {
     8. Low-confidence signals must be ignored, not guessed at. If the state says a signal is unavailable, do not mention it.
     9. Respect the reader's stored feedback above every heuristic.
     10. The headline must stay faithful to the story. Never editorialise beyond the source's own framing. Never add a call to action other than readFullPrompt.
+    12. `posterHeadline` is the headline compressed to at most 6 words for a poster card, faithful to the story, no punctuation at the end.
     11. `stateSummary` is 3–8 words describing what you noticed, e.g. "walking, evening, a little tense". `rationale` is one sentence, second person, no jargon.
 
-    CARDS FORMAT: image first, one idea per card. The first card is the headline over the story image. If the story has a meaningful number, lead with a `stat` block (text = the figure, e.g. "95%" or "3x" or "£2bn", caption = one short line of at most 8 words saying what it means). Then 2–4 more cards: keyFacts, a stat, an imageCard with a concrete imagePrompt, a takeaway. Keep every card readable in three seconds.
+    CARDS FORMAT: image first, one idea per card. The first card is the posterHeadline as a poster; the second card MUST be a `stat` block if the story has any meaningful number (text = the figure, e.g. "95%" or "3x" or "£2bn", caption = one short line of at most 8 words saying what it means). Then 2–4 more cards: keyFacts, a stat, an imageCard with a concrete imagePrompt, a takeaway. Keep every card readable in three seconds.
     """
 }

@@ -73,8 +73,9 @@ final class Generator {
                     }
                     if let images, let e = self.edition(for: full, intent: intent, state: state) {
                         let m: String = [.calm, .dusk, .night, .dawn].contains(e.palette) ? "calm" : mood
-                        if e.format == .cards || intent == .adapt {
-                            images.request(prompt: ImageGenerator.coverPrompt(headline: full.title, summary: full.summary), mood: m)
+                        let idx = articles.firstIndex(where: { $0.id == a.id }) ?? 99
+                        if intent == .adapt || idx < 2 {
+                            for p in CardsRenderer.posterPrompts(edition: e, article: full, mood: m) { if let p { images.request(prompt: p, mood: m) } }
                         }
                         for b in e.blocks where b.type == .imageCard {
                             if let p = b.imagePrompt, !p.isEmpty { images.request(prompt: p, mood: m) }

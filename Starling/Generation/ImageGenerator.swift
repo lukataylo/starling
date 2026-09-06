@@ -9,7 +9,7 @@ final class ImageGenerator {
     private(set) var failed: Set<String> = []
     private var inflight: Set<String> = []
     private var queue: [(String, String, String)] = []   // (key, prompt, mood)
-    private let maxConcurrent = 2
+    private let maxConcurrent = 3
     private let dir: URL = {
         let d = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0].appendingPathComponent("genimg2", isDirectory: true)
         try? FileManager.default.createDirectory(at: d, withIntermediateDirectories: true)
@@ -41,6 +41,22 @@ final class ImageGenerator {
     }
 
     static func style(for mood: String) -> String { mood == "calm" ? styleCalm : styleFocused }
+
+    enum PosterKind { case headline, stat }
+
+    /// A complete poster card with the type baked in, in the bold-gradient style of the reference mockup.
+    static func posterPrompt(kind: PosterKind, big: String, line: String, subject: String, source: String, mood: String) -> String {
+        let colours: String
+        switch mood {
+        case "calm": colours = "a smooth confident gradient from soft sage green at the top to warm sand at the bottom, gentle diffuse daylight, ink-green text"
+        case "focused": colours = "a deep near-black to charcoal gradient with a warm signal-orange glow rising from the bottom-right, off-white text with the small line in orange"
+        default: colours = "a bold saturated gradient from vivid orange-coral at the top to deeper burnt orange at the bottom, near-black text"
+        }
+        let bigLine = kind == .stat ? "the figure \"\(big)\" set enormous (about a third of the width) on its own line" : "the headline \"\(big)\" set very large across up to three lines"
+        return """
+        Vertical 9:16 story card, confident graphic-design poster. Background: \(colours). Typography: minimal clean geometric sans-serif, excellent layout, generous margins; top-left, \(bigLine), then directly below in a smaller regular weight the line "\(line)". Bottom-left: a small solid circle followed by the word "starling" in the same sans-serif. One duotone photographic subject placed low-right and blending into the gradient, related to: \(subject). No other text, no logos, no interface elements. Spell every word exactly as given.
+        """
+    }
 
     func request(prompt: String, mood: String) {
         let k = Self.key(prompt, mood: mood)

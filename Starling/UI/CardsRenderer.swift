@@ -26,6 +26,32 @@ struct CardsRenderer: View {
     private var coverPrompt: String { ImageGenerator.coverPrompt(headline: article.title, summary: article.summary) }
     private var cover: UIImage? { imageGen.image(prompt: coverPrompt, mood: mood) ?? hero }
 
+    /// Poster prompts for the first two cards; nil when there's nothing to say.
+    static func posterPrompts(edition: Edition, article: Article, mood: String) -> [String?] {
+        let src = FeedCatalog.source(article.sourceID)?.name ?? "Starling"
+        let subject = String(article.summary.prefix(160))
+        let headline = edition.posterHeadline ?? edition.headline.split(separator: " ").prefix(6).joined(separator: " ")
+        let p0 = ImageGenerator.posterPrompt(kind: .headline, big: headline, line: src, subject: subject, source: src, mood: mood)
+        var p1: String? = nil
+        let rest = edition.blocks.filter { $0.type != .headline && $0.type != .dek }
+        if let b = rest.first {
+            if b.type == .stat, let big = b.text {
+                p1 = ImageGenerator.posterPrompt(kind: .stat, big: big, line: b.caption ?? "", subject: subject, source: src, mood: mood)
+            } else if let first = b.items?.first ?? b.text, !first.isEmpty {
+                let words = first.split(separator: " ")
+                let big = words.prefix(4).joined(separator: " ")
+                let line = words.dropFirst(4).prefix(12).joined(separator: " ")
+                p1 = ImageGenerator.posterPrompt(kind: .headline, big: big, line: line, subject: subject, source: src, mood: mood)
+            }
+        }
+        return [p0, p1]
+    }
+    private var posters: [String?] { Self.posterPrompts(edition: edition, article: article, mood: mood) }
+    private func poster(_ i: Int) -> UIImage? {
+        guard i < posters.count, let p = posters[i] else { return nil }
+        return imageGen.image(prompt: p, mood: mood)
+    }
+
     var body: some View {
         VStack(spacing: 12) {
             HStack(spacing: 6) {
@@ -48,13 +74,24 @@ struct CardsRenderer: View {
         .foregroundStyle(theme.ink)
         .background(theme.palette.background)
         .environment(\.colorScheme, theme.palette.scheme)
-        .task { imageGen.request(prompt: coverPrompt, mood: mood) }
+        .task {
+            for p in posters { if let p { imageGen.request(prompt: p, mood: mood) } }
+            imageGen.request(prompt: coverPrompt, mood: mood)
+        }
     }
 
     @ViewBuilder private func card(_ i: Int, _ blocks: [Edition.Block]) -> some View {
         let tile = theme.tiles[i % theme.tiles.count]
         let b = blocks.first!
-        if i == 0 {
+        if i < 2, let img = poster(i) {
+            // Fully generated poster: the type is in the image.
+            ZStack(alignment: .bottomTrailing) {
+                Image(uiImage: img).resizable().aspectRatio(contentMode: .fill)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity).clipped()
+                swipeHint(i, light: true).padding(22)
+            }
+            .background(tile)
+        } else if i == 0 {
             // Cover: headline over the image
             ZStack(alignment: .bottomLeading) {
                 Group {

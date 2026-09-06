@@ -4,6 +4,7 @@ struct Edition: Codable, Hashable, Identifiable {
     var id: String { stateSummary + rationale + String(blocks.count) }
     let stateSummary: String
     let rationale: String
+    var posterHeadline: String? = nil
     let density: Density
     let tone: Tone
     let pace: Pace
@@ -35,10 +36,11 @@ enum EditionSchema {
     static let json: [String: Any] = [
         "type": "object",
         "additionalProperties": false,
-        "required": ["stateSummary", "rationale", "density", "tone", "pace", "typeScale", "typeface", "headlineWeight", "palette", "accent", "margins", "format", "estimatedReadSeconds", "blocks"],
+        "required": ["stateSummary", "rationale", "posterHeadline", "density", "tone", "pace", "typeScale", "typeface", "headlineWeight", "palette", "accent", "margins", "format", "estimatedReadSeconds", "blocks"],
         "properties": [
             "stateSummary": ["type": "string"],
             "rationale": ["type": "string"],
+            "posterHeadline": ["type": "string"],
             "density": e(Density.allCases.map(\.rawValue)),
             "tone": e(Tone.allCases.map(\.rawValue)),
             "pace": e(Pace.allCases.map(\.rawValue)),
