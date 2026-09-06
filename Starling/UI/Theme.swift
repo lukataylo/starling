@@ -170,7 +170,7 @@ struct StatePill: View {
     var compact = false
     let action: () -> Void
 
-    @AppStorage("devMode") private var devMode = false
+    @AppStorage("devMode") private var devMode = true
 
     struct Segment: Identifiable { let id: String; let symbol: String; let text: String; var struck = false }
 

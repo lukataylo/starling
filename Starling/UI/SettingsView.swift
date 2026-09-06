@@ -11,7 +11,7 @@ struct SettingsView: View {
     @AppStorage("modelOverride") private var modelOverride = ""
     @AppStorage("elevenAgentID") private var elevenAgentID = ""
     @AppStorage("readerName") private var readerName = ""
-    @AppStorage("devMode") private var devMode = false
+    @AppStorage("devMode") private var devMode = true
     @AppStorage(Appearance.key) private var appearance = Appearance.system.rawValue
     @State private var useClockOverride = false
     @State private var clock = Date()
@@ -67,7 +67,7 @@ struct SettingsView: View {
                     NavigationLink("State readout") { SignalSheet(theme: hub.theme) }
                     NavigationLink("Live signals") { SensorDebugView() }
                     Toggle("Developer mode", isOn: $devMode)
-                } header: { Text("Sensing") } footer: { Text("Developer mode makes the state pill tappable to open the readout from anywhere.") }
+                } header: { Text("Sensing") } footer: { Text("With developer mode on, tapping the state pill opens the raw telemetry readout from anywhere.") }
                 Section("The interface is never finished") {
                     NavigationLink("Layout rules per state") { LayoutRulesView() }
                 }
