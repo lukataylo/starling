@@ -249,16 +249,22 @@ struct ReaderView: View {
                     label: inCards ? "Short" : "Cards",
                     theme: theme) { flipFormat() }
             Spacer()
-            // Right: long vs short
-            ModeFab(symbol: inLong ? "text.alignleft" : "text.book.closed",
-                    label: inLong ? "Short" : "Long",
-                    theme: theme) {
-                withAnimation(.snappy(duration: 0.3)) {
-                    if inLong { mode = .adapted; formatOverride = .text }
-                    else { mode = .longform }
+            // Right: depth cycle Short → Long → Original, hidden while in cards.
+            if !inCards {
+                let inOriginal = mode == .original
+                ModeFab(symbol: inLong ? "doc.plaintext" : (inOriginal ? "text.alignleft" : "text.book.closed"),
+                        label: inLong ? "Original" : (inOriginal ? "Short" : "Long"),
+                        theme: theme) {
+                    withAnimation(.snappy(duration: 0.3)) {
+                        if inLong { mode = .original }
+                        else if inOriginal { mode = .adapted; formatOverride = .text }
+                        else { mode = .longform }
+                    }
                 }
+                .transition(.scale.combined(with: .opacity))
             }
         }
+        .animation(.snappy(duration: 0.25), value: inCards)
         .padding(.horizontal, 16).padding(.top, 6).padding(.bottom, 4)
         .background(theme.palette.background)
     }
