@@ -56,7 +56,7 @@ struct ReaderView: View {
         VStack(spacing: 0) {
             HStack {
                 RoundIconButton(symbol: "chevron.left", theme: theme) { dismiss() }
-                StatePill(theme: theme, badge: pendingChange != nil) { showSignals = true }
+                StatePill(theme: theme, badge: pendingChange != nil, suffix: currentEdition.map { $0.density == .glance || $0.density == .brief ? "Short edition" : "Article" }) { showSignals = true }
                 Spacer()
                 RoundIconButton(symbol: "rectangle.split.2x1", theme: theme) { showCompare = true }
                 Menu {
@@ -135,9 +135,19 @@ struct ReaderView: View {
                     .id(e.id)
             } else {
                 ScrollView {
-                    EditionRenderer(edition: e, hero: heroImage, mood: mood, onReadFull: { mode = .longform })
-                        .id(e.id)
-                        .transition(.opacity)
+                    VStack(spacing: 0) {
+                        if !theme.isQuick { articleSwitcher }
+                        if theme.isQuick {
+                            QuickEditionView(edition: e, article: article, hero: heroImage,
+                                             pendingText: pendingChange != nil ? "New version available" : nil,
+                                             onPending: { showSignals = true },
+                                             onReadFull: { mode = .longform })
+                        } else {
+                            ArticleView(edition: e, article: article, hero: heroImage)
+                        }
+                    }
+                    .id(e.id)
+                    .transition(.opacity)
                 }
             }
         } else {
@@ -197,34 +207,56 @@ struct ReaderView: View {
         .padding(20)
     }
 
-    // MARK: dock
-    @ViewBuilder private var dock: some View {
-        VStack(spacing: 10) {
-            HStack(spacing: 10) {
-                dockButton("Cards", "rectangle.on.rectangle", on: effectiveFormat == .cards && mode != .longform && mode != .original) {
-                    if mode == .longform || mode == .original { mode = .adapted }
-                    formatOverride = .cards
-                }
-                dockButton("Text", "text.alignleft", on: effectiveFormat == .text && mode != .longform && mode != .original) {
-                    if mode == .longform || mode == .original { mode = .adapted }
-                    formatOverride = .text
-                }
-                dockButton("Full", "text.book.closed", on: mode == .longform) { mode = .longform }
-            }
+    // MARK: dock — Cards · Text · Full Story · Original, then Keep / Not how I feel
+    private var articleSwitcher: some View {
+        HStack(spacing: 4) {
+            segment("Focused", on: mode == .preset(.focused)) { mode = .preset(.focused) }
+            segment("Calm", on: mode == .preset(.calm)) { mode = .preset(.calm) }
+            segment("Original", on: mode == .original) { mode = .original }
         }
-        .padding(.horizontal, 16).padding(.top, 8).padding(.bottom, 4)
-        .background(LinearGradient(colors: [theme.palette.background.opacity(0), theme.palette.background, theme.palette.background], startPoint: .top, endPoint: .bottom))
+        .padding(4)
+        .background(theme.surface, in: RoundedRectangle(cornerRadius: 8))
+        .padding(.horizontal, 22).padding(.top, 6)
     }
 
-    private func dockButton(_ title: String, _ symbol: String, on: Bool, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            VStack(spacing: 4) {
-                Image(systemName: symbol).font(.system(size: 17, weight: .semibold))
-                Text(title).font(theme.font(12, weight: .heavy))
+    @ViewBuilder private var dock: some View {
+        VStack(spacing: 8) {
+            HStack(spacing: 4) {
+                segment("Cards", on: effectiveFormat == .cards && mode != .longform && mode != .original) { if mode == .longform || mode == .original { mode = .adapted }; formatOverride = .cards }
+                segment("Text", on: effectiveFormat == .text && mode != .longform && mode != .original) { if mode == .longform || mode == .original { mode = .adapted }; formatOverride = .text }
+                segment("Full Story", on: mode == .longform) { mode = .longform }
+                segment("Original", on: mode == .original) { mode = .original }
             }
-            .frame(maxWidth: .infinity).frame(height: 56)
-            .background(on ? theme.ink : theme.surface, in: RoundedRectangle(cornerRadius: 16))
-            .foregroundStyle(on ? theme.palette.background : theme.ink)
+            .padding(4)
+            .background(theme.surface, in: RoundedRectangle(cornerRadius: 8))
+            HStack(spacing: 8) {
+                outlined("Keep", "bookmark") {
+                    pendingState = nil
+                    if let e = currentEdition { generator.addFeedback("At \(pageState.timeOfDay.label) while \(pageState.motion.rawValue) I kept: \(e.density.rawValue), \(e.palette.rawValue), \(e.typeface.rawValue), \(effectiveFormat.rawValue)") }
+                }
+                outlined("Not how I feel", "face.smiling") { showSignals = true }
+            }
+        }
+        .padding(.horizontal, 16).padding(.top, 8).padding(.bottom, 6)
+        .background(theme.palette.background)
+    }
+
+    private func segment(_ title: String, on: Bool, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(title).font(Identity.grotesk(12, .semibold)).tracking(-0.2)
+                .frame(maxWidth: .infinity).frame(height: 32)
+                .background(on ? theme.ink : Color.clear, in: RoundedRectangle(cornerRadius: 6))
+                .foregroundStyle(on ? theme.palette.background : theme.ink)
+        }
+        .buttonStyle(.plain)
+    }
+
+    private func outlined(_ title: String, _ symbol: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            HStack(spacing: 8) { Image(systemName: symbol).font(.system(size: 13, weight: .semibold)); Text(title).font(Identity.grotesk(12, .semibold)) }
+                .frame(maxWidth: .infinity).frame(height: 40)
+                .overlay(RoundedRectangle(cornerRadius: 8).strokeBorder(theme.ink.opacity(0.25)))
+                .foregroundStyle(theme.ink)
         }
         .buttonStyle(.plain)
     }

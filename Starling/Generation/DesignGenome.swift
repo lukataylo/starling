@@ -94,7 +94,7 @@ enum DesignGenome {
     - accent: amber, coral, sage, sky, slate, plum
     - margins: tight, normal, wide
     - format: text (one flowing page) or cards (one idea per swipeable card, each block becomes a card; suggest cards when the reader is walking, standing, or on transport, and text when they are sitting or lying down — the reader can flip this)
-    - blocks: headline, dek, keyFacts (items, max 3), paragraph, pullQuote, imageCard (symbol = an SF Symbol name, caption, imagePrompt), stat (text = a big figure, caption = one short line), timeline (items, each "time — event"), takeaway, readFullPrompt
+    - blocks: headline, dek, keyFacts (items, max 4; each item is "HEADING — text": a 1–3 word uppercase heading such as THE IDEA, WHY NOW, WHAT CHANGES, THE CATCH, then an em dash, then one or two short sentences), paragraph, pullQuote, imageCard (symbol = an SF Symbol name, caption, imagePrompt), stat (text = a big figure, caption = one short line), timeline (items, each "time — event"), takeaway, readFullPrompt
     - imageCard: use one when a picture or a simple diagram explains the story better than words — a map, a before/after, a simple flow, a scene. Put a concrete one-sentence description in imagePrompt (what to draw, which elements, no more than three labels). In cards format include one imageCard as its own card. At most two per edition. Set imagePrompt to null only when the article's own photo is enough.
 
     RULES OF JUDGEMENT:
