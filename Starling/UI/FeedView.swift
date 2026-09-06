@@ -19,6 +19,8 @@ struct FeedView: View {
     @State private var modeChosen = false
     @State private var proposedMode: HomeMode?
     @State private var proposalSince: Date?
+    @State private var dismissedMode: HomeMode?
+    @State private var dismissedAt: Date?
 
     private var theme: Theme { hub.theme }
     private var moving: Bool { [.walking, .running, .automotive].contains(hub.state.motion) }
@@ -47,9 +49,10 @@ struct FeedView: View {
                 // The home opens in the mode the rules want, then never swaps on its own: a change is proposed and the reader taps Switch.
                 let wanted: HomeMode = rules.homeLayout(for: hub.state) == .stack ? .stack : .tiles
                 if !modeChosen { mode = wanted; modeChosen = true; return }
-                if wanted != mode {
-                    if proposedMode != wanted { proposedMode = wanted; proposalSince = .now }
-                } else { proposedMode = nil }
+                // Once shown, a proposal stays until the reader acts on it; a dismissed one stays away for two minutes.
+                guard wanted != mode, proposedMode == nil else { return }
+                if dismissedMode == wanted, let at = dismissedAt, Date().timeIntervalSince(at) < 120 { return }
+                proposedMode = wanted; proposalSince = .now
             }
             // The mode switch floats above everything on the home (including the stack's drag area), so every tap lands.
             .overlay(alignment: .bottomLeading) { modeFab.padding(16) }
@@ -86,7 +89,7 @@ struct FeedView: View {
         if let p = proposedMode, p != mode {
             HomeModeProposal(target: p, dark: mode == .stack,
                              onSwitch: { withAnimation { mode = p }; proposedMode = nil },
-                             onDismiss: { proposedMode = nil })
+                             onDismiss: { dismissedMode = p; dismissedAt = .now; proposedMode = nil })
             .padding(.horizontal, 16).padding(.bottom, 8)
         }
     }
