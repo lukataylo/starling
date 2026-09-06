@@ -11,6 +11,8 @@ final class Generator {
     private(set) var editions: [Key: Edition] = [:]
     private(set) var status: [Key: Status] = [:]
     private var inflight: [Key: Task<Edition?, Never>] = [:]
+    /// Editions the reader explicitly regenerated this session; only these beat a bundled edition.
+    private var sessionForced: Set<Key> = []
     private(set) var lastLatency: TimeInterval?
     private(set) var lastUsage: String = ""
 
@@ -121,7 +123,10 @@ final class Generator {
     }
 
     func edition(for article: Article, intent: GenerationIntent, state: UserState) -> Edition? {
-        if let e = editions[key(article, intent, state)] { return e }
+        let k = key(article, intent, state)
+        // Bundled stories show their pre-generated edition (with its posters) unless regenerated in this session.
+        if intent == .adapt, !sessionForced.contains(k), let e = bundledAdapt(article, state: state) { return e }
+        if let e = editions[k] { return e }
         if intent == .adapt, let e = bundledAdapt(article, state: state) { return e }
         return bundled(article, intent)
     }
@@ -133,8 +138,9 @@ final class Generator {
     @discardableResult
     func generate(article: Article, intent: GenerationIntent, state: UserState, sources: [FeedSource], force: Bool = false) async -> Edition? {
         let k = key(article, intent, state)
-        if !force, let e = editions[k] { return e }
+        if force { sessionForced.insert(k) }
         if !force, intent == .adapt, let e = bundledAdapt(article, state: state) { return e }
+        if !force, let e = editions[k] { return e }
         if !force, let e = bundled(article, intent) { return e }
         if let t = inflight[k] { return await t.value }
         let previous = force ? (editions[k] ?? bundled(article, intent) ?? bundledAdapt(article, state: state)) : nil
