@@ -443,7 +443,6 @@ struct StackCard: View {
     var parallax: CGSize = .zero
     private var ink: Color { color == Identity.acid ? Identity.ink : Identity.warmWhite }
     var body: some View {
-        let imageH = max(150, height * 0.36)
         VStack(alignment: .leading, spacing: 0) {
             HStack {
                 Text(sourceName(article)).font(Identity.grotesk(10, .bold)).tracking(1.4)
@@ -462,22 +461,13 @@ struct StackCard: View {
                 .padding(.horizontal, 16)
                 .frame(maxWidth: .infinity, alignment: .leading)
             Spacer(minLength: 8)
-            ZStack(alignment: .bottomLeading) {
-                StoryArt(article: article, mono: true)
-                    .scaleEffect(1.08)
-                    .offset(x: -parallax.width * 0.08, y: -parallax.height * 0.06)
-                LinearGradient(colors: [.clear, .black.opacity(0.6)], startPoint: .center, endPoint: .bottom)
-                HStack(alignment: .bottom) {
-                    Text(article.summary).font(Identity.serif(14)).lineLimit(2).foregroundStyle(Identity.warmWhite)
-                    Spacer(minLength: 10)
-                    ArrowDot(light: false)
-                }
-                .padding(16)
+            HStack(alignment: .bottom) {
+                Text(article.summary).font(Identity.serif(17)).lineSpacing(3).lineLimit(4).foregroundStyle(ink.opacity(0.85))
+                Spacer(minLength: 10)
+                ArrowDot(light: color != Identity.acid)
             }
-            .frame(height: imageH)
-            .frame(maxWidth: .infinity)
-            .clipped()
-            .background(Identity.ink)
+            .padding(16)
+            .padding(.bottom, 6)
         }
         .frame(maxWidth: .infinity)
         .frame(height: height)
