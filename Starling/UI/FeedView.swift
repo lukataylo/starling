@@ -50,7 +50,8 @@ struct FeedView: View {
                 let wanted: HomeMode = rules.homeLayout(for: hub.state) == .stack ? .stack : .tiles
                 if !modeChosen { mode = wanted; modeChosen = true; return }
                 // Once shown, a proposal stays until the reader acts on it; a dismissed one stays away for two minutes.
-                guard wanted != mode, proposedMode == nil else { return }
+                // Only ever propose moving TO cards (on the move); never nag to go back to tiles.
+                guard wanted == .stack, wanted != mode, proposedMode == nil else { return }
                 if dismissedMode == wanted, let at = dismissedAt, Date().timeIntervalSince(at) < 120 { return }
                 proposedMode = wanted; proposalSince = .now
             }
