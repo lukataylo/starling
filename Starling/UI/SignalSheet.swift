@@ -6,7 +6,13 @@ struct SignalSheet: View {
     @Environment(SignalHub.self) private var hub
     @Environment(Generator.self) private var generator
     @Environment(\.dismiss) private var dismiss
-    let theme: Theme
+    /// The page's theme is accepted for API compatibility; the readout always uses the dark telemetry skin for contrast.
+    let pageTheme: Theme
+    private var theme: Theme { Theme(paletteName: .night, accentName: .sage, scale: .regular, typeface: .sans, appearance: .dark) }
+    init(theme: Theme, mode: Binding<ReaderMode>? = nil, edition: Edition? = nil, format: Binding<EditionFormat>? = nil, pending: UserState? = nil, pendingReady: Bool = false, onSwitch: (() -> Void)? = nil, onDismissPending: (() -> Void)? = nil, onKeep: (() -> Void)? = nil, onWhy: (() -> Void)? = nil) {
+        self.pageTheme = theme; self.mode = mode; self.edition = edition; self.format = format; self.pending = pending; self.pendingReady = pendingReady
+        self.onSwitch = onSwitch; self.onDismissPending = onDismissPending; self.onKeep = onKeep; self.onWhy = onWhy
+    }
     var mode: Binding<ReaderMode>? = nil
     var edition: Edition? = nil
     var format: Binding<EditionFormat>? = nil
@@ -20,7 +26,7 @@ struct SignalSheet: View {
     @State private var showFinger = false
 
     private var mono: Font { .system(size: 11, weight: .medium, design: .monospaced) }
-    private var card: Color { theme.surface }
+    private var card: Color { Color(red: 0.11, green: 0.115, blue: 0.13) }
 
     var body: some View {
         let s = hub.state
@@ -98,10 +104,11 @@ struct SignalSheet: View {
                             Button { showCorrect = true } label: { Label("Not how I feel", systemImage: "hand.raised") }
                             Button { dismiss(); onWhy?() } label: { Label("Why", systemImage: "info.circle") }
                         }
-                        .buttonStyle(.bordered).tint(theme.accent).font(theme.font(13, weight: .bold))
+                        .buttonStyle(.borderedProminent).tint(Identity.acid).foregroundStyle(Identity.ink).font(theme.font(13, weight: .bold))
                     }
                     .padding(14)
                     .background(card, in: RoundedRectangle(cornerRadius: 14))
+                    .overlay(RoundedRectangle(cornerRadius: 14).strokeBorder(Color.white.opacity(0.08)))
                 }
                 VStack(alignment: .leading, spacing: 8) {
                     row("STRESS", String(format: "%.2f", s.stress))
@@ -149,7 +156,7 @@ struct SignalSheet: View {
             content()
         }
         .padding(12)
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity, minHeight: 84, alignment: .topLeading)
         .background(card, in: RoundedRectangle(cornerRadius: 10))
     }
 
