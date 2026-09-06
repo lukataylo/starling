@@ -31,6 +31,10 @@ struct CardsRenderer: View {
         PosterPrompts.prompts(edition: edition, title: article.title, summary: article.summary, sourceName: FeedCatalog.source(article.sourceID)?.name ?? "Starling", mood: mood)
     }
     private var posters: [String?] { Self.posterPrompts(edition: edition, article: article, mood: mood) }
+
+    /// Foreground for a tile colour: ink on acid, warm white on cobalt / red / ink.
+    private func fg(on color: Color) -> Color { color == Identity.acid ? Identity.ink : Identity.warmWhite }
+    private func fgSecondary(on color: Color) -> Color { color == Identity.acid ? Identity.ink.opacity(0.65) : Identity.warmWhite.opacity(0.7) }
     private func poster(_ i: Int) -> UIImage? {
         guard i < posters.count, let p = posters[i] else { return nil }
         return imageGen.imageAnyMood(prompt: p, mood: mood)
@@ -47,6 +51,7 @@ struct CardsRenderer: View {
             TabView(selection: $page) {
                 ForEach(Array(cards.enumerated()), id: \.offset) { i, blocks in
                     card(i, blocks)
+                        .environment(\.colorScheme, theme.tiles[i % theme.tiles.count] == Identity.acid || i == 0 ? .light : .dark)
                         .clipShape(RoundedRectangle(cornerRadius: 26))
                         .padding(.horizontal, 16)
                         .tag(i)
@@ -78,7 +83,7 @@ struct CardsRenderer: View {
             // Poster not ready yet: a clean typographic card in the same spirit, never the scraped photo.
             VStack(alignment: .leading, spacing: 12) {
                 Text("\(FeedCatalog.source(article.sourceID)?.name ?? "")".uppercased())
-                    .font(theme.font(11, weight: .bold)).tracking(0.6).foregroundStyle(theme.ink.opacity(0.7))
+                    .font(theme.font(11, weight: .bold)).tracking(0.6).foregroundStyle(Identity.ink.opacity(0.7))
                 Text(edition.posterHeadline ?? edition.headline)
                     .font(theme.font(38, weight: theme.heavy)).tracking(-1).lineSpacing(0)
                     .fixedSize(horizontal: false, vertical: true)
@@ -86,7 +91,7 @@ struct CardsRenderer: View {
                 HStack(spacing: 8) {
                     if posters.first != nil && !imageGen.isFailed(prompt: posters[0]!, mood: mood) {
                         ProgressView().tint(theme.ink).scaleEffect(0.8)
-                        Text("Drawing poster…").font(theme.font(11, weight: .bold)).foregroundStyle(theme.secondary)
+                        Text("Drawing poster…").font(theme.font(11, weight: .bold)).foregroundStyle(Identity.ink.opacity(0.65))
                     }
                     Spacer()
                     swipeHint(i, light: false)
@@ -94,7 +99,8 @@ struct CardsRenderer: View {
             }
             .padding(24)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            .background(theme.accent.opacity(theme.isDark ? 0.55 : 0.8))
+            .foregroundStyle(Identity.ink)
+            .background(Identity.acid)
         } else if b.type == .stat {
             VStack(alignment: .leading, spacing: 6) {
                 Text(b.text ?? "").font(theme.font(76, weight: theme.heavy)).tracking(-2).minimumScaleFactor(0.5).lineLimit(1)
@@ -104,7 +110,8 @@ struct CardsRenderer: View {
             }
             .padding(24)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            .background(i % 2 == 0 ? theme.accent.opacity(theme.isDark ? 0.55 : 0.75) : tile)
+            .foregroundStyle(fg(on: i % 2 == 0 ? Identity.acid : tile))
+            .background(i % 2 == 0 ? Identity.acid : tile)
         } else if b.type == .imageCard {
             Color.clear
                 .overlay(ImageCardFill(block: b, edition: edition, hero: nil, mood: mood))
@@ -120,14 +127,15 @@ struct CardsRenderer: View {
                 .background(tile)
         } else {
             VStack(alignment: .leading, spacing: 16) {
-                Text("\(i + 1) of \(cards.count)").font(theme.font(11, weight: .bold)).tracking(0.6).foregroundStyle(theme.secondary)
+                Text("\(i + 1) of \(cards.count)").font(theme.font(11, weight: .bold)).tracking(0.6).foregroundStyle(fgSecondary(on: tile))
                 Spacer(minLength: 0)
                 EditionRenderer.blockView(b, edition: edition, scale: 1.2, onReadFull: onReadFull)
                 Spacer(minLength: 0)
-                swipeHint(i, light: false)
+                swipeHint(i, light: tile != Identity.acid)
             }
             .padding(24)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+            .foregroundStyle(fg(on: tile))
             .background(tile)
         }
     }
@@ -142,7 +150,7 @@ struct CardsRenderer: View {
                 Text("Read full").font(theme.font(12, weight: .heavy)).onTapGesture { onReadFull?() }
             }
         }
-        .foregroundStyle(light ? Color.white.opacity(0.8) : theme.secondary)
+        .foregroundStyle(light ? Color.white.opacity(0.85) : Identity.ink.opacity(0.65))
     }
 }
 

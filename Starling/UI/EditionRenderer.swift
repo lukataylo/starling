@@ -7,7 +7,12 @@ struct EditionRenderer: View {
     var mood: String = "focused"
     var onReadFull: (() -> Void)? = nil
 
-    private var palette: Palette { DesignGenome.palette(edition.palette) }
+    private var basePalette: Palette { DesignGenome.palette(edition.palette) }
+    /// On cards (scale > 1) the tile decides the colour; secondary text follows the inherited foreground.
+    private var palette: Palette {
+        if scale > 1 { return Palette(background: .clear, card: Color.black.opacity(0.08), text: .primary, secondary: .primary.opacity(0.65), scheme: basePalette.scheme) }
+        return basePalette
+    }
     private var accent: Color { DesignGenome.accent(edition.accent, palette: edition.palette) }
     private var design: Font.Design { DesignGenome.design(edition.typeface) }
     private var m: (body: CGFloat, headline: CGFloat, lineSpacing: CGFloat) {

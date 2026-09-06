@@ -234,6 +234,7 @@ struct ReaderView: View {
                     pendingState = nil
                     if let e = currentEdition { generator.addFeedback("At \(pageState.timeOfDay.label) while \(pageState.motion.rawValue) I kept: \(e.density.rawValue), \(e.palette.rawValue), \(e.typeface.rawValue), \(effectiveFormat.rawValue)") }
                 }
+                outlined(isRegenerating ? "Regenerating…" : "Regenerate", "arrow.clockwise") { Task { await regenerate() } }
                 outlined("Not how I feel", "face.smiling") { showSignals = true }
             }
         }
@@ -253,7 +254,7 @@ struct ReaderView: View {
 
     private func outlined(_ title: String, _ symbol: String, action: @escaping () -> Void) -> some View {
         Button(action: action) {
-            HStack(spacing: 8) { Image(systemName: symbol).font(.system(size: 13, weight: .semibold)); Text(title).font(Identity.grotesk(12, .semibold)) }
+            HStack(spacing: 6) { Image(systemName: symbol).font(.system(size: 12, weight: .semibold)); Text(title).font(Identity.grotesk(11, .semibold)).lineLimit(1).minimumScaleFactor(0.8) }
                 .frame(maxWidth: .infinity).frame(height: 40)
                 .overlay(RoundedRectangle(cornerRadius: 8).strokeBorder(theme.ink.opacity(0.25)))
                 .foregroundStyle(theme.ink)
@@ -271,9 +272,14 @@ struct ReaderView: View {
     private func readFull() async {
         await generator.generate(article: article, intent: .longform, state: pageState, sources: feeds.enabledSources)
     }
+    @State private var isRegenerating = false
+    /// Force a fresh generation of the current view from the live state — the judges' "do it again" button.
     private func regenerate() async {
+        guard !isRegenerating else { return }
         if mode == .original { mode = .adapted }
-        shownState = liveState; pendingState = nil
+        isRegenerating = true
+        shownState = liveState; pendingState = nil; cardPage = 0
         await generator.generate(article: article, intent: intentForMode, state: liveState, sources: feeds.enabledSources, force: true)
+        isRegenerating = false
     }
 }
