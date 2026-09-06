@@ -241,11 +241,23 @@ struct ReaderView: View {
     }
 
     @ViewBuilder private var dock: some View {
+        let inCards = effectiveFormat == .cards && mode != .longform && mode != .original
+        let inLong = mode == .longform
         HStack {
-            ModeFab(symbol: effectiveFormat == .cards ? "text.alignleft" : "rectangle.on.rectangle",
-                    label: effectiveFormat == .cards ? "Short" : "Cards",
+            // Left: cards vs short
+            ModeFab(symbol: inCards ? "text.alignleft" : "rectangle.on.rectangle",
+                    label: inCards ? "Short" : "Cards",
                     theme: theme) { flipFormat() }
             Spacer()
+            // Right: long vs short
+            ModeFab(symbol: inLong ? "text.alignleft" : "text.book.closed",
+                    label: inLong ? "Short" : "Long",
+                    theme: theme) {
+                withAnimation(.snappy(duration: 0.3)) {
+                    if inLong { mode = .adapted; formatOverride = .text }
+                    else { mode = .longform }
+                }
+            }
         }
         .padding(.horizontal, 16).padding(.top, 6).padding(.bottom, 4)
         .background(theme.palette.background)
