@@ -86,7 +86,10 @@ final class FeedStore {
             }
         }
         let featuredSet = featuredIDs
-        let all = featured + merged.filter { !featuredSet.contains($0.id) }
+        // Live items that exist in the bundled snapshot are swapped for the snapshot copy, so their
+        // pre-generated editions and posters (keyed on the exact summary text) always resolve.
+        let snapshotByID = Dictionary(uniqueKeysWithValues: Snapshot.load().map { ($0.id, $0) })
+        let all = featured + merged.filter { !featuredSet.contains($0.id) }.map { snapshotByID[$0.id] ?? $0 }
         articles = Array(all.prefix(16))
         reserve = Array(all.dropFirst(16))
         lastRefresh = .now
