@@ -170,48 +170,61 @@ struct StatePill: View {
 
     @AppStorage("devMode") private var devMode = false
 
+    struct Segment: Identifiable { let id: String; let symbol: String; let text: String; var struck = false }
+
     var body: some View {
-        let s = hub.state
+        let segs = segments(hub.state)
         Button(action: { if devMode { action() } }) {
-            HStack(spacing: 6) {
-                Text(text(s)).font(Identity.grotesk(12, .semibold)).tracking(-0.2).lineLimit(1)
-                if badge { Circle().fill(Identity.ink).frame(width: 6, height: 6) }
+            HStack(spacing: 0) {
+                ForEach(Array(segs.enumerated()), id: \.element.id) { i, seg in
+                    HStack(spacing: 5) {
+                        Image(systemName: seg.symbol).font(.system(size: 11, weight: .bold))
+                        Text(seg.text).font(Identity.grotesk(12, .semibold)).tracking(-0.2).lineLimit(1).strikethrough(seg.struck)
+                    }
+                    .padding(.horizontal, 10).padding(.vertical, 8)
+                    if i < segs.count - 1 { Rectangle().fill(Identity.ink).frame(width: 1.2).padding(.vertical, 5) }
+                }
+                if badge { Circle().fill(Identity.ink).frame(width: 6, height: 6).padding(.trailing, 10) }
             }
-            .padding(.horizontal, 12).padding(.vertical, 8)
             .background(Identity.acid, in: Capsule())
+            .overlay(Capsule().strokeBorder(Identity.ink, lineWidth: 1.2))
             .foregroundStyle(Identity.ink)
+            .fixedSize(horizontal: true, vertical: false)
         }
         .buttonStyle(.plain)
         .allowsHitTesting(devMode)
     }
 
-    func text(_ s: UserState) -> String {
-        var parts: [String] = []
+    /// Eyes · mood · motion · pulse, each with its own icon.
+    func segments(_ s: UserState) -> [Segment] {
+        var out: [Segment] = []
         if s.sensingEnabled && hub.cameraSupported {
-            if !s.faceDetected { parts.append("Not in view") }
-            else { parts.append(s.attention >= 0.5 ? "Looking" : "Not looking") }
+            if !s.faceDetected { out.append(Segment(id: "eyes", symbol: "eye.slash", text: "Not in view")) }
+            else if s.attention >= 0.5 { out.append(Segment(id: "eyes", symbol: "eye", text: "Looking")) }
+            else { out.append(Segment(id: "eyes", symbol: "eye", text: "Looking", struck: true)) }
         }
         switch s.label {
-        case .calm: parts.append("Calm")
-        case .tense: parts.append("Tense")
-        case .tired: parts.append("Tired")
-        case .focused, .distracted: if parts.isEmpty { parts.append(s.label == .focused ? "Focused" : "Distracted") }
+        case .calm: out.append(Segment(id: "mood", symbol: "leaf", text: "Calm"))
+        case .tense: out.append(Segment(id: "mood", symbol: "bolt", text: "Tense"))
+        case .tired: out.append(Segment(id: "mood", symbol: "moon", text: "Tired"))
+        case .focused: if out.isEmpty { out.append(Segment(id: "mood", symbol: "scope", text: "Focused")) }
+        case .distracted: if out.isEmpty { out.append(Segment(id: "mood", symbol: "eye.slash", text: "Distracted")) }
         }
-        if let bpm = s.bpm, s.bpmConfidence >= 0.3 { parts.append("\(Int(bpm)) bpm") }
         switch s.motion {
-        case .walking: parts.append("Walking")
-        case .running: parts.append("Running")
-        case .automotive: parts.append("In transit")
+        case .walking: out.append(Segment(id: "motion", symbol: "figure.walk", text: "Walking"))
+        case .running: out.append(Segment(id: "motion", symbol: "figure.run", text: "Running"))
+        case .automotive: out.append(Segment(id: "motion", symbol: "tram", text: "In transit"))
         default:
             switch s.posture {
-            case .lyingDown: parts.append("Lying down")
-            case .reclined: parts.append("Reclined")
-            case .flat: parts.append("Phone down")
-            default: parts.append("Still")
+            case .lyingDown: out.append(Segment(id: "motion", symbol: "bed.double", text: "Lying down"))
+            case .reclined: out.append(Segment(id: "motion", symbol: "chair.lounge", text: "Reclined"))
+            case .flat: out.append(Segment(id: "motion", symbol: "iphone.gen3", text: "Phone down"))
+            default: out.append(Segment(id: "motion", symbol: "figure.stand", text: "Still"))
             }
         }
-        if let suffix { parts.append(suffix) }
-        return parts.joined(separator: " · ")
+        if let bpm = s.bpm, s.bpmConfidence >= 0.3 { out.append(Segment(id: "pulse", symbol: "heart", text: "\(Int(bpm))")) }
+        if let suffix { out.append(Segment(id: "suffix", symbol: "doc.text", text: suffix)) }
+        return out
     }
 }
 
