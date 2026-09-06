@@ -57,8 +57,6 @@ struct FeedView: View {
             }
             // The mode switch floats above everything on the home (including the stack's drag area), so every tap lands.
             .overlay(alignment: .bottomLeading) { modeFab.padding(16) }
-            // The proposal bar lives in the bottom inset, beneath the floating switch, so the two never overlap.
-            .safeAreaInset(edge: .bottom) { EmptyView() }
         }
     }
 
