@@ -118,7 +118,7 @@ struct ReaderView: View {
         }
         .animation(.snappy(duration: 0.3), value: isRegenerating)
         .sensoryFeedback(.impact(weight: .medium), trigger: isRegenerating)
-        .safeAreaInset(edge: .bottom) { dock }
+        .overlay(alignment: .bottom) { dock }
         .sheet(isPresented: $showWhy) { WhyThisSheet(article: article, edition: currentEdition) }
         .sheet(isPresented: $showCompare) { CompareView(article: article) }
         .fullScreenCover(isPresented: $showCall) { CallSheet(article: article, theme: theme, onApply: { applyVersion($0) }) }
@@ -292,7 +292,6 @@ struct ReaderView: View {
         }
         .animation(.snappy(duration: 0.25), value: inCards)
         .padding(.horizontal, 16).padding(.top, 6).padding(.bottom, 4)
-        .background(theme.palette.background)
     }
 
     private var modeTitle: String {

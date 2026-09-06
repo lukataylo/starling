@@ -90,7 +90,7 @@ struct QuickEditionView: View {
         }
         .foregroundStyle(theme.ink)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.bottom, 24)
+        .padding(.bottom, 96)
     }
 }
 
@@ -165,7 +165,7 @@ struct ArticleView: View {
         .foregroundStyle(theme.ink)
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 22)
-        .padding(.bottom, 30)
+        .padding(.bottom, 96)
     }
     private func img(_ u: UIImage) -> UIImage { u }
     private func sectionTitle(_ i: Int) -> String { ["THE STORY", "THE DETAIL", "WHAT IT MEANS", "WHERE IT GOES"][min(3, i / 4)] }
@@ -219,7 +219,7 @@ struct PosterLayout: View {
             .padding(.horizontal, 20)
             .foregroundStyle(theme.ink)
         }
-        .padding(.bottom, 24)
+        .padding(.bottom, 96)
     }
 }
 
@@ -300,7 +300,7 @@ struct SplitLayout: View {
             .padding(.horizontal, 22)
             .foregroundStyle(theme.ink)
         }
-        .padding(.bottom, 24)
+        .padding(.bottom, 96)
     }
 }
 

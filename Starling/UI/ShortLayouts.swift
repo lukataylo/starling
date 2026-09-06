@@ -213,7 +213,7 @@ struct ShortEditionView: View {
         .foregroundStyle(theme.ink)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(edition.resolvedLayout == .zine ? Identity.night : theme.palette.background)
-        .padding(.bottom, 24)
+        .padding(.bottom, 96)
     }
 
     @ViewBuilder private func paragraphsView(_ paras: [String], _ n: Int) -> some View {
