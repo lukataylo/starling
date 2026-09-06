@@ -97,6 +97,22 @@ struct ReaderView: View {
         .environment(\.colorScheme, theme.palette.scheme)
         .animation(.easeInOut(duration: 0.5), value: theme.paletteName)
         .toolbar(.hidden, for: .navigationBar)
+        .overlay(alignment: .top) {
+            if isRegenerating {
+                HStack(spacing: 10) {
+                    ProgressView().tint(Identity.ink).scaleEffect(0.8)
+                    Text("Regenerating for \(liveState.label.rawValue), \(liveState.timeOfDay.label)…").font(Identity.grotesk(13, .semibold))
+                }
+                .padding(.horizontal, 16).padding(.vertical, 10)
+                .background(Identity.acid, in: Capsule())
+                .foregroundStyle(Identity.ink)
+                .shadow(color: .black.opacity(0.2), radius: 10, y: 4)
+                .padding(.top, 62)
+                .transition(.move(edge: .top).combined(with: .opacity))
+            }
+        }
+        .animation(.snappy(duration: 0.3), value: isRegenerating)
+        .sensoryFeedback(.impact(weight: .medium), trigger: isRegenerating)
         .safeAreaInset(edge: .bottom) { dock }
         .sheet(isPresented: $showWhy) { WhyThisSheet(article: article, edition: currentEdition) }
         .sheet(isPresented: $showCompare) { CompareView(article: article) }
