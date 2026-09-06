@@ -136,6 +136,8 @@ struct StoryArt: View {
 
 // MARK: - Screen 1: Tile view
 
+private func openAsText() { UserDefaults.standard.set("text", forKey: "readerFormat") }
+
 struct TileHome: View {
     @Environment(FeedStore.self) private var feeds
     @Environment(SignalHub.self) private var hub
@@ -172,15 +174,16 @@ struct TileHome: View {
                     let a = feeds.articles
                     VStack(spacing: 4) {
                         ForEach(Array(stride(from: 0, to: a.count, by: 4)), id: \.self) { i in
-                            NavigationLink(value: a[i]) { LeadTile(article: a[i]) }.buttonStyle(.plain)
+                            // Opening from the tile home lands in the article (Short) view; the card stack lands in cards.
+                            NavigationLink(value: a[i]) { LeadTile(article: a[i]) }.buttonStyle(.plain).simultaneousGesture(TapGesture().onEnded { openAsText() })
                             if i + 1 < a.count {
                                 HStack(spacing: 4) {
-                                    NavigationLink(value: a[i + 1]) { HalfTile(article: a[i + 1], color: Identity.cobalt, graphic: true) }.buttonStyle(.plain)
-                                    if i + 2 < a.count { NavigationLink(value: a[i + 2]) { HalfTile(article: a[i + 2], color: Identity.ink, graphic: false) }.buttonStyle(.plain) }
+                                    NavigationLink(value: a[i + 1]) { HalfTile(article: a[i + 1], color: Identity.cobalt, graphic: true) }.buttonStyle(.plain).simultaneousGesture(TapGesture().onEnded { openAsText() })
+                                    if i + 2 < a.count { NavigationLink(value: a[i + 2]) { HalfTile(article: a[i + 2], color: Identity.ink, graphic: false) }.buttonStyle(.plain).simultaneousGesture(TapGesture().onEnded { openAsText() }) }
                                     else { Color.clear }
                                 }
                             }
-                            if i + 3 < a.count { NavigationLink(value: a[i + 3]) { WideTile(article: a[i + 3]) }.buttonStyle(.plain) }
+                            if i + 3 < a.count { NavigationLink(value: a[i + 3]) { WideTile(article: a[i + 3]) }.buttonStyle(.plain).simultaneousGesture(TapGesture().onEnded { openAsText() }) }
                         }
                         if feeds.hasMore {
                             HStack(spacing: 8) { ProgressView().tint(theme.ink); Text("MORE STORIES").font(Identity.grotesk(10, .bold)).tracking(1.5) }
