@@ -26,6 +26,7 @@ struct CallSheet: View {
         return out.hasSuffix(".") ? out : out + "."
     }
     @State private var nearEar = false
+    @State private var showTitle = true
     private var elapsed: String {
         let s = Int(now.timeIntervalSince(started)); return String(format: "%02d:%02d", s / 60, s % 60)
     }
@@ -37,30 +38,31 @@ struct CallSheet: View {
             VStack(spacing: 0) {
                 Text(elapsed).font(Identity.grotesk(17, .medium)).padding(.top, 14)
                 Text("Starling").font(Identity.grotesk(58, .semibold)).tracking(-2.8).padding(.top, 4)
-                Text(article.title).font(Identity.grotesk(17, .medium)).multilineTextAlignment(.center).lineLimit(2).padding(.horizontal, 32).padding(.top, 2)
-                Text(subtitle).font(Identity.grotesk(17, .medium)).opacity(0.85).padding(.top, 2)
+                // The story title shows for the first few seconds, then gives way to the status line.
+                Group {
+                    if showTitle {
+                        Text(article.title).font(Identity.grotesk(17, .medium)).multilineTextAlignment(.center).lineLimit(2).padding(.horizontal, 32)
+                            .transition(.opacity)
+                    }
+                    Text(subtitle).font(Identity.grotesk(17, .medium)).opacity(0.85)
+                }
+                .padding(.top, 2)
+                .animation(.easeInOut(duration: 0.6), value: showTitle)
                 Spacer(minLength: 10)
                 Image("Bird").resizable().aspectRatio(contentMode: .fit).frame(width: 250)
                     .scaleEffect(reader.agentSpeaking ? 1.03 : 1).animation(.easeInOut(duration: 0.6).repeatForever(autoreverses: true), value: reader.agentSpeaking)
                 Spacer(minLength: 10)
                 Text(statusLabel).font(Identity.grotesk(11, .medium)).tracking(3).opacity(0.7)
-                Group {
-                    if let p = reader.proposal {
-                        VStack(spacing: 8) {
-                            Text("Switch to the \(p.kind) version?").font(Identity.grotesk(26, .semibold)).tracking(-0.8).multilineTextAlignment(.center)
-                            Button("Yes, switch") { onApply(p.kind) }.font(Identity.grotesk(14, .bold)).padding(.horizontal, 16).padding(.vertical, 9).background(Identity.ink, in: Capsule()).foregroundStyle(Identity.acid)
-                        }
-                    } else {
-                        Text(latestAgentLine.isEmpty ? placeholder : latestAgentLine)
-                            .font(Identity.grotesk(26, .semibold)).tracking(-0.8).lineSpacing(-1)
-                            .multilineTextAlignment(.center).lineLimit(4).minimumScaleFactor(0.75)
-                            .contentTransition(.opacity)
-                            .animation(.easeInOut(duration: 0.25), value: latestAgentLine)
+                if let p = reader.proposal {
+                    VStack(spacing: 8) {
+                        Text("Switch to the \(p.kind) version?").font(Identity.grotesk(24, .semibold)).tracking(-0.8).multilineTextAlignment(.center)
+                        Button("Yes, switch") { onApply(p.kind) }.font(Identity.grotesk(14, .bold)).padding(.horizontal, 16).padding(.vertical, 9).background(Identity.ink, in: Capsule()).foregroundStyle(Identity.acid)
                     }
+                    .padding(.horizontal, 28).padding(.top, 10)
+                } else if case .failed(let why) = reader.callState {
+                    Text(why).font(Identity.grotesk(15)).multilineTextAlignment(.center).padding(.horizontal, 28).padding(.top, 10)
                 }
-                .frame(minHeight: 130)
-                .padding(.horizontal, 28).padding(.top, 10)
-                Text(reader.agentSpeaking ? "Interrupt with a question" : "Ask anything about the story").font(Identity.grotesk(15)).opacity(0.7).padding(.top, 6)
+                Text(reader.agentSpeaking ? "Interrupt with a question" : "Ask anything about the story").font(Identity.grotesk(15)).opacity(0.7).padding(.top, 18)
                 HStack(alignment: .center, spacing: 3) {
                     ForEach(Array(wave.enumerated()), id: \.offset) { _, h in
                         Capsule().fill(Identity.ink).frame(width: 3, height: 4 + 44 * h)
@@ -91,6 +93,7 @@ struct CallSheet: View {
         }
         .onAppear {
             started = .now
+            DispatchQueue.main.asyncAfter(deadline: .now() + 6) { showTitle = false }
             AudioManager.shared.isSpeakerOutputPreferred = true
             // Like the Phone app: the proximity sensor darkens the screen and routes audio to the earpiece against your head.
             UIDevice.current.isProximityMonitoringEnabled = true
