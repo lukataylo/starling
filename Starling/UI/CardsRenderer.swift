@@ -147,7 +147,7 @@ struct CardsRenderer: View {
                     .fixedSize(horizontal: false, vertical: true)
                 Spacer()
                 if UserDefaults.standard.bool(forKey: "devMode"), let p = posters.first ?? nil {
-                    Text("mood \(mood) · poster_\(PosterPrompts.key(p, mood: mood)) · bundled \(hasBundledPosters ? "yes" : "no") · \(UIImage(named: "poster_" + PosterPrompts.key(p, mood: mood)) == nil ? "not in bundle" : "in bundle")")
+                    Text("mood \(mood) · poster_\(PosterPrompts.key(p, mood: mood)) · bundled \(hasBundledPosters ? "yes" : "no") · \(ImageGenerator.bundled(PosterPrompts.key(p, mood: mood)) == nil ? "not in bundle" : "in bundle")")
                         .font(.system(size: 9, design: .monospaced)).foregroundStyle(Identity.ink.opacity(0.6))
                 }
                 HStack(spacing: 8) {

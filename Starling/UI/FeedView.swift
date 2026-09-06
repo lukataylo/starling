@@ -105,7 +105,7 @@ func sourceName(_ a: Article) -> String { (FeedCatalog.source(a.sourceID)?.name 
 /// Resolve art for a story: bundled hero, the publisher's image, or a pre-generated poster.
 @MainActor
 func storyArt(_ article: Article, generator: Generator, heroes: HeroImageStore, images: ImageGenerator) -> UIImage? {
-    if let img = generator.heroImageName(for: article, edition: nil).flatMap(UIImage.init(named:)) { return img }
+    if let name = generator.heroImageName(for: article, edition: nil), let img = UIImage(named: name) ?? Bundle.main.url(forResource: name, withExtension: "jpg").flatMap({ UIImage(contentsOfFile: $0.path) }) { return img }
     if let img = heroes.image(for: article.imageURL) { return img }
     for m in ["focused", "calm"] {
         if let e = generator.bundled(article, .preset(m == "calm" ? .calm : .focused)),

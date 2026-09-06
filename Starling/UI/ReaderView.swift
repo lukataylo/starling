@@ -58,7 +58,7 @@ struct ReaderView: View {
         return formatOverride ?? currentEdition?.format ?? .text
     }
     private var heroImage: UIImage? {
-        if let name = generator.heroImageName(for: article, edition: currentEdition), let img = UIImage(named: name) { return img }
+        if let name = generator.heroImageName(for: article, edition: currentEdition), let img = UIImage(named: name) ?? Bundle.main.url(forResource: name, withExtension: "jpg").flatMap({ UIImage(contentsOfFile: $0.path) }) { return img }
         return heroes.image(for: article.imageURL)
     }
     private var mood: String {

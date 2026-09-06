@@ -22,10 +22,16 @@ final class ImageGenerator {
 
     static func key(_ prompt: String, mood: String) -> String { PosterPrompts.key(prompt, mood: mood) }
 
+    /// Bundled poster by key: explicit .jpg URL, since UIImage(named:) is unreliable for JPEGs without an extension.
+    static func bundled(_ k: String) -> UIImage? {
+        if let url = Bundle.main.url(forResource: "poster_" + k, withExtension: "jpg"), let i = UIImage(contentsOfFile: url.path) { return i }
+        return UIImage(named: "poster_" + k) ?? UIImage(named: "poster_" + k + ".jpg")
+    }
+
     func image(prompt: String, mood: String) -> UIImage? {
         let k = Self.key(prompt, mood: mood)
         if let i = images[k] { return i }
-        if let i = UIImage(named: "poster_" + k) { images[k] = i; return i }   // bundled, pre-generated
+        if let i = Self.bundled(k) { images[k] = i; return i }   // bundled, pre-generated
         let file = dir.appendingPathComponent(k + ".jpg")
         if let data = try? Data(contentsOf: file), let i = UIImage(data: data) { images[k] = i; return i }
         return nil
@@ -44,7 +50,7 @@ final class ImageGenerator {
     func request(prompt: String, mood: String) {
         let k = Self.key(prompt, mood: mood)
         guard images[k] == nil, !inflight.contains(k), !failed.contains(k), !queue.contains(where: { $0.0 == k }), LLMClient.apiKey != nil else { return }
-        if UIImage(named: "poster_" + k) != nil { _ = image(prompt: prompt, mood: mood); return }
+        if Self.bundled(k) != nil { _ = image(prompt: prompt, mood: mood); return }
         if FileManager.default.fileExists(atPath: dir.appendingPathComponent(k + ".jpg").path) { _ = image(prompt: prompt, mood: mood); return }
         queue.append((k, prompt, mood))
         pump()
