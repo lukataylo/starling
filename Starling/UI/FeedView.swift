@@ -325,7 +325,7 @@ struct StackHome: View {
         let a = feeds.articles
         VStack(spacing: 0) {
             HStack {
-                StatePill(theme: hub.theme) { showSignals = true }
+                Text("STARLING").font(Identity.grotesk(11, .bold)).tracking(2).foregroundStyle(Identity.warmWhite.opacity(0.7))
                 Spacer()
                 Text("\(a.isEmpty ? 0 : index + 1) / \(a.count)").font(.system(size: 11, weight: .medium, design: .monospaced)).foregroundStyle(Identity.warmWhite.opacity(0.6))
             }
