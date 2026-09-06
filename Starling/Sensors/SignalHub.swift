@@ -25,6 +25,16 @@ final class SignalHub {
     var labelOverride: ReaderLabel? { didSet { recompute() } }
     /// Debug clock for demos (nil = real time).
     var clockOverride: Date? { didSet { recompute() } }
+    /// Persisted appearance choice (system / light / dark); observed by the theme.
+    var appearance: Appearance = .stored {
+        didSet { UserDefaults.standard.set(appearance.rawValue, forKey: Appearance.key) }
+    }
+    /// Whether the system trait collection is currently dark (pushed in from the root scene so the theme is observable).
+    var systemIsDark: Bool = Appearance.systemIsDark
+    /// True while the ARKit camera is deliberately paused (backgrounded or a fingertip pulse measurement owns the camera).
+    private(set) var cameraPaused = false
+    /// True while the app is in the foreground; the watchdog only restarts the session when active.
+    private(set) var appActive = true
 
     private let context = ContextMonitor()
     private var face: FaceSessionController?
@@ -33,6 +43,9 @@ final class SignalHub {
     private var started = false
     private var faceStartedAt: Date?
     private var calibrationDone = false
+    private var lastFaceAt: Date?
+    private var lastDecayAt = Date()
+    private var lastWatchdogRestart: Date = .distantPast
     private var calibBPMs: [Double] = []
     private var calibBlink: Double = 0
     var cameraSupported: Bool { FaceSessionController.isSupported }
@@ -85,6 +98,7 @@ final class SignalHub {
                 onInterruption: { [weak self] interrupted in Task { @MainActor in self?.phase = interrupted ? .interrupted : (self?.calibrationDone == true ? .live : .calibrating(0)) } })
             face?.pulse.debugEnabled = debugEnabled
         }
+        cameraPaused = false
         face?.run()
         faceStartedAt = nil
         calibrationDone = false
@@ -92,8 +106,30 @@ final class SignalHub {
         phase = .calibrating(0)
     }
 
-    func pauseCamera() { face?.pause() }
-    func resumeCamera() { if isSensingEnabled { face?.run() } }
+    func pauseCamera() {
+        cameraPaused = true
+        face?.pause()
+    }
+
+    /// Back in the foreground (or the fingertip measurement finished): restart tracking from scratch if the
+    /// session was interrupted or never got going, keeping the calibration if it had already completed.
+    func resumeCamera() {
+        cameraPaused = false
+        guard isSensingEnabled, started else { return }
+        guard FaceSessionController.isSupported else { phase = .unsupported; return }
+        if face == nil { startCamera(); return }
+        face?.run()
+        lastWatchdogRestart = .now
+        switch phase {
+        case .interrupted, .unsupported, .idle:
+            phase = calibrationDone ? .live : .calibrating(0)
+        default:
+            break
+        }
+    }
+
+    /// Scene-phase hook from the root: the watchdog only restarts the camera while the app is active.
+    func setAppActive(_ active: Bool) { appActive = active }
 
     func recalibrate() {
         faceStartedAt = nil; calibrationDone = false; calibBPMs = []; baselineIsDefault = true; baselineBPM = 70
@@ -129,6 +165,7 @@ final class SignalHub {
 
     private func tick() {
         recordHistory()
+        watchdog()
         // Calibration progress: 20s after the face is first seen (extend to 45s if pulse is slow to lock).
         if let t0 = faceStartedAt, !calibrationDone {
             let elapsed = Date().timeIntervalSince(t0)
@@ -149,6 +186,17 @@ final class SignalHub {
         recompute()
     }
 
+    /// If frames stop arriving for 5s while sensing is on and the app is active, re-run the session (at most every 10s).
+    private func watchdog() {
+        guard isSensingEnabled, appActive, !cameraPaused, let face, started else { return }
+        guard let last = face.lastFrameAt else { return }
+        let now = Date()
+        guard now.timeIntervalSince(last) > 5, now.timeIntervalSince(lastWatchdogRestart) > 10 else { return }
+        lastWatchdogRestart = now
+        face.run()
+        if phase == .interrupted { phase = calibrationDone ? .live : .calibrating(0) }
+    }
+
     private func ingest(sample s: AttentionSample) {
         lastAttentionSample = s
         if s.tracked && faceStartedAt == nil { faceStartedAt = .now }
@@ -163,7 +211,10 @@ final class SignalHub {
 
     // MARK: - Ingest (later sources call these)
     func ingestAttention(attention: Double, blinkRate: Double, faceDetected: Bool) {
+        // While a fingertip measurement owns the camera the face session is paused; ignore any straggling samples.
+        guard !cameraPaused else { return }
         self.attention = attention; self.blinkRate = blinkRate; self.faceDetected = faceDetected
+        if faceDetected { lastFaceAt = .now }
         recompute()
     }
     private var fingerAt: Date?
@@ -206,6 +257,14 @@ final class SignalHub {
         if motionSample.isMovingNow && motionSample.motion == .stationary { s.motion = .walking }
         s.posture = motionSample.posture
         s.faceDetected = isSensingEnabled && faceDetected
+        // No face for more than 3s: decay attention toward 0 (about a fifth per second) instead of holding the last value.
+        let now = Date()
+        if !faceDetected, let seen = lastFaceAt, now.timeIntervalSince(seen) > 3, attention > 0 {
+            let dt = min(2, max(0, now.timeIntervalSince(lastDecayAt)))
+            attention *= pow(0.8, dt)
+            if attention < 0.01 { attention = 0 }
+        }
+        lastDecayAt = now
         s.attention = isSensingEnabled ? attention : 0
         s.blinkRate = isSensingEnabled ? blinkRate : 0
 

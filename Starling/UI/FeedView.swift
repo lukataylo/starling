@@ -12,6 +12,7 @@ struct FeedView: View {
     @State private var showSources = false
     @State private var showSettings = false
     @State private var showSignals = false
+    @State private var showBookmarks = false
     @State private var mode: HomeMode = .tiles
     @State private var modeChosen = false
     @State private var proposedMode: HomeMode?
@@ -29,6 +30,7 @@ struct FeedView: View {
             .sheet(isPresented: $showSources) { SourcePicker() }
             .sheet(isPresented: $showSettings) { SettingsView() }
             .sheet(isPresented: $showSignals) { SignalSheet(theme: theme) }
+            .sheet(isPresented: $showBookmarks) { BookmarksView() }
             .task { if feeds.articles.isEmpty { await feeds.refresh() } }
             .onChange(of: feeds.enabledIDs, initial: true) { _, ids in generator.sourceSignature = ids.sorted().joined(separator: ",") }
             .onChange(of: feeds.lastRefresh) { _, _ in prefetch(); feeds.articles.prefix(16).forEach { heroes.load($0.imageURL) } }
@@ -43,6 +45,9 @@ struct FeedView: View {
                     if proposedMode != wanted { proposedMode = wanted; proposalSince = .now }
                 } else { proposedMode = nil }
             }
+            // The mode switch floats above everything on the home (including the stack's drag area), so every tap lands.
+            .overlay(alignment: .bottomLeading) { modeFab.padding(16) }
+            // The proposal bar lives in the bottom inset, beneath the floating switch, so the two never overlap.
             .safeAreaInset(edge: .bottom) { proposalBar }
         }
     }
@@ -51,11 +56,24 @@ struct FeedView: View {
         let bg: Color = mode == .stack ? Identity.night : theme.palette.background
         let scheme: ColorScheme = mode == .stack ? .dark : theme.palette.scheme
         Group {
-            if mode == .stack { StackHome(mode: $mode, onManual: { proposedMode = nil }) }
-            else { TileHome(mode: $mode, showSources: $showSources, showSettings: $showSettings, showSignals: $showSignals, onManual: { proposedMode = nil }) }
+            if mode == .stack { StackHome() }
+            else { TileHome(showSources: $showSources, showSettings: $showSettings, showSignals: $showSignals, showBookmarks: $showBookmarks) }
         }
         .background(bg.ignoresSafeArea())
         .environment(\.colorScheme, scheme)
+    }
+
+    /// Persistent bottom-left switch: tiles ↔ cards. A manual flip clears any pending proposal.
+    private var modeFab: some View {
+        let stack = mode == .stack
+        let fabTheme = stack ? Theme(paletteName: .night, accentName: .sage, scale: .regular, typeface: .sans) : theme
+        return ModeFab(symbol: stack ? "square.grid.2x2" : "square.stack.3d.down.forward",
+                       label: stack ? "Tiles" : "Cards",
+                       theme: fabTheme) {
+            proposedMode = nil
+            withAnimation { mode = stack ? .tiles : .stack }
+        }
+        .environment(\.colorScheme, stack ? .dark : theme.palette.scheme)
     }
 
     @ViewBuilder private var proposalBar: some View {
@@ -113,11 +131,10 @@ struct StoryArt: View {
 struct TileHome: View {
     @Environment(FeedStore.self) private var feeds
     @Environment(SignalHub.self) private var hub
-    @Binding var mode: HomeMode
     @Binding var showSources: Bool
     @Binding var showSettings: Bool
     @Binding var showSignals: Bool
-    let onManual: () -> Void
+    @Binding var showBookmarks: Bool
     private var theme: Theme { hub.theme }
 
     var body: some View {
@@ -127,7 +144,7 @@ struct TileHome: View {
                     Text("Starling").font(Identity.grotesk(56, .black)).tracking(-3.5).foregroundStyle(theme.ink)
                     Spacer()
                     HStack(spacing: 6) {
-                        RoundIconButton(symbol: "square.stack.3d.down.forward", theme: theme) { onManual(); withAnimation { mode = .stack } }
+                        RoundIconButton(symbol: "bookmark", theme: theme) { showBookmarks = true }
                         RoundIconButton(symbol: "line.3.horizontal", theme: theme) { showSources = true }
                         RoundIconButton(symbol: "gearshape", theme: theme) { showSettings = true }
                     }
@@ -168,7 +185,7 @@ struct TileHome: View {
                     .padding(.horizontal, 12).padding(.top, 14)
                 }
             }
-            .padding(.bottom, 30)
+            .padding(.bottom, 90)   // clears the floating mode switch
         }
         .refreshable { await feeds.refresh() }
     }
@@ -284,8 +301,6 @@ struct WideTile: View {
 struct StackHome: View {
     @Environment(FeedStore.self) private var feeds
     @Environment(SignalHub.self) private var hub
-    @Binding var mode: HomeMode
-    let onManual: () -> Void
     @State private var index = 0
     @State private var drag: CGFloat = 0
     @State private var flying = false
@@ -302,8 +317,7 @@ struct StackHome: View {
             HStack {
                 StatePill(theme: hub.theme) { showSignals = true }
                 Spacer()
-                Text("\(a.isEmpty ? 0 : index + 1) / \(a.count)").font(.system(size: 11, weight: .medium, design: .monospaced)).foregroundStyle(Identity.warmWhite.opacity(0.6)).padding(.trailing, 8)
-                RoundIconButton(symbol: "square.grid.2x2", theme: Theme(paletteName: .night, accentName: .sage, scale: .regular, typeface: .sans)) { onManual(); withAnimation { mode = .tiles } }
+                Text("\(a.isEmpty ? 0 : index + 1) / \(a.count)").font(.system(size: 11, weight: .medium, design: .monospaced)).foregroundStyle(Identity.warmWhite.opacity(0.6)).padding(.trailing, 4)
             }
             .padding(.horizontal, 16).padding(.top, 6)
             if a.isEmpty {
@@ -352,6 +366,8 @@ struct StackHome: View {
                     Text("SWIPE UP FOR NEXT").font(Identity.grotesk(10, .semibold)).tracking(2)
                 }
                 .foregroundStyle(Identity.warmWhite.opacity(0.7))
+                .frame(maxWidth: .infinity)
+                .padding(.leading, 120)   // sits to the right of the floating mode switch
                 .padding(.vertical, 12)
                 .onAppear { withAnimation(.easeInOut(duration: 0.9).repeatForever(autoreverses: true)) { hintPhase = true } }
             }

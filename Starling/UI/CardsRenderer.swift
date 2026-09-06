@@ -33,9 +33,35 @@ struct CardsRenderer: View {
     }
     private var posters: [String?] { Self.posterPrompts(edition: edition, article: article, mood: mood) }
 
-    /// Foreground for a tile colour: ink on acid, warm white on cobalt / red / ink.
-    private func fg(on color: Color) -> Color { color == Identity.acid ? Identity.ink : Identity.warmWhite }
-    private func fgSecondary(on color: Color) -> Color { color == Identity.acid ? Identity.ink.opacity(0.65) : Identity.warmWhite.opacity(0.7) }
+    private static let amber = Color(red: 0.85, green: 0.55, blue: 0.10)
+    private static let moss = Color(red: 0.25, green: 0.45, blue: 0.30)
+
+    /// Tile colours follow the edition's palette; the set is rotated by the accent and the rationale so two regenerations in the same palette still look different.
+    private var tileSet: [Color] {
+        let base: [Color]
+        switch edition.palette {
+        case .day:   base = [Identity.cobalt, Identity.red, Identity.ink, Identity.acid]
+        case .focus: base = [Identity.ink, Identity.acid, Identity.cobalt, Identity.red]
+        case .dawn:  base = [Self.amber, Identity.ink, Identity.red, Identity.acid]
+        case .calm:  base = [Self.moss, Identity.ink, Identity.acid, Identity.cobalt]
+        case .dusk:  base = [Identity.red, Identity.cobalt, Identity.ink, Identity.acid]
+        case .night: base = [Identity.ink, Identity.cobalt, Identity.acid, Identity.red]
+        }
+        let accentIndex = AccentName.allCases.firstIndex(of: edition.accent) ?? 0
+        let shift = (Self.stableHash(edition.rationale) + accentIndex) % base.count
+        return Array(base[shift...] + base[..<shift])
+    }
+    /// Deterministic across launches (String.hashValue is seeded per process).
+    private static func stableHash(_ s: String) -> Int {
+        var h: UInt32 = 2166136261
+        for b in s.utf8 { h = (h ^ UInt32(b)) &* 16777619 }
+        return Int(h % 1000)
+    }
+    private func tile(_ i: Int) -> Color { tileSet[i % tileSet.count] }
+    /// Light tiles take ink; everything else takes warm white.
+    private func isLight(_ color: Color) -> Bool { color == Identity.acid || color == Self.amber }
+    private func fg(on color: Color) -> Color { isLight(color) ? Identity.ink : Identity.warmWhite }
+    private func fgSecondary(on color: Color) -> Color { isLight(color) ? Identity.ink.opacity(0.65) : Identity.warmWhite.opacity(0.7) }
     /// Card i's poster: the current edition's own, else the story's pre-generated poster for this mood (then the other mood).
     private func poster(_ i: Int) -> UIImage? {
         if i < posters.count, let p = posters[i], let img = imageGen.imageAnyMood(prompt: p, mood: mood) { return img }
@@ -63,7 +89,7 @@ struct CardsRenderer: View {
             TabView(selection: $page) {
                 ForEach(Array(cards.enumerated()), id: \.offset) { i, blocks in
                     card(i, blocks)
-                        .environment(\.colorScheme, theme.tiles[i % theme.tiles.count] == Identity.acid || i == 0 ? .light : .dark)
+                        .environment(\.colorScheme, isLight(tile(i)) || i == 0 ? .light : .dark)
                         .clipShape(RoundedRectangle(cornerRadius: 26))
                         .padding(.horizontal, 16)
                         .tag(i)
@@ -82,7 +108,7 @@ struct CardsRenderer: View {
     }
 
     @ViewBuilder private func card(_ i: Int, _ blocks: [Edition.Block]) -> some View {
-        let tile = theme.tiles[i % theme.tiles.count]
+        let tile = tile(i)
         let b = blocks.first!
         if i < 2, let img = poster(i) {
             // Fully generated poster: the type is in the image.
@@ -144,7 +170,7 @@ struct CardsRenderer: View {
                 Spacer(minLength: 0)
                 EditionRenderer.blockView(b, edition: edition, scale: 1.2, onReadFull: onReadFull)
                 Spacer(minLength: 0)
-                swipeHint(i, light: tile != Identity.acid)
+                swipeHint(i, light: !isLight(tile))
             }
             .padding(24)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)

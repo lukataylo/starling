@@ -10,6 +10,7 @@ struct SettingsView: View {
     @AppStorage("apiKeyOverride") private var keyOverride = ""
     @AppStorage("modelOverride") private var modelOverride = ""
     @AppStorage("elevenAgentID") private var elevenAgentID = ""
+    @AppStorage(Appearance.key) private var appearance = Appearance.system.rawValue
     @State private var useClockOverride = false
     @State private var clock = Date()
 
@@ -20,6 +21,14 @@ struct SettingsView: View {
                 Section("Sensing") {
                     Toggle("Use camera, motion and heart rate", isOn: $hub.isSensingEnabled)
                     Text("Adaptation is a proposal. Turn this off and Starling only uses the time of day and how you're holding the phone.").font(.caption).foregroundStyle(.secondary)
+                }
+                Section("Appearance") {
+                    Picker("Appearance", selection: $appearance) {
+                        ForEach(Appearance.allCases) { a in Text(a.label).tag(a.rawValue) }
+                    }
+                    .pickerStyle(.segmented)
+                    .onChange(of: appearance) { _, raw in hub.appearance = Appearance(rawValue: raw) ?? .system }
+                    Text("Dark turns every skin into its night version; Light keeps the page pale even in the evening.").font(.caption).foregroundStyle(.secondary)
                 }
                 Section("Demo: pretend it's another time") {
                     Toggle("Override clock", isOn: $useClockOverride)

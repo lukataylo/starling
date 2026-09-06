@@ -15,6 +15,8 @@ final class FaceSessionController: NSObject, ARSessionDelegate {
     private let onInterruption: (Bool) -> Void
     private var lastHeadSpeed: Float = 0
     private var running = false
+    /// Timestamp of the most recent `didUpdate frame`. Written on the delegate queue, read on main by the hub's watchdog.
+    nonisolated(unsafe) private(set) var lastFrameAt: Date?
 
     init(onAttention: @escaping (AttentionSample) -> Void, onPulse: @escaping (PulseEstimate) -> Void, onInterruption: @escaping (Bool) -> Void) {
         self.onAttention = onAttention
@@ -43,6 +45,7 @@ final class FaceSessionController: NSObject, ARSessionDelegate {
             guard granted, let self else { return }
             self.session.run(self.makeConfig(), options: [.resetTracking, .removeExistingAnchors])
             self.running = true
+            self.lastFrameAt = .now   // give the fresh session a full grace period before the watchdog judges it
         }
     }
 
@@ -61,6 +64,7 @@ final class FaceSessionController: NSObject, ARSessionDelegate {
 
     // MARK: ARSessionDelegate (background queue). Never retain the frame.
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
+        lastFrameAt = .now
         let anchor = frame.anchors.compactMap { $0 as? ARFaceAnchor }.first
         if let s = attention.process(anchor: anchor, camera: frame.camera, timestamp: frame.timestamp) {
             lastHeadSpeed = s.headSpeed

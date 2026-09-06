@@ -8,6 +8,7 @@ struct ReaderView: View {
     @Environment(SignalHub.self) private var hub
     @Environment(HeroImageStore.self) private var heroes
     @Environment(Newsreader.self) private var newsreader
+    @Environment(Bookmarks.self) private var bookmarks
     @Environment(\.dismiss) private var dismiss
     @State var article: Article
     @State private var bodyLoaded = false
@@ -20,7 +21,7 @@ struct ReaderView: View {
     @State private var pendingSince: Date?
     @State private var formatOverride: EditionFormat?
     @State private var cardPage = 0
-    @State private var dockExpanded = true
+    @State private var dockExpanded = false
     @State private var showCall = false
     private let stableAfter: TimeInterval = 5
 
@@ -64,14 +65,17 @@ struct ReaderView: View {
                 RoundIconButton(symbol: "chevron.left", theme: theme) { dismiss() }
                 StatePill(theme: theme, badge: pendingChange != nil, suffix: currentEdition.map { $0.density == .glance || $0.density == .brief ? "Short edition" : "Article" }) { showSignals = true }
                 Spacer()
+                RoundIconButton(symbol: isKept ? "bookmark.fill" : "bookmark", theme: theme, filled: isKept) { keep() }
                 RoundIconButton(symbol: "phone.fill", theme: theme, filled: newsreader.callState == .live) {
                     showCall = true
                     if newsreader.callState != .live { Task { await newsreader.startCall(article: article, state: liveState, currentVersion: modeTitle, sources: feeds.enabledSources) } }
                 }
                 Menu {
+                    Button { keep() } label: { Label(isKept ? "Kept" : "Keep", systemImage: isKept ? "bookmark.fill" : "bookmark") }
+                    Button { Task { await regenerate() } } label: { Label(isRegenerating ? "Regenerating…" : "Regenerate", systemImage: "arrow.clockwise") }
+                    Button { showSignals = true } label: { Label("Not how I feel", systemImage: "face.smiling") }
+                    Divider()
                     Button { showCompare = true } label: { Label("Compare generations", systemImage: "rectangle.split.2x1") }
-                    Button { mode = .original } label: { Label("Original article", systemImage: "doc.plaintext") }
-                    Button { Task { await regenerate() } } label: { Label("Regenerate for now", systemImage: "arrow.clockwise") }
                     Button { showWhy = true } label: { Label("Why this version", systemImage: "info.circle") }
                     Link(destination: article.link) { Label("Open in Safari", systemImage: "safari") }
                 } label: {
@@ -81,6 +85,12 @@ struct ReaderView: View {
             .padding(.horizontal, 20).padding(.top, 8).padding(.bottom, 6)
 
             content
+                .overlay(alignment: .bottomLeading) {
+                    ModeFab(symbol: effectiveFormat == .cards ? "text.alignleft" : "rectangle.on.rectangle",
+                            label: effectiveFormat == .cards ? "Short" : "Cards",
+                            theme: theme) { flipFormat() }
+                        .padding(.leading, 16).padding(.bottom, 12)
+                }
         }
         .background(theme.palette.background.ignoresSafeArea())
         .environment(\.colorScheme, theme.palette.scheme)
@@ -222,7 +232,7 @@ struct ReaderView: View {
         .padding(20)
     }
 
-    // MARK: dock — Cards · Text · Full Story · Original, then Keep / Not how I feel
+    // MARK: dock — Cards · Short · Adapted · Original
     private var articleSwitcher: some View {
         HStack(spacing: 4) {
             segment("Focused", on: mode == .preset(.focused)) { mode = .preset(.focused) }
@@ -261,14 +271,6 @@ struct ReaderView: View {
             }
             .padding(4)
             .background(theme.surface, in: RoundedRectangle(cornerRadius: 8))
-            HStack(spacing: 8) {
-                outlined("Keep", "bookmark") {
-                    pendingState = nil
-                    if let e = currentEdition { generator.addFeedback("At \(pageState.timeOfDay.label) while \(pageState.motion.rawValue) I kept: \(e.density.rawValue), \(e.palette.rawValue), \(e.typeface.rawValue), \(effectiveFormat.rawValue)") }
-                }
-                outlined(isRegenerating ? "Regenerating…" : "Regenerate", "arrow.clockwise") { Task { await regenerate() } }
-                outlined("Not how I feel", "face.smiling") { showSignals = true }
-            }
             }
         }
         .padding(.horizontal, 16).padding(.top, 4).padding(.bottom, 6)
@@ -293,14 +295,24 @@ struct ReaderView: View {
         .buttonStyle(.plain)
     }
 
-    private func outlined(_ title: String, _ symbol: String, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            HStack(spacing: 6) { Image(systemName: symbol).font(.system(size: 12, weight: .semibold)); Text(title).font(Identity.grotesk(11, .semibold)).lineLimit(1).minimumScaleFactor(0.8) }
-                .frame(maxWidth: .infinity).frame(height: 40)
-                .overlay(RoundedRectangle(cornerRadius: 8).strokeBorder(theme.ink.opacity(0.25)))
-                .foregroundStyle(theme.ink)
+    private var isKept: Bool { bookmarks.contains(article) }
+
+    /// Keep: save the story. Also tells the generator what was kept so the taste model learns from it.
+    private func keep() {
+        let saving = !isKept
+        bookmarks.toggle(article)
+        guard saving else { return }
+        pendingState = nil
+        if let e = currentEdition { generator.addFeedback("At \(pageState.timeOfDay.label) while \(pageState.motion.rawValue) I kept: \(e.density.rawValue), \(e.palette.rawValue), \(e.typeface.rawValue), \(effectiveFormat.rawValue)") }
+    }
+
+    /// The bottom-left fab: one tap flips cards ↔ short.
+    private func flipFormat() {
+        withAnimation(.snappy(duration: 0.3)) {
+            let toText = effectiveFormat == .cards
+            if mode == .longform || mode == .original { mode = .adapted }
+            formatOverride = toText ? .text : .cards
         }
-        .buttonStyle(.plain)
     }
 
     /// The newsreader's confirmed change, or the reader's tap on the proposal card.
@@ -334,4 +346,13 @@ struct ReaderView: View {
         await generator.generate(article: article, intent: intentForMode, state: liveState, sources: feeds.enabledSources, force: true)
         isRegenerating = false
     }
+}
+
+/// The reader hides the navigation bar, which switches off the interactive back swipe. Put it back.
+extension UINavigationController: @retroactive UIGestureRecognizerDelegate {
+    override open func viewDidLoad() {
+        super.viewDidLoad()
+        interactivePopGestureRecognizer?.delegate = self
+    }
+    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool { viewControllers.count > 1 }
 }
