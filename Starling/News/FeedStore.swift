@@ -1,0 +1,94 @@
+import Foundation
+import Observation
+
+@Observable @MainActor
+final class FeedStore {
+    var enabledIDs: Set<String> {
+        didSet { UserDefaults.standard.set(Array(enabledIDs), forKey: "enabledFeeds") }
+    }
+    private(set) var articles: [Article] = []
+    private(set) var isLoading = false
+    private(set) var failedSourceIDs: Set<String> = []
+    private(set) var usedSnapshot = false
+    private(set) var lastRefresh: Date?
+
+    init() {
+        if let saved = UserDefaults.standard.array(forKey: "enabledFeeds") as? [String], !saved.isEmpty {
+            enabledIDs = Set(saved)
+        } else {
+            enabledIDs = FeedCatalog.defaultEnabled
+        }
+    }
+
+    var enabledSources: [FeedSource] { FeedCatalog.all.filter { enabledIDs.contains($0.id) } }
+
+    func toggle(_ source: FeedSource) {
+        if enabledIDs.contains(source.id) { enabledIDs.remove(source.id) } else { enabledIDs.insert(source.id) }
+        Task { await refresh() }
+    }
+
+    func refresh() async {
+        isLoading = true
+        defer { isLoading = false }
+        let sources = enabledSources
+        var collected: [Article] = []
+        var failed: Set<String> = []
+        await withTaskGroup(of: (String, [Article]?).self) { group in
+            for s in sources {
+                group.addTask {
+                    var req = URLRequest(url: s.url)
+                    req.timeoutInterval = 10
+                    req.setValue("Starling/1.0", forHTTPHeaderField: "User-Agent")
+                    guard let (data, _) = try? await URLSession.shared.data(for: req) else { return (s.id, nil) }
+                    let items = RSSParser.parse(data: data, sourceID: s.id)
+                    return (s.id, items.isEmpty ? nil : Array(items.prefix(12)))
+                }
+            }
+            for await (id, items) in group {
+                if let items { collected += items } else { failed.insert(id) }
+            }
+        }
+        // Snapshot fallback for anything that failed.
+        let snapshot = Snapshot.load()
+        usedSnapshot = false
+        for id in failed {
+            let fallback = snapshot.filter { $0.sourceID == id }
+            if !fallback.isEmpty { collected += fallback; usedSnapshot = true }
+        }
+        failedSourceIDs = failed
+        // Interleave by source so one feed doesn't dominate.
+        var bySource: [String: [Article]] = Dictionary(grouping: collected, by: \.sourceID)
+        var merged: [Article] = []
+        var seen: Set<String> = []
+        while !bySource.isEmpty {
+            for s in sources {
+                guard var list = bySource[s.id], !list.isEmpty else { bySource[s.id] = nil; continue }
+                let a = list.removeFirst()
+                bySource[s.id] = list
+                if seen.insert(a.id).inserted { merged.append(a) }
+            }
+        }
+        articles = merged
+        lastRefresh = .now
+    }
+
+    /// Ensure the body is loaded. Returns the article with body populated when possible.
+    func loadBody(for article: Article) async -> Article {
+        if let body = article.body, body.count >= 2 { return article }
+        var copy = article
+        let paras = await ArticleExtractor.fetchBody(for: article)
+        copy.body = paras.isEmpty ? [article.summary] : paras
+        if let idx = articles.firstIndex(where: { $0.id == article.id }) { articles[idx] = copy }
+        return copy
+    }
+}
+
+enum Snapshot {
+    static func load() -> [Article] {
+        guard let url = Bundle.main.url(forResource: "articles", withExtension: "json"),
+              let data = try? Data(contentsOf: url) else { return [] }
+        let dec = JSONDecoder()
+        dec.dateDecodingStrategy = .iso8601
+        return (try? dec.decode([Article].self, from: data)) ?? []
+    }
+}
