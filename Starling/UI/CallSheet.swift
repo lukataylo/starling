@@ -14,9 +14,17 @@ struct CallSheet: View {
     @State private var wave: [CGFloat] = Array(repeating: 0.2, count: 28)
     private let tick = Timer.publish(every: 0.12, on: .main, in: .common).autoconnect()
 
+    /// Only the tail of what's being said: the last sentence or two, never the whole narrative.
     private var latestAgentLine: String {
-        reader.transcript.last { $0.role == "newsreader" }?.text ?? ""
+        let full = reader.transcript.last { $0.role == "newsreader" }?.text ?? ""
+        let sentences = full.split(whereSeparator: { ".!?".contains($0) }).map { $0.trimmingCharacters(in: .whitespaces) }.filter { !$0.isEmpty }
+        guard !sentences.isEmpty else { return full }
+        var out = sentences.suffix(1).joined(separator: ". ")
+        if out.count < 60, sentences.count > 1 { out = sentences.suffix(2).joined(separator: ". ") }
+        if out.count > 150 { out = String(out.suffix(150)); if let sp = out.firstIndex(of: " ") { out = "…" + out[out.index(after: sp)...] } }
+        return out.hasSuffix(".") ? out : out + "."
     }
+    @State private var nearEar = false
     private var elapsed: String {
         let s = Int(now.timeIntervalSince(started)); return String(format: "%02d:%02d", s / 60, s % 60)
     }
@@ -44,7 +52,7 @@ struct CallSheet: View {
                     } else {
                         Text(latestAgentLine.isEmpty ? placeholder : latestAgentLine)
                             .font(Identity.grotesk(26, .semibold)).tracking(-0.8).lineSpacing(-1)
-                            .multilineTextAlignment(.center).lineLimit(5).minimumScaleFactor(0.7)
+                            .multilineTextAlignment(.center).lineLimit(4).minimumScaleFactor(0.75)
                             .contentTransition(.opacity)
                             .animation(.easeInOut(duration: 0.25), value: latestAgentLine)
                     }
@@ -80,7 +88,17 @@ struct CallSheet: View {
                 return max(0.05, min(1, CGFloat.random(in: 0...1) * energy * centre + 0.05))
             }
         }
-        .onAppear { started = .now; try? AVAudioSession.sharedInstance().overrideOutputAudioPort(.speaker) }
+        .onAppear {
+            started = .now
+            try? AVAudioSession.sharedInstance().overrideOutputAudioPort(.speaker)
+            // Like the Phone app: the proximity sensor darkens the screen and routes audio to the earpiece against your head.
+            UIDevice.current.isProximityMonitoringEnabled = true
+        }
+        .onDisappear { UIDevice.current.isProximityMonitoringEnabled = false }
+        .onReceive(NotificationCenter.default.publisher(for: UIDevice.proximityStateDidChangeNotification)) { _ in
+            nearEar = UIDevice.current.proximityState
+            try? AVAudioSession.sharedInstance().overrideOutputAudioPort(nearEar ? .none : (speaker ? .speaker : .none))
+        }
         .onChange(of: reader.callState) { _, s in if s == .ended { dismiss() } }
     }
 
