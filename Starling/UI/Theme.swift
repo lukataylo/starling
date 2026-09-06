@@ -182,14 +182,14 @@ struct StatePill: View {
                         Text(seg.text).font(Identity.grotesk(12, .semibold)).tracking(-0.2).lineLimit(1).strikethrough(seg.struck)
                     }
                     .padding(.horizontal, 10).padding(.vertical, 8)
-                    if i < segs.count - 1 { Rectangle().fill(Identity.ink).frame(width: 1.2).padding(.vertical, 5) }
+                    if i < segs.count - 1 { Rectangle().fill(Identity.ink).frame(width: 1.2, height: 18) }
                 }
                 if badge { Circle().fill(Identity.ink).frame(width: 6, height: 6).padding(.trailing, 10) }
             }
             .background(Identity.acid, in: Capsule())
             .overlay(Capsule().strokeBorder(Identity.ink, lineWidth: 1.2))
             .foregroundStyle(Identity.ink)
-            .fixedSize(horizontal: true, vertical: false)
+            .fixedSize()
         }
         .buttonStyle(.plain)
         .allowsHitTesting(devMode)
