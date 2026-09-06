@@ -1,5 +1,6 @@
 import SwiftUI
 import AVFoundation
+import LiveKit
 
 /// The call: full acid-green screen, timer, Starling wordmark, the story, the bird, what's being said, a waveform, and Speaker / End / Mute.
 struct CallSheet: View {
@@ -90,14 +91,14 @@ struct CallSheet: View {
         }
         .onAppear {
             started = .now
-            try? AVAudioSession.sharedInstance().overrideOutputAudioPort(.speaker)
+            AudioManager.shared.isSpeakerOutputPreferred = true
             // Like the Phone app: the proximity sensor darkens the screen and routes audio to the earpiece against your head.
             UIDevice.current.isProximityMonitoringEnabled = true
         }
         .onDisappear { UIDevice.current.isProximityMonitoringEnabled = false }
         .onReceive(NotificationCenter.default.publisher(for: UIDevice.proximityStateDidChangeNotification)) { _ in
             nearEar = UIDevice.current.proximityState
-            try? AVAudioSession.sharedInstance().overrideOutputAudioPort(nearEar ? .none : (speaker ? .speaker : .none))
+            AudioManager.shared.isSpeakerOutputPreferred = nearEar ? false : speaker
         }
         .onChange(of: reader.callState) { _, s in if s == .ended { dismiss() } }
     }
@@ -132,7 +133,7 @@ struct CallSheet: View {
 
     private func toggleSpeaker() {
         speaker.toggle()
-        try? AVAudioSession.sharedInstance().overrideOutputAudioPort(speaker ? .speaker : .none)
+        AudioManager.shared.isSpeakerOutputPreferred = speaker
     }
 
     private func callButton(_ title: String, _ symbol: String, fill: Color, size: CGFloat = 72, action: @escaping () -> Void) -> some View {

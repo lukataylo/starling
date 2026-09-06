@@ -10,6 +10,7 @@ struct SettingsView: View {
     @AppStorage("apiKeyOverride") private var keyOverride = ""
     @AppStorage("modelOverride") private var modelOverride = ""
     @AppStorage("elevenAgentID") private var elevenAgentID = ""
+    @AppStorage("readerName") private var readerName = ""
     @AppStorage("devMode") private var devMode = false
     @AppStorage(Appearance.key) private var appearance = Appearance.system.rawValue
     @State private var useClockOverride = false
@@ -46,6 +47,7 @@ struct SettingsView: View {
                         .autocorrectionDisabled().textInputAutocapitalization(.never)
                 }
                 Section {
+                    TextField("Your name (the newsreader greets you)", text: $readerName)
                     TextField("Agent ID (blank = bundled)", text: $elevenAgentID).autocorrectionDisabled().textInputAutocapitalization(.never)
                     Text(Newsreader.apiKey == nil ? "No ElevenLabs key bundled." : "ElevenLabs key bundled. Bundled agent: \((Bundle.main.infoDictionary?["ELEVENLABS_AGENT_ID"] as? String ?? "none").prefix(12))…").font(.caption).foregroundStyle(.secondary)
                 } header: { Text("Newsreader (ElevenLabs)") } footer: { Text("Tap the phone in a story to call the newsreader. It only knows the story it was handed and asks before changing what's on screen.") }

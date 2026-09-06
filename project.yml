@@ -21,6 +21,9 @@ packages:
   ElevenLabs:
     url: https://github.com/elevenlabs/elevenlabs-swift-sdk
     from: "2.0.0"
+  LiveKit:
+    url: https://github.com/livekit/client-sdk-swift.git
+    from: "2.0.0"
 targets:
   Starling:
     type: application
@@ -32,6 +35,7 @@ targets:
     dependencies:
       - target: StarlingWatch
       - package: ElevenLabs
+      - package: LiveKit
     entitlements:
       path: Starling/Starling.entitlements
       properties:

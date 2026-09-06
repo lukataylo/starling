@@ -64,7 +64,9 @@ final class Newsreader {
         }
         guard let narrative = narratives[article.id] else { callState = .failed("Couldn't author the story for voice."); return }
         callState = .connecting
+        let name = (UserDefaults.standard.string(forKey: "readerName") ?? "").trimmingCharacters(in: .whitespaces)
         let vars: [String: String] = [
+            "listener_name": name.isEmpty ? "there" : name,
             "headline": article.title,
             "source": FeedCatalog.source(article.sourceID)?.name ?? "",
             "state_summary": "\(state.label.rawValue), \(state.timeOfDay.label), \(state.motion.rawValue)",
