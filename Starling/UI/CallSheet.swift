@@ -27,7 +27,7 @@ struct CallSheet: View {
                 .ignoresSafeArea()
             VStack(spacing: 0) {
                 Text(elapsed).font(Identity.grotesk(17, .medium)).padding(.top, 14)
-                Text("Starling").font(Identity.grotesk(56, .semibold)).tracking(-2.5).padding(.top, 6)
+                Text("Starling").font(Identity.grotesk(58, .semibold)).tracking(-2.8).padding(.top, 4)
                 Text(article.title).font(Identity.grotesk(17, .medium)).multilineTextAlignment(.center).lineLimit(2).padding(.horizontal, 32).padding(.top, 2)
                 Text(subtitle).font(Identity.grotesk(17, .medium)).opacity(0.85).padding(.top, 2)
                 Spacer(minLength: 10)
@@ -81,9 +81,7 @@ struct CallSheet: View {
             }
         }
         .onAppear { started = .now; try? AVAudioSession.sharedInstance().overrideOutputAudioPort(.speaker) }
-        .presentationDetents([.large])
-        .presentationDragIndicator(.hidden)
-        .interactiveDismissDisabled(reader.callState == .live || reader.callState == .connecting)
+        .onChange(of: reader.callState) { _, s in if s == .ended { dismiss() } }
     }
 
     private var subtitle: String {

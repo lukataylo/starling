@@ -95,7 +95,7 @@ struct ReaderView: View {
         .safeAreaInset(edge: .bottom) { dock }
         .sheet(isPresented: $showWhy) { WhyThisSheet(article: article, edition: currentEdition) }
         .sheet(isPresented: $showCompare) { CompareView(article: article) }
-        .sheet(isPresented: $showCall) { CallSheet(article: article, theme: theme, onApply: { applyVersion($0) }) }
+        .fullScreenCover(isPresented: $showCall) { CallSheet(article: article, theme: theme, onApply: { applyVersion($0) }) }
         .sheet(isPresented: $showSignals) {
             SignalSheet(theme: theme, mode: $mode, edition: currentEdition,
                         format: Binding(get: { effectiveFormat }, set: { formatOverride = $0 }),
@@ -158,7 +158,6 @@ struct ReaderView: View {
                 ScrollView {
                     VStack(spacing: 0) {
                         if mode == .longform || (e.resolvedLayout == .article && mode != .adapted) {
-                            articleSwitcher
                             ArticleView(edition: e, article: article, hero: heroImage)
                         } else {
                             ShortEditionView(edition: e, article: article, hero: heroImage,
