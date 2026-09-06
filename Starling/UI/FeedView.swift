@@ -31,7 +31,8 @@ struct FeedView: View {
             .sheet(isPresented: $showSignals) { SignalSheet(theme: theme) }
             .task { if feeds.articles.isEmpty { await feeds.refresh() } }
             .onChange(of: feeds.enabledIDs, initial: true) { _, ids in generator.sourceSignature = ids.sorted().joined(separator: ",") }
-            .onChange(of: feeds.lastRefresh) { _, _ in prefetch(); feeds.articles.prefix(12).forEach { heroes.load($0.imageURL) } }
+            .onChange(of: feeds.lastRefresh) { _, _ in prefetch(); feeds.articles.prefix(16).forEach { heroes.load($0.imageURL) } }
+            .onChange(of: feeds.articles.count) { _, _ in prefetch(); feeds.articles.forEach { heroes.load($0.imageURL) } }
             .onChange(of: hub.phase) { _, p in if p == .live { prefetch() } }
             .onChange(of: hub.state.bucket) { _, _ in prefetch() }
             .onChange(of: hub.state.bucket, initial: true) { _, _ in
@@ -157,6 +158,11 @@ struct TileHome: View {
                                 }
                             }
                             if i + 3 < a.count { NavigationLink(value: a[i + 3]) { WideTile(article: a[i + 3]) }.buttonStyle(.plain) }
+                        }
+                        if feeds.hasMore {
+                            HStack(spacing: 8) { ProgressView().tint(theme.ink); Text("MORE STORIES").font(Identity.grotesk(10, .bold)).tracking(1.5) }
+                                .frame(maxWidth: .infinity).padding(.vertical, 18).foregroundStyle(theme.secondary)
+                                .onAppear { feeds.loadMore() }
                         }
                     }
                     .padding(.horizontal, 12).padding(.top, 14)

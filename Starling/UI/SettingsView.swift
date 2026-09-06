@@ -9,6 +9,7 @@ struct SettingsView: View {
     @Environment(ImageGenerator.self) private var imageGen
     @AppStorage("apiKeyOverride") private var keyOverride = ""
     @AppStorage("modelOverride") private var modelOverride = ""
+    @AppStorage("elevenAgentID") private var elevenAgentID = ""
     @State private var useClockOverride = false
     @State private var clock = Date()
 
@@ -34,6 +35,10 @@ struct SettingsView: View {
                     TextField("Model (blank = \(LLMClient.defaultModel))", text: $modelOverride)
                         .autocorrectionDisabled().textInputAutocapitalization(.never)
                 }
+                Section {
+                    TextField("Agent ID (blank = bundled)", text: $elevenAgentID).autocorrectionDisabled().textInputAutocapitalization(.never)
+                    Text(Newsreader.apiKey == nil ? "No ElevenLabs key bundled." : "ElevenLabs key bundled. Bundled agent: \((Bundle.main.infoDictionary?["ELEVENLABS_AGENT_ID"] as? String ?? "none").prefix(12))…").font(.caption).foregroundStyle(.secondary)
+                } header: { Text("Newsreader (ElevenLabs)") } footer: { Text("Tap the phone in a story to call the newsreader. It only knows the story it was handed and asks before changing what's on screen.") }
                 Section {
                     Toggle("Pre-generate overnight", isOn: Binding(get: { overnight.isEnabled }, set: { overnight.isEnabled = $0 }))
                     Button(overnight.isRunning ? "Running…" : "Run now") {

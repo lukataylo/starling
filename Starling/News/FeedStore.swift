@@ -7,6 +7,14 @@ final class FeedStore {
         didSet { UserDefaults.standard.set(Array(enabledIDs), forKey: "enabledFeeds.v2") }
     }
     private(set) var articles: [Article] = []
+    /// All parsed items, beyond the visible window; `loadMore()` reveals more as the reader scrolls.
+    private var reserve: [Article] = []
+    var hasMore: Bool { !reserve.isEmpty }
+    func loadMore(_ n: Int = 8) {
+        guard !reserve.isEmpty else { return }
+        let chunk = Array(reserve.prefix(n)); reserve.removeFirst(chunk.count)
+        articles += chunk
+    }
     private(set) var isLoading = false
     private(set) var failedSourceIDs: Set<String> = []
     private(set) var usedSnapshot = false
@@ -50,7 +58,7 @@ final class FeedStore {
                     req.setValue("Starling/1.0", forHTTPHeaderField: "User-Agent")
                     guard let (data, _) = try? await URLSession.shared.data(for: req) else { return (s.id, nil) }
                     let items = RSSParser.parse(data: data, sourceID: s.id)
-                    return (s.id, items.isEmpty ? nil : Array(items.prefix(12)))
+                    return (s.id, items.isEmpty ? nil : Array(items.prefix(60)))
                 }
             }
             for await (id, items) in group {
@@ -78,7 +86,9 @@ final class FeedStore {
             }
         }
         let featuredSet = featuredIDs
-        articles = featured + merged.filter { !featuredSet.contains($0.id) }
+        let all = featured + merged.filter { !featuredSet.contains($0.id) }
+        articles = Array(all.prefix(16))
+        reserve = Array(all.dropFirst(16))
         lastRefresh = .now
     }
 

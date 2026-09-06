@@ -9,6 +9,7 @@ struct StarlingApp: App {
     @State private var imageGen = ImageGenerator()
     @State private var rules = StateRules()
     @State private var overnight = OvernightPregen()
+    @State private var newsreader = Newsreader()
     @Environment(\.scenePhase) private var scenePhase
 
     var body: some Scene {
@@ -21,6 +22,7 @@ struct StarlingApp: App {
                 .environment(imageGen)
                 .environment(rules)
                 .environment(overnight)
+                .environment(newsreader)
                 .task {
                     generator.rulesTextProvider = { [rules] s in rules.promptText(for: s) }
                     generator.rulesSignature = rules.signature

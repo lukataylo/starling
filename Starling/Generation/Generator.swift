@@ -96,10 +96,10 @@ final class Generator {
         guard LLMClient.apiKey != nil else { return }
         let intents: [GenerationIntent] = [.adapt, .preset(.calm), .preset(.focused), .preset(.commute)]
         let live = articles.filter { self.bundledEditions[$0.id] == nil }
-        for a in live.prefix(5) {
+        for (li, a) in live.prefix(12).enumerated() {
             Task {
                 let full = await feeds.loadBody(for: a)
-                for intent in intents {
+                for intent in (li < 5 ? intents : [.adapt]) {
                     let k = self.key(full, intent, state)
                     if self.editions[k] == nil && self.inflight[k] == nil {
                         _ = await self.generate(article: full, intent: intent, state: state, sources: sources)
@@ -107,7 +107,7 @@ final class Generator {
                     if let images, let e = self.edition(for: full, intent: intent, state: state) {
                         let m: String = [.calm, .dusk, .night, .dawn].contains(e.palette) ? "calm" : mood
                         let idx = articles.firstIndex(where: { $0.id == a.id }) ?? 99
-                        if intent == .adapt || idx < 2 {
+                        if (intent == .adapt && li < 6) || idx < 2 {
                             for p in CardsRenderer.posterPrompts(edition: e, article: full, mood: m) { if let p { images.request(prompt: p, mood: m) } }
                         }
                         for b in e.blocks where b.type == .imageCard {

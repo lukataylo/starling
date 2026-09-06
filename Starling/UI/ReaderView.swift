@@ -7,6 +7,7 @@ struct ReaderView: View {
     @Environment(Generator.self) private var generator
     @Environment(SignalHub.self) private var hub
     @Environment(HeroImageStore.self) private var heroes
+    @Environment(Newsreader.self) private var newsreader
     @Environment(\.dismiss) private var dismiss
     @State var article: Article
     @State private var bodyLoaded = false
@@ -20,6 +21,7 @@ struct ReaderView: View {
     @State private var formatOverride: EditionFormat?
     @State private var cardPage = 0
     @State private var dockExpanded = true
+    @State private var showCall = false
     private let stableAfter: TimeInterval = 5
 
     private var liveState: UserState { hub.state }
@@ -62,8 +64,12 @@ struct ReaderView: View {
                 RoundIconButton(symbol: "chevron.left", theme: theme) { dismiss() }
                 StatePill(theme: theme, badge: pendingChange != nil, suffix: currentEdition.map { $0.density == .glance || $0.density == .brief ? "Short edition" : "Article" }) { showSignals = true }
                 Spacer()
-                RoundIconButton(symbol: "rectangle.split.2x1", theme: theme) { showCompare = true }
+                RoundIconButton(symbol: "phone.fill", theme: theme, filled: newsreader.callState == .live) {
+                    showCall = true
+                    if newsreader.callState != .live { Task { await newsreader.startCall(article: article, state: liveState, currentVersion: modeTitle, sources: feeds.enabledSources) } }
+                }
                 Menu {
+                    Button { showCompare = true } label: { Label("Compare generations", systemImage: "rectangle.split.2x1") }
                     Button { mode = .original } label: { Label("Original article", systemImage: "doc.plaintext") }
                     Button { Task { await regenerate() } } label: { Label("Regenerate for now", systemImage: "arrow.clockwise") }
                     Button { showWhy = true } label: { Label("Why this version", systemImage: "info.circle") }
@@ -83,6 +89,7 @@ struct ReaderView: View {
         .safeAreaInset(edge: .bottom) { dock }
         .sheet(isPresented: $showWhy) { WhyThisSheet(article: article, edition: currentEdition) }
         .sheet(isPresented: $showCompare) { CompareView(article: article) }
+        .sheet(isPresented: $showCall) { CallSheet(article: article, theme: theme, onApply: { applyVersion($0) }) }
         .sheet(isPresented: $showSignals) {
             SignalSheet(theme: theme, mode: $mode, edition: currentEdition,
                         format: Binding(get: { effectiveFormat }, set: { formatOverride = $0 }),
@@ -101,6 +108,10 @@ struct ReaderView: View {
             article = await feeds.loadBody(for: article)
             heroes.load(article.imageURL)
             bodyLoaded = true
+            // Stage 1 of the voice pipeline starts the moment the story opens, so tapping Call is only the handshake.
+            newsreader.author(article: article, sources: feeds.enabledSources)
+            newsreader.onApplyVersion = { kind in applyVersion(kind) }
+            if newsreader.callState == .live { await newsreader.moveTo(article: article, currentVersion: modeTitle) }
             shownState = liveState
             await generator.generate(article: article, intent: .adapt, state: liveState, sources: feeds.enabledSources)
         }
@@ -290,6 +301,17 @@ struct ReaderView: View {
                 .foregroundStyle(theme.ink)
         }
         .buttonStyle(.plain)
+    }
+
+    /// The newsreader's confirmed change, or the reader's tap on the proposal card.
+    private func applyVersion(_ kind: String) {
+        switch kind {
+        case "cards": if mode == .longform || mode == .original { mode = .adapted }; formatOverride = .cards
+        case "short", "text", "brief": if mode == .longform || mode == .original { mode = .adapted }; formatOverride = .text
+        case "adapted", "full", "longform", "article": mode = .longform
+        case "original": mode = .original
+        default: break
+        }
     }
 
     // MARK: actions

@@ -24,6 +24,10 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>ELEVENLABS_AGENT_ID</key>
+	<string>$(ELEVENLABS_AGENT_ID)</string>
+	<key>ELEVENLABS_API_KEY</key>
+	<string>$(ELEVENLABS_API_KEY)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>NSAppTransportSecurity</key>
@@ -35,6 +39,8 @@
 	<string>Starling uses the front camera to estimate your attention and pulse so it can adapt the article to you. Camera frames never leave the device.</string>
 	<key>NSHealthShareUsageDescription</key>
 	<string>Starling reads your heart rate from Apple Watch to sense how calm or tense you are while reading.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Starling uses the microphone so you can talk to the newsreader.</string>
 	<key>NSMotionUsageDescription</key>
 	<string>Starling uses motion to know whether you're sitting, walking or lying down.</string>
 	<key>OPENAI_API_KEY</key>

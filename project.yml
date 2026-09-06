@@ -17,6 +17,10 @@ settings:
     ENABLE_USER_SCRIPT_SANDBOXING: NO
     TARGETED_DEVICE_FAMILY: "1"
     IPHONEOS_DEPLOYMENT_TARGET: "18.0"
+packages:
+  ElevenLabs:
+    url: https://github.com/elevenlabs/elevenlabs-swift-sdk
+    from: "2.0.0"
 targets:
   Starling:
     type: application
@@ -27,6 +31,7 @@ targets:
           - "**/.DS_Store"
     dependencies:
       - target: StarlingWatch
+      - package: ElevenLabs
     entitlements:
       path: Starling/Starling.entitlements
       properties:
@@ -48,6 +53,9 @@ targets:
         NSAppTransportSecurity:
           NSAllowsArbitraryLoads: true
         OPENAI_API_KEY: "$(OPENAI_API_KEY)"
+        ELEVENLABS_API_KEY: "$(ELEVENLABS_API_KEY)"
+        ELEVENLABS_AGENT_ID: "$(ELEVENLABS_AGENT_ID)"
+        NSMicrophoneUsageDescription: "Starling uses the microphone so you can talk to the newsreader."
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.lukadadiani.starling
