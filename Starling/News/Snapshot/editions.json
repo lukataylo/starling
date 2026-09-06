@@ -1,4 +1,897 @@
 {
+  "https:\/\/arstechnica.com\/gadgets\/2026\/09\/nearly-impossible-how-fairphone-built-the-ethical-repairable-fairphone-gen-6\/" : {
+    "longform" : {
+      "accent" : "sage",
+      "blocks" : [
+        {
+          "text" : "Nearly impossible? How Fairphone built the ethical, repairable Fairphone Gen 6+",
+          "type" : "headline"
+        },
+        {
+          "text" : "Fairphone’s $650 Gen 6+ trades some conventional smartphone refinement for a longer life, easier repairs, and a stronger claim that owners should be able to fully own their devices.",
+          "type" : "dek"
+        },
+        {
+          "caption" : "A phone designed to be opened, not discarded.",
+          "imagePrompt" : "Show a Fairphone Gen 6+ opened on a workbench, with its battery and modular components beside a small screwdriver; label only “replaceable parts.”",
+          "symbol" : "wrench.and.screwdriver",
+          "type" : "imageCard"
+        },
+        {
+          "text" : "Smartphone longevity once seemed like a problem for someone else. Before a phone could be worn out or broken, there was usually a newer, shinier model waiting to replace it. That cycle has changed. People now expect their smartphones to go the distance, even as the devices themselves have become less repairable and, in many cases, more fragile.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Fairphone, a Dutch smartphone maker that has just entered the US market, is built around a different premise. Its new $650 Fairphone Gen 6+ is designed for longevity and easy repairability rather than treating the phone as a sealed object whose useful life ends when one component fails.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Fairphone’s goal is to provide a compelling mobile experience while enabling the user to “fully own” their device.",
+          "type" : "pullQuote"
+        },
+        {
+          "text" : "That approach comes with visible trade-offs. The Gen 6+ is aimed at buyers accustomed to the standard glass-and-aluminum sandwich: a slim, tightly sealed device held together with glue, gaskets, and tiny screws. A phone designed to be opened and repaired cannot simply optimize for the same priorities. Its differences are part of the design, not an accidental compromise.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The question is whether those drawbacks matter more than the years they might buy. Fairphone’s argument is not that every buyer should reject conventional phones, but that repairability can be a meaningful part of the mobile experience for the right person. If a battery, screen, or other component needs attention, the owner should have a practical route to fixing the device instead of facing an expensive repair—or replacing the phone outright.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "That argument arrives as software support has become less of a limiting factor. Google, Samsung, and Apple now support phones with software updates for the better part of a decade. The remaining uncertainty is physical: will the hardware last that long, and what happens when it needs a repair? Long software support is useful only if the device can remain usable underneath it.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Fairphone prioritizes the self-repair experience as its answer. The company’s chief technology officer, Chandler Hatton, told Ars that Fairphone wants to combine a compelling mobile experience with the ability for users to “fully own” their devices. That formulation captures the company’s broader bet: ownership should include more than possession. It should include a meaningful ability to maintain the product over time.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Whether the Gen 6+ makes that bet worthwhile depends on what a buyer values. Someone seeking the thinnest, most tightly sealed phone may prefer the familiar glass-and-aluminum formula. Someone more concerned with keeping a phone working for years may view Fairphone’s compromises as an exchange rather than a defect. The device does not erase the tensions between durability, design, cost, and repair; it makes them harder to ignore.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Fairphone’s $650 Gen 6+ treats repairability as a core smartphone feature. Its promise is not frictionless perfection, but a device that gives owners a better chance of keeping hardware useful alongside long software support.",
+          "type" : "takeaway"
+        }
+      ],
+      "density" : "longform",
+      "estimatedReadSeconds" : 240,
+      "format" : "text",
+      "headlineWeight" : "regular",
+      "layout" : "article",
+      "margins" : "wide",
+      "pace" : "scroll",
+      "palette" : "dusk",
+      "posterHeadline" : "Fairphone Makes Repairable Phones",
+      "rationale" : "You are settled in for the evening, so this long, serif-led edition gives the repair argument room to unfold without rushing you.",
+      "stateSummary" : "reclined, evening, calm and attentive",
+      "tone" : "reflective",
+      "typeScale" : "regular",
+      "typeface" : "serif"
+    },
+    "preset:calm" : {
+      "accent" : "sage",
+      "blocks" : [
+        {
+          "text" : "Fairphone bets on repairable longevity",
+          "type" : "headline"
+        },
+        {
+          "text" : "The $650 Gen 6+ trades some conventional phone polish for easier repairs and longer ownership.",
+          "type" : "dek"
+        },
+        {
+          "caption" : "Price of the Fairphone Gen 6+",
+          "text" : "$650",
+          "type" : "stat"
+        },
+        {
+          "items" : [
+            "THE IDEA — Fairphone designs the Gen 6+ so owners can repair it themselves.",
+            "THE TRADE-OFF — Repairability means departing from glued glass-and-aluminum construction.",
+            "THE MARKET — Fairphone has now entered the US smartphone market.",
+            "THE QUESTION — Durable hardware must match the nearly decade-long software support many rivals offer."
+          ],
+          "type" : "keyFacts"
+        },
+        {
+          "text" : "Modern smartphones increasingly receive software updates for years, but their physical construction can make repairs difficult or expensive. Fairphone’s approach treats ownership as more than continued software support: it aims to let users keep the hardware working, too.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The Gen 6+ is not a claim that repairability has no costs. It is Fairphone’s attempt to make long-term ownership a practical feature rather than an afterthought.",
+          "type" : "takeaway"
+        }
+      ],
+      "density" : "brief",
+      "estimatedReadSeconds" : 60,
+      "format" : "text",
+      "headlineWeight" : "semibold",
+      "layout" : "quick",
+      "margins" : "normal",
+      "pace" : "scroll",
+      "palette" : "dusk",
+      "posterHeadline" : "Fairphone bets on repairability",
+      "rationale" : "You are calm and reclined this evening, so this brief edition uses a clear, lightly literary structure that explains the repair trade-offs without overselling them.",
+      "stateSummary" : "reclined, evening, calm",
+      "tone" : "reflective",
+      "typeScale" : "regular",
+      "typeface" : "serif"
+    },
+    "preset:focused" : {
+      "accent" : "slate",
+      "blocks" : [
+        {
+          "text" : "Fairphone bets on repairable longevity",
+          "type" : "headline"
+        },
+        {
+          "text" : "The $650 Gen 6+ trades some conventional smartphone design for easier self-repair and longer ownership.",
+          "type" : "dek"
+        },
+        {
+          "caption" : "Price of the Fairphone Gen 6+",
+          "text" : "$650",
+          "type" : "stat"
+        },
+        {
+          "items" : [
+            "THE IDEA — Fairphone designs the phone so owners can repair more of it themselves.",
+            "THE TRADE-OFF — Repairability means departing from glued glass-and-aluminum smartphone designs.",
+            "THE CONTEXT — Modern phones may receive software updates for nearly a decade, but hardware can fail sooner.",
+            "THE GOAL — Fairphone says users should be able to fully own their devices, not depend entirely on costly repairs."
+          ],
+          "type" : "keyFacts"
+        },
+        {
+          "text" : "Fairphone has entered the US market with a different answer to smartphone longevity. Instead of treating repair as an afterthought, the Dutch company makes self-repair a central part of the Gen 6+ design. That can mean accepting compromises compared with thinner, more tightly sealed phones, but it may extend the useful life of the hardware.",
+          "type" : "paragraph"
+        }
+      ],
+      "density" : "brief",
+      "estimatedReadSeconds" : 60,
+      "format" : "text",
+      "headlineWeight" : "semibold",
+      "layout" : "dossier",
+      "margins" : "normal",
+      "pace" : "scroll",
+      "palette" : "focus",
+      "posterHeadline" : "Fairphone bets on repair",
+      "rationale" : "You are focused and stationary this morning, so a compact dossier keeps the technical trade-offs clear without sacrificing the key evidence.",
+      "stateSummary" : "focused, stationary, morning",
+      "tone" : "brisk",
+      "typeScale" : "regular",
+      "typeface" : "sans"
+    }
+  },
+  "https:\/\/arstechnica.com\/gaming\/2026\/09\/valve-secretly-leaked-a-left-4-dead-2-trailer-to-dodge-the-esrb\/" : {
+    "longform" : {
+      "accent" : "slate",
+      "blocks" : [
+        {
+          "text" : "A ratings board wouldn’t let Valve release a trailer. It “leaked” it instead.",
+          "type" : "headline"
+        },
+        {
+          "text" : "A 17-year-old Left 4 Dead 2 mystery has an explanation: Valve reportedly staged the trailer’s leak after the ESRB blocked its official release.",
+          "type" : "dek"
+        },
+        {
+          "text" : "Back in 2009, Ars Technica wrote about what was being reported as a leaked trailer for the then-upcoming Left 4 Dead 2. The footage looked, as Ars put it at the time, “like it’s straight from a high-gloss action movie.”",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Today, that story needs an important update. The trailer was not an accidental leak. Valve orchestrated it itself.",
+          "type" : "paragraph"
+        },
+        {
+          "caption" : "The “leak” was a release workaround.",
+          "imagePrompt" : "A simple timeline showing 2009’s reported trailer leak leading to 2026’s confirmation, with Left 4 Dead 2 and ESRB labels.",
+          "symbol" : "film",
+          "type" : "imageCard"
+        },
+        {
+          "text" : "The explanation comes from former Valve writer Chet Faliszek, who discussed cut lines from the game in a newly posted video. Referring to Valve’s dealings with the ESRB, he said: “for Left 4 Dead 2 with the ESRB... we leaked our trailer ahead of time because they wouldn't let us release the trailer.”",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "“We leaked our trailer ahead of time because they wouldn't let us release the trailer.”",
+          "type" : "pullQuote"
+        },
+        {
+          "text" : "Faliszek’s comment identifies the ratings board as the reason for the maneuver. The Entertainment Software Rating Board is a self-regulating industry group that has, since 1994, offered age-appropriateness ratings for thousands of games submitted to it.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Those ratings have not always seemed especially reliable or consistent. The ESRB’s judgments have sometimes been questionable, even as the board became a standard checkpoint for game publishers seeking to distribute their work through major retailers.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "At the time, the commercial stakes were more direct than they are for many developers today. A publisher that wanted space on major retailers’ shelves needed to submit to the ESRB’s standards.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "That requirement helps explain why Valve would not simply bypass the board. Many smaller or online-focused game makers skip ratings these days, but Left 4 Dead 2 arrived in a period when retail distribution made the ESRB difficult to avoid.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "So the old trailer’s apparent leak was a workaround: Valve could put the footage in public circulation without releasing it through the channel the ESRB had blocked. What looked like unauthorized distribution was, according to Faliszek, a deliberate piece of release strategy.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The 2009 Left 4 Dead 2 trailer leak was staged by Valve after the ESRB would not allow an official release, turning a ratings obstacle into a publicity workaround.",
+          "type" : "takeaway"
+        }
+      ],
+      "density" : "longform",
+      "estimatedReadSeconds" : 180,
+      "format" : "text",
+      "headlineWeight" : "regular",
+      "layout" : "article",
+      "margins" : "wide",
+      "pace" : "scroll",
+      "palette" : "dusk",
+      "posterHeadline" : "Valve Staged The Trailer Leak",
+      "rationale" : "You are settled in for a full evening read, so this preserves the complete account in a calm, literary layout with room to explain the ratings mechanism.",
+      "stateSummary" : "reclined, calm evening, focused",
+      "tone" : "reflective",
+      "typeScale" : "regular",
+      "typeface" : "serif"
+    },
+    "preset:calm" : {
+      "accent" : "plum",
+      "blocks" : [
+        {
+          "text" : "Valve secretly leaked Left 4 Dead 2 trailer",
+          "type" : "headline"
+        },
+        {
+          "text" : "A former Valve writer says the studio released the footage unofficially after the ESRB blocked its planned trailer.",
+          "type" : "dek"
+        },
+        {
+          "caption" : "The original trailer report",
+          "text" : "2009",
+          "type" : "stat"
+        },
+        {
+          "items" : [
+            "THE SOURCE — Former Valve writer Chet Faliszek disclosed the plan.",
+            "THE OBSTACLE — The ESRB would not approve the trailer for release.",
+            "THE MECHANISM — Valve made the footage appear to leak instead.",
+            "THE CONTEXT — Retail distribution then depended on ESRB ratings."
+          ],
+          "type" : "keyFacts"
+        },
+        {
+          "text" : "In 2009, Ars Technica described footage from the upcoming Left 4 Dead 2 as resembling a high-gloss action movie. The report treated it as a leak. Seventeen years later, Faliszek says Valve orchestrated it.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The “leak” was not a security failure; it was Valve’s workaround for a blocked marketing release.",
+          "type" : "takeaway"
+        }
+      ],
+      "density" : "brief",
+      "estimatedReadSeconds" : 60,
+      "format" : "text",
+      "headlineWeight" : "black",
+      "layout" : "zine",
+      "margins" : "normal",
+      "pace" : "scroll",
+      "palette" : "dusk",
+      "posterHeadline" : "Valve staged the trailer leak",
+      "rationale" : "You are settled in for an evening read, so the dark zine treatment gives this compact correction a distinctive, easy-to-follow briefing without overstating the story.",
+      "stateSummary" : "reclined, calm, evening",
+      "tone" : "reflective",
+      "typeScale" : "regular",
+      "typeface" : "serif"
+    },
+    "preset:focused" : {
+      "accent" : "slate",
+      "blocks" : [
+        {
+          "text" : "Valve Orchestrated Left 4 Dead 2 Trailer Leak",
+          "type" : "headline"
+        },
+        {
+          "text" : "A former Valve writer says the company leaked its trailer after the ESRB blocked an official release.",
+          "type" : "dek"
+        },
+        {
+          "caption" : "The original trailer report",
+          "text" : "2009",
+          "type" : "stat"
+        },
+        {
+          "items" : [
+            "THE REVELATION — Chet Faliszek disclosed the staged leak in a newly posted video.",
+            "THE BARRIER — The ESRB would not let Valve release the trailer officially.",
+            "THE SYSTEM — Retail shelf space required publishers to submit games for ESRB ratings at the time.",
+            "THE UPDATE — Ars originally described the footage as a reported leak 17 years ago."
+          ],
+          "type" : "keyFacts"
+        },
+        {
+          "text" : "Valve’s workaround reflects the commercial importance of ratings in 2009. Publishers seeking space in major retailers generally had to submit games to the ESRB, though many smaller and online-focused developers now avoid the process.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Read the full Ars Technica story",
+          "type" : "readFullPrompt"
+        }
+      ],
+      "density" : "brief",
+      "estimatedReadSeconds" : 60,
+      "format" : "text",
+      "headlineWeight" : "semibold",
+      "layout" : "poster",
+      "margins" : "normal",
+      "pace" : "scroll",
+      "palette" : "day",
+      "posterHeadline" : "Valve Staged the Trailer Leak",
+      "rationale" : "You are focused and stationary this morning, so a compact poster briefing puts the newly revealed mechanism and its timeline in view immediately.",
+      "stateSummary" : "focused, stationary, morning",
+      "tone" : "brisk",
+      "typeScale" : "regular",
+      "typeface" : "sans"
+    }
+  },
+  "https:\/\/arstechnica.com\/gaming\/2026\/09\/xbox-imposes-harsh-new-time-limits-for-game-pass-game-streaming\/" : {
+    "longform" : {
+      "accent" : "slate",
+      "blocks" : [
+        {
+          "text" : "Xbox imposes harsh new time limits for Game Pass game streaming",
+          "type" : "headline"
+        },
+        {
+          "text" : "Microsoft is replacing Game Pass’s original promise of unlimited cloud gaming with monthly allowances, saying the change will contain rising server costs while affecting about 4% of subscribers.",
+          "type" : "dek"
+        },
+        {
+          "caption" : "Microsoft is rationing access to remote Xbox hardware.",
+          "imagePrompt" : "A clean diagram of a player device connecting to a remote server rack running a game, with three labels: player, cloud server, monthly limit.",
+          "symbol" : "cloud.fill",
+          "type" : "imageCard"
+        },
+        {
+          "text" : "In 2020, Microsoft said Game Pass Ultimate would include unlimited access to its new Xbox Cloud Gaming service, then known as Project xCloud. Starting in November, that streaming buffet will be replaced by strict monthly limits across Game Pass subscriptions.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Microsoft has not specified the allowance for each subscription tier in the supplied announcement. It says players without Game Pass will be able to buy timed access to streaming versions of eligible games they own on supported devices. In June, the company also began testing a free, ad-supported option for accessing cloud libraries at no additional cost.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "“Moving to monthly limits allows us to keep offering the service while continuing to invest in its reliability and performance.”",
+          "type" : "pullQuote"
+        },
+        {
+          "text" : "Sony currently offers streamable versions of select PlayStation games without time limits only through its top-tier, $20-per-month PlayStation Plus Premium plan. Nvidia’s GeForce Now instead limits individual sessions: one hour on its free ad-supported tier and eight hours on its $20-per-month Ultimate tier. GeForce Now users can start as many sessions as they want each day and can buy single-day passes for limited-time access to more than 2,000 streamable titles.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Microsoft says the new limits will create a “higher cost” for some customers but will affect only 4% of Game Pass subscribers. Based on an estimated 30 million subscribers, that implies about 1.2 million people currently stream often enough to require additional payments under the new structure.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "That estimate does not establish how many subscribers use cloud gaming at all. Microsoft celebrated reaching 10 million and then 20 million cloud-streaming users in 2022, but those milestones presumably included people who tried the service once and did not return. Last year, Microsoft said Xbox Cloud Gaming usage had risen 45% year over year and that the service had streamed 500 million hours of games during fiscal 2025.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The figures point to a familiar distribution problem: a relatively small minority of subscribers may account for most streaming hours. Microsoft’s explanation is that cloud gaming becomes more expensive as more people use it and as they play for longer, so monthly limits are intended to make the service financially manageable rather than remove it outright.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The cost structure differs from that of ordinary video streaming. A video service mainly absorbs additional bandwidth as viewing rises. Microsoft must also reserve substantial computing capacity to run each cloud game remotely, and the company says those pressures have been compounded by sharply rising RAM and storage prices this year.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The change arrives more than five years after Xbox presented a cloud-focused vision in which many players would access games through web browsers, smart TVs, streaming sticks or dedicated streaming devices instead of buying expensive local hardware. Since then, Google has shut down Stadia, while Amazon has stopped selling new games and streaming older purchases through Luna.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Microsoft’s own earlier filings were notably less expansive than that vision. In a 2023 Finding of Fact filed during its trial with the FTC, the company said cloud gaming represented only a tiny fraction of the billions of gameplay hours each year and had never achieved consumer demand beyond its existing niche.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Cloud gaming also barely featured in the “hard truths” that new Xbox CEO Asha Sharma presented in June while announcing a “hard reset” of Microsoft’s gaming business. The new Game Pass limits therefore look less like a temporary adjustment than a practical retreat from the idea that streaming would become the default way to play Xbox games.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "For most subscribers, little may change immediately. The important shift is contractual: unlimited cloud access is ending, heavy users may have to pay more, and Microsoft is treating remote game execution as a scarce computing service rather than an invisible add-on to a subscription.",
+          "type" : "takeaway"
+        }
+      ],
+      "density" : "longform",
+      "estimatedReadSeconds" : 360,
+      "format" : "text",
+      "headlineWeight" : "semibold",
+      "layout" : "article",
+      "margins" : "wide",
+      "pace" : "scroll",
+      "palette" : "dusk",
+      "posterHeadline" : "Xbox Limits Cloud Gaming Time",
+      "rationale" : "You are settled in for a full evening read, so this keeps the story detailed, literary and easy to follow without softening its technical argument.",
+      "stateSummary" : "calm, reclined, evening reading",
+      "tone" : "reflective",
+      "typeScale" : "regular",
+      "typeface" : "serif"
+    },
+    "preset:calm" : {
+      "accent" : "amber",
+      "blocks" : [
+        {
+          "text" : "Xbox puts limits on cloud gaming",
+          "type" : "headline"
+        },
+        {
+          "text" : "Starting in November, Game Pass subscribers will receive monthly streaming allowances instead of unlimited cloud gaming. Microsoft says the change reflects the high computing cost of running games remotely.",
+          "type" : "dek"
+        },
+        {
+          "caption" : "Subscribers affected by the new model",
+          "text" : "4%",
+          "type" : "stat"
+        },
+        {
+          "items" : [
+            "THE CHANGE — Game Pass cloud gaming will have monthly time limits from November.",
+            "THE REASON — Remote games require server computing, not just bandwidth.",
+            "WHO PAYS — Microsoft says about 4% of subscribers may need extra payments.",
+            "THE CONTEXT — Cloud gaming remains a small niche despite 500 million streamed hours in fiscal 2025."
+          ],
+          "type" : "keyFacts"
+        },
+        {
+          "text" : "Microsoft once presented cloud gaming as a central path beyond consoles, but the market has stayed limited. Google closed Stadia, Amazon scaled back Luna, and Microsoft now says usage is concentrated among a small group of heavy streamers.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The technical constraint is straightforward: every streamed game session needs a remote machine to run it.",
+          "type" : "pullQuote"
+        },
+        {
+          "text" : "For most subscribers, the change may be invisible. Frequent cloud players will face a new question: whether their monthly usage justifies paying for more time.",
+          "type" : "takeaway"
+        }
+      ],
+      "density" : "brief",
+      "estimatedReadSeconds" : 60,
+      "format" : "text",
+      "headlineWeight" : "semibold",
+      "layout" : "poster",
+      "margins" : "wide",
+      "pace" : "scroll",
+      "palette" : "dusk",
+      "posterHeadline" : "Xbox Cloud Gaming Gets Limits",
+      "rationale" : "You are calm and reclined, so this uses a compact evening briefing with a literary texture while keeping the cost mechanism clear.",
+      "stateSummary" : "reclined, calm evening reading",
+      "tone" : "reflective",
+      "typeScale" : "regular",
+      "typeface" : "serif"
+    },
+    "preset:focused" : {
+      "accent" : "amber",
+      "blocks" : [
+        {
+          "text" : "Xbox imposes new cloud-gaming limits",
+          "type" : "headline"
+        },
+        {
+          "text" : "Starting in November, Game Pass subscriptions will cap monthly game-streaming time, ending the promise of effectively unlimited cloud play for heavier users.",
+          "type" : "dek"
+        },
+        {
+          "caption" : "Subscribers affected by the new limits",
+          "text" : "4%",
+          "type" : "stat"
+        },
+        {
+          "items" : [
+            "THE CHANGE — Microsoft is adding monthly streaming limits to its Game Pass plans.",
+            "WHO PAYS — Frequent streamers may need to purchase additional access.",
+            "THE SCALE — About 1.2 million subscribers could be affected, based on Microsoft’s estimate.",
+            "WHY NOW — Cloud games require remote computing resources, not just bandwidth."
+          ],
+          "type" : "keyFacts"
+        },
+        {
+          "text" : "Microsoft says the limits will help fund reliability and performance as cloud-gaming costs rise. The company says only 4% of subscribers will face higher costs, implying that streaming time is concentrated among a small minority.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Cloud gaming remains a niche inside Xbox’s larger business, despite years of promises that streamed games would replace much of the need for dedicated hardware.",
+          "type" : "takeaway"
+        }
+      ],
+      "density" : "brief",
+      "estimatedReadSeconds" : 60,
+      "format" : "text",
+      "headlineWeight" : "semibold",
+      "layout" : "split",
+      "margins" : "normal",
+      "pace" : "scroll",
+      "palette" : "focus",
+      "posterHeadline" : "Xbox Caps Cloud Gaming Time",
+      "rationale" : "You are focused and stationary, so a compact morning briefing with clear numbers and ruled facts gets to the mechanism quickly.",
+      "stateSummary" : "focused, stationary, morning",
+      "tone" : "brisk",
+      "typeScale" : "regular",
+      "typeface" : "sans"
+    }
+  },
+  "https:\/\/arstechnica.com\/health\/2026\/09\/reports-rfk-jr-ordered-measles-deaths-deletion-cdc-still-secretly-counts-them\/" : {
+    "longform" : {
+      "accent" : "slate",
+      "blocks" : [
+        {
+          "text" : "Reports: RFK Jr. ordered measles deaths deletion; CDC still secretly counts them",
+          "type" : "headline"
+        },
+        {
+          "text" : "Two reports say Health Secretary Robert F. Kennedy Jr. directed the removal of two measles-related deaths from the CDC’s public data, while the agency continues to count them internally.",
+          "type" : "dek"
+        },
+        {
+          "caption" : "A public-data trail showing two Pennsylvania deaths removed from the CDC website while internal counting continued.",
+          "imagePrompt" : "Draw a simple timeline from Pennsylvania health officials to the CDC website, showing two death records appearing and then disappearing on August 30; label only “Pennsylvania,” “CDC,” and “August 30.”",
+          "symbol" : "chart.xyaxis.line",
+          "type" : "imageCard"
+        },
+        {
+          "text" : "Reports released today describe a split between what the Centers for Disease Control and Prevention shows publicly and what it continues to count internally: two measles deaths were removed from the agency’s public data, but the deaths remain part of its internal tally.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The reported deletion came at the direct request of Kennedy, the US health secretary, according to the reports. Earlier today, Reuters reported that Kennedy instructed new CDC director Erica Schwartz to remove the two deaths from the agency’s website.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "CDC staff had reportedly already reviewed information about the cases and accepted the characterization that the deaths were measles-related. Despite that review, Schwartz deleted the deaths without objection, insiders told Reuters.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The sequence had been visible on the CDC website before it was reversed. According to previous reporting, the two deaths were added to the site and then removed within hours on August 30.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "A second report released today also describes the deaths as continuing to be counted secretly by the CDC, even after their removal from the public-facing data. Taken together, the reports point to a discrepancy between the agency’s published figures and its internal accounting.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The cases involve a newborn and a child. Both deaths were reported last week by health officials in Pennsylvania, where an ongoing measles outbreak has sickened 540 people so far.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The outbreak’s recent growth has been substantial: 119 of those illnesses were reported in the last week alone. The figures provide the immediate public-health context for the dispute over how the deaths are classified and displayed.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "“The public data and the agency’s reported internal count no longer appear to tell the same story.”",
+          "type" : "pullQuote"
+        },
+        {
+          "text" : "The reports therefore concern both the handling of two individual deaths and the integrity of a national disease-monitoring record. The underlying question is not only whether the cases were measles-related—a characterization CDC staff had reportedly accepted—but why that information was removed from public view after Kennedy’s instruction.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The key sequence is: Pennsylvania officials reported the newborn’s and child’s deaths last week; CDC staff reviewed and accepted their measles-related characterization; the deaths appeared on the agency’s website on August 30; they were removed within hours after Kennedy instructed Schwartz to delete them; and reports now say the CDC continues counting them internally.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The reports do not change the outbreak’s published case count: Pennsylvania has recorded 540 illnesses so far, including 119 in the last week. They instead raise questions about how deaths connected to that outbreak are recorded, classified and communicated.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Takeaway — Reports say two Pennsylvania measles deaths—a newborn and a child—were removed from the CDC’s public website at Kennedy’s request, even as the agency continued counting them internally; the state outbreak has sickened 540 people, including 119 in the last week.",
+          "type" : "takeaway"
+        }
+      ],
+      "density" : "longform",
+      "estimatedReadSeconds" : 240,
+      "format" : "text",
+      "headlineWeight" : "semibold",
+      "layout" : "article",
+      "margins" : "wide",
+      "pace" : "scroll",
+      "palette" : "dusk",
+      "posterHeadline" : "CDC Keeps Counting Deleted Measles Deaths",
+      "rationale" : "You are reading a detailed, technically reported account in the evening, so the page uses a calm literary design with room for mechanisms and attribution.",
+      "stateSummary" : "reclined, evening, calm and attentive",
+      "tone" : "reflective",
+      "typeScale" : "regular",
+      "typeface" : "serif"
+    },
+    "preset:calm" : {
+      "accent" : "slate",
+      "blocks" : [
+        {
+          "text" : "Reports say RFK Jr. ordered measles deaths deleted from public CDC data",
+          "type" : "headline"
+        },
+        {
+          "text" : "Two reports say the CDC removed records of two measles-related deaths after Health Secretary Robert F. Kennedy Jr. directed the agency to do so. The agency is reportedly still counting them internally.",
+          "type" : "dek"
+        },
+        {
+          "caption" : "People sickened in Pennsylvania outbreak",
+          "text" : "540",
+          "type" : "stat"
+        },
+        {
+          "items" : [
+            "THE REPORTS — Reuters and another report say Kennedy instructed CDC director Erica Schwartz to remove the deaths.",
+            "THE RECORDS — CDC staff had reportedly reviewed and accepted the characterization that the deaths were measles-related.",
+            "THE VICTIMS — The deaths involved a newborn and a child, according to reporting and Pennsylvania health officials.",
+            "THE OUTBREAK — Pennsylvania has reported 540 illnesses, including 119 in the past week."
+          ],
+          "type" : "keyFacts"
+        },
+        {
+          "text" : "The two deaths appeared on the CDC website and were removed within hours on August 30, according to previous reporting. The latest reports describe a split between the agency’s public data and its internal count.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The central question is not only why the records disappeared, but whether public health data can remain reliable when classifications are changed without a transparent explanation.",
+          "type" : "takeaway"
+        }
+      ],
+      "density" : "brief",
+      "estimatedReadSeconds" : 60,
+      "format" : "text",
+      "headlineWeight" : "semibold",
+      "layout" : "poster",
+      "margins" : "wide",
+      "pace" : "scroll",
+      "palette" : "dusk",
+      "posterHeadline" : "CDC Deletes Two Measles Deaths",
+      "rationale" : "You are settled in for an evening read, so this keeps the briefing compact while giving the disputed data change enough context to understand.",
+      "stateSummary" : "reclined, evening, calm",
+      "tone" : "reflective",
+      "typeScale" : "regular",
+      "typeface" : "serif"
+    },
+    "preset:focused" : {
+      "accent" : "slate",
+      "blocks" : [
+        {
+          "text" : "Reports say RFK Jr. ordered two measles deaths removed from CDC data",
+          "type" : "headline"
+        },
+        {
+          "text" : "Reuters and another report say the CDC removed records after Health Secretary Robert F. Kennedy Jr. directed its director to do so, while staff continued counting the deaths internally.",
+          "type" : "dek"
+        },
+        {
+          "caption" : "People sickened in Pennsylvania outbreak",
+          "text" : "540",
+          "type" : "stat"
+        },
+        {
+          "items" : [
+            "THE REPORTS — Reuters and a second report say Kennedy instructed CDC director Erica Schwartz to delete the records.",
+            "THE DEATHS — The cases involved a newborn and a child whose deaths Pennsylvania officials reported last week.",
+            "THE TIMELINE — The deaths appeared on the CDC website and were removed within hours on August 30.",
+            "THE OUTBREAK — Pennsylvania officials report 540 measles cases, including 119 in the preceding week."
+          ],
+          "type" : "keyFacts"
+        },
+        {
+          "text" : "CDC staff had reportedly reviewed the cases and accepted that they were measles-related before the records were removed. The agency is still counting the two deaths internally, according to the reports.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The dispute concerns the difference between the CDC’s public dashboard and its underlying count: the records were removed from the website, but the deaths have not disappeared from the agency’s internal tally.",
+          "type" : "paragraph"
+        }
+      ],
+      "density" : "brief",
+      "estimatedReadSeconds" : 60,
+      "format" : "text",
+      "headlineWeight" : "semibold",
+      "layout" : "split",
+      "margins" : "normal",
+      "pace" : "scroll",
+      "palette" : "focus",
+      "posterHeadline" : "CDC Measles Deaths Removed",
+      "rationale" : "You asked for a focused morning briefing, so this uses a high-contrast, technical layout that puts the key number and evidence up front.",
+      "stateSummary" : "focused, stationary, morning",
+      "tone" : "brisk",
+      "typeScale" : "regular",
+      "typeface" : "sans"
+    }
+  },
+  "https:\/\/arstechnica.com\/science\/2026\/09\/brain-of-a-male-fly-completely-mapped-joins-earlier-map-of-a-female-brain\/" : {
+    "longform" : {
+      "accent" : "slate",
+      "blocks" : [
+        {
+          "text" : "Second complete map of a fruit fly brain completed",
+          "type" : "headline"
+        },
+        {
+          "text" : "Researchers have completed a map of every neuron in a male fruit fly, creating a new tool for studying how brains are wired—and for refining methods that could eventually be used on much more complex nervous systems.",
+          "type" : "dek"
+        },
+        {
+          "caption" : "A complete wiring map of a male Drosophila brain, showing neurons and synaptic connections as a dense three-dimensional network.",
+          "imagePrompt" : "A clean scientific three-dimensional diagram of a fruit fly brain showing branching neurons and dense synaptic connections, with labels for neurons and synapses only.",
+          "symbol" : "brain.head.profile",
+          "type" : "imageCard"
+        },
+        {
+          "text" : "On Friday, researchers announced the completion of a map of every neuron in the brain of a male fruit fly. The map, known as a connectome, turns the brain’s physical wiring into something researchers can inspect and analyze.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "That makes the connectome a practical tool for neurobiology. Researchers can use it to investigate how neural circuits are arranged and how those circuits might contribute to the way a brain works. The map may accelerate research not by answering every question immediately, but by giving scientists a detailed structure against which to test them.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The result also creates an opportunity for comparative science. A connectome of a female Drosophila was completed earlier this year, so researchers now have two complete maps to examine. Comparing them may reveal differences between the brains of male and female flies, while also separating biological variation from the more general features of the species’ nervous system.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The work was a collaboration between biologists at the Howard Hughes Medical Institute’s Janelia Research Campus and computer scientists at Google. Both groups acknowledge that neither could have completed the project without the other.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Preparing an entire brain for imaging at the necessary resolution is itself a specialised biological task. The sample has to be handled and imaged in a way that preserves the information researchers need. Interpreting the resulting images is a different problem, requiring computational methods capable of distinguishing and tracing structures through an enormous volume of data.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The scale of that data explains why automation is essential. Even a fruit fly’s brain contains hundreds of millions of synapses. Building a complete picture of those connections by hand would not be manageable in the time available to human researchers.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The project therefore sits at the intersection of microscopy, biology and machine-assisted image analysis. The computer scientists’ contribution was not a decorative layer placed on top of the biology: interpreting the images is fundamental to turning them into a usable connectome. The biologists, meanwhile, supplied the preparation, imaging and domain knowledge needed to make that interpretation meaningful.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The researchers expect the investment to pay off over the long term. A complete wiring diagram could become a valuable reference for neurobiologists trying to understand how brains work, even though a map of connections is not, by itself, a complete explanation of behaviour or thought.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The techniques developed here may matter beyond fruit flies. The team expects the tools to be applied to increasingly complex nervous systems, potentially including those of vertebrates. That prospect is an extrapolation, not a claim that a vertebrate connectome is immediately within reach: larger brains bring more neurons, more synapses and substantially greater imaging and interpretation challenges.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "“A connectome is both a research instrument and an object of study: it can speed up experiments while giving scientists a new way to ask what neural wiring means.”",
+          "type" : "pullQuote"
+        },
+        {
+          "text" : "The male fruit-fly map is significant because it combines a complete neural inventory with methods designed to handle data at a scale humans cannot process unaided. Alongside the female map completed earlier this year, it offers a basis for comparison and a test bed for better tools. Its longer-term value will depend on how effectively researchers connect wiring patterns to the operation of living brains.",
+          "type" : "takeaway"
+        }
+      ],
+      "density" : "longform",
+      "estimatedReadSeconds" : 240,
+      "format" : "text",
+      "headlineWeight" : "semibold",
+      "layout" : "article",
+      "margins" : "wide",
+      "pace" : "scroll",
+      "palette" : "dusk",
+      "posterHeadline" : "A Complete Fruit Fly Brain Map",
+      "rationale" : "You are settled in for a full evening read, so this uses a calm literary layout with enough width and contrast for sustained attention.",
+      "stateSummary" : "reclined, evening, calm and attentive",
+      "tone" : "reflective",
+      "typeScale" : "regular",
+      "typeface" : "serif"
+    },
+    "preset:calm" : {
+      "accent" : "slate",
+      "blocks" : [
+        {
+          "text" : "A complete map of a male fruit fly’s brain is finished, giving researchers a detailed wiring diagram and a test bed for tools that may eventually tackle larger brains.",
+          "type" : "dek"
+        },
+        {
+          "text" : "Second complete fruit-fly brain map",
+          "type" : "headline"
+        },
+        {
+          "caption" : "Complete fruit-fly brain maps",
+          "text" : "2",
+          "type" : "stat"
+        },
+        {
+          "items" : [
+            "THE MAP — Researchers traced every neuron in a male Drosophila brain.",
+            "WHY IT MATTERS — The connectome could help scientists study how brain circuits produce behavior.",
+            "THE WORK — Janelia biologists and Google computer scientists combined imaging, biology and automated analysis.",
+            "THE LIMIT — Mapping hundreds of millions of synapses is too time-consuming for people to do unaided."
+          ],
+          "type" : "keyFacts"
+        },
+        {
+          "text" : "A connectome is more than a picture. It records how neurons and synapses are connected, allowing researchers to investigate the brain’s circuitry rather than studying isolated cells.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The male map follows a completed female Drosophila connectome earlier this year. Comparing the two gives scientists another way to study which wiring patterns are shared and which differ, though the map itself does not automatically explain what every circuit does.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The project also functioned as an engineering trial. Preparing an entire brain for high-resolution imaging requires specialised biological work; converting the resulting images into a complete wiring diagram requires large-scale computation. Neither partner could have completed the effort alone.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The immediate value is a research tool. The longer-term question is whether methods refined on a fruit fly can scale to increasingly complex nervous systems, including vertebrate brains.",
+          "type" : "takeaway"
+        }
+      ],
+      "density" : "brief",
+      "estimatedReadSeconds" : 60,
+      "format" : "text",
+      "headlineWeight" : "semibold",
+      "layout" : "quick",
+      "margins" : "wide",
+      "pace" : "scroll",
+      "palette" : "dusk",
+      "posterHeadline" : "A Second Fruit-Fly Brain Map",
+      "rationale" : "You are settled in for a calm evening read, so this uses a literary briefing with enough space to explain what the map enables without overselling it.",
+      "stateSummary" : "reclined, evening, calm and attentive",
+      "tone" : "reflective",
+      "typeScale" : "regular",
+      "typeface" : "serif"
+    },
+    "preset:focused" : {
+      "accent" : "sky",
+      "blocks" : [
+        {
+          "text" : "Second complete map of a fruit fly brain completed",
+          "type" : "headline"
+        },
+        {
+          "text" : "Researchers have finished mapping every neuron in a male fruit fly, creating a tool for studying how brains work and refining methods for larger nervous systems.",
+          "type" : "dek"
+        },
+        {
+          "caption" : "Complete fruit-fly connectomes",
+          "text" : "2",
+          "type" : "stat"
+        },
+        {
+          "items" : [
+            "THE MAP — Researchers mapped every neuron in a male Drosophila brain.",
+            "THE PAIR — A female fruit-fly connectome was completed earlier this year.",
+            "THE TEAM — HHMI Janelia biologists and Google computer scientists worked together.",
+            "THE LIMIT — Hundreds of millions of synapses require automated analysis beyond practical human effort."
+          ],
+          "type" : "keyFacts"
+        },
+        {
+          "text" : "A connectome records the brain’s wiring: neurons and the synapses linking them. Its value is both practical and scientific. Researchers can use the completed map to investigate neural circuits, while the process of building it helps improve tools for studying more complex nervous systems, potentially including vertebrates.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The project depended on a division of labour. Preparing an entire brain for high-resolution imaging requires biological expertise; interpreting the resulting images requires large-scale computation. Neither the Janelia nor Google teams says it could have completed the work alone.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The immediate result is not a complete explanation of the brain. It is a detailed map—a research instrument that may make those explanations easier to test.",
+          "type" : "takeaway"
+        }
+      ],
+      "density" : "brief",
+      "estimatedReadSeconds" : 60,
+      "format" : "text",
+      "headlineWeight" : "semibold",
+      "layout" : "dossier",
+      "margins" : "normal",
+      "pace" : "scroll",
+      "palette" : "focus",
+      "posterHeadline" : "Fruit Fly Brain Mapped",
+      "rationale" : "You asked for a focused morning briefing, so this uses a high-contrast dossier that puts the key result and evidence in a fast, structured read.",
+      "stateSummary" : "focused, stationary, morning",
+      "tone" : "brisk",
+      "typeScale" : "regular",
+      "typeface" : "sans"
+    }
+  },
   "https:\/\/arstechnica.com\/science\/2026\/09\/farmed-salmon-may-not-be-as-nutritious-as-it-once-was-new-research-suggests\/" : {
     "longform" : {
       "accent" : "amber",
@@ -402,6 +1295,183 @@
       "typeface" : "sans"
     }
   },
+  "https:\/\/arstechnica.com\/security\/2026\/09\/once-popular-for-attacking-ai-ascii-smuggling-is-embraced-by-spammers\/" : {
+    "longform" : {
+      "accent" : "slate",
+      "blocks" : [
+        {
+          "text" : "Once popular for attacking AI, ASCII smuggling is embraced by spammers",
+          "type" : "headline"
+        },
+        {
+          "text" : "A technique designed to hide malicious instructions from people while leaving them legible to language models is now being used to help unwanted email evade filters.",
+          "type" : "dek"
+        },
+        {
+          "caption" : "How invisible characters hide instructions",
+          "imagePrompt" : "A split-screen diagram showing an email that appears blank to a person while a computer reveals hidden letters encoded as Unicode tags; label only “human view” and “computer view”.",
+          "symbol" : "eye.slash",
+          "type" : "imageCard"
+        },
+        {
+          "text" : "Spammers are adopting a trick that first drew attention in attacks on AI agents, extending a security problem from prompt injection into the familiar territory of mass email.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The technique is broadly known as ASCII smuggling. It gained attention two years ago as a way to make a class of AI attack called prompt injection more stealthy.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "In a prompt-injection attack, malicious instructions are placed inside emails or other untrusted content that an AI system is asked to process. The instructions are intended to influence the language model, even though they do not come from a trusted operator.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "ASCII smuggling changes how those instructions are represented. Rather than writing them in ordinary text, an attacker renders them using a special range of Unicode tags.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "For example, the tag point U+E0041 mirrors the letter “A,” while U+E0061 mirrors the letter “a.” The visible character is replaced by a tag that computers can interpret as the corresponding letter.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The relevant block contains 128 tags and mimics part of the American Standard Code for Information Interchange, or ASCII, almost perfectly. Its important difference is not what the tags represent, but who can perceive them.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "By design, the encoded characters are almost completely invisible to humans while remaining readable to computers. That creates a split in the message: a person inspecting an email may see no suspicious instruction, but an LLM processing the same content can detect one.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "That property made ASCII smuggling useful for hiding malicious prompts in AI-agent attacks. It also gives spammers a way to place content in messages without presenting ordinary, easily scanned text to the filters intended to flag unwanted email used in mass campaigns.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The mechanism is therefore less a new language than a mismatch between human and machine visibility. The same encoded characters can look empty or harmless in an email interface while still carrying meaningful instructions for software that parses them.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The development is a reminder that defenses built around visible text can miss content that is technically present but visually absent. A technique associated with stealthy AI attacks has found a second use in the older, persistent contest between spammers and email filters.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "“The instructions are invisible to people, but not to the systems processing them.”",
+          "type" : "pullQuote"
+        },
+        {
+          "text" : "ASCII smuggling exploits the gap between what people see and what software reads: Unicode tags can mirror ASCII letters, hide malicious prompts from human readers, and help spam evade filters.",
+          "type" : "takeaway"
+        }
+      ],
+      "density" : "longform",
+      "estimatedReadSeconds" : 240,
+      "format" : "text",
+      "headlineWeight" : "semibold",
+      "layout" : "article",
+      "margins" : "wide",
+      "pace" : "scroll",
+      "palette" : "dusk",
+      "posterHeadline" : "ASCII Smuggling Reaches Spam",
+      "rationale" : "You are settled and attentive in the evening, so the full explanation uses a calm, literary layout with comfortable reading flow.",
+      "stateSummary" : "calm, evening, reclined, attentive",
+      "tone" : "reflective",
+      "typeScale" : "regular",
+      "typeface" : "serif"
+    },
+    "preset:calm" : {
+      "accent" : "plum",
+      "blocks" : [
+        {
+          "text" : "ASCII smuggling moves from hidden AI attacks into spam campaigns.",
+          "type" : "headline"
+        },
+        {
+          "text" : "The technique uses special Unicode tags that computers can read while remaining almost invisible to people. Spammers are now using that mismatch to evade email filters.",
+          "type" : "dek"
+        },
+        {
+          "caption" : "Invisible characters mimic ASCII",
+          "text" : "128",
+          "type" : "stat"
+        },
+        {
+          "items" : [
+            "THE TECHNIQUE — Special Unicode tags hide instructions from ordinary readers.",
+            "THE MECHANISM — LLMs can interpret the encoded characters as text.",
+            "THE ORIGIN — The method became notable in prompt-injection attacks two years ago.",
+            "THE SHIFT — Spammers now use it to bypass unwanted-mail filters."
+          ],
+          "type" : "keyFacts"
+        },
+        {
+          "text" : "ASCII smuggling exploits a gap between what software can process and what people can see.",
+          "type" : "takeaway"
+        }
+      ],
+      "density" : "brief",
+      "estimatedReadSeconds" : 60,
+      "format" : "text",
+      "headlineWeight" : "semibold",
+      "layout" : "zine",
+      "margins" : "normal",
+      "pace" : "scroll",
+      "palette" : "dusk",
+      "posterHeadline" : "ASCII Smuggling Hits Spam",
+      "rationale" : "You are settled and attentive, so this uses a calm, literary briefing that explains the technical mechanism without overstating the risk.",
+      "stateSummary" : "calm, evening, reclined",
+      "tone" : "reflective",
+      "typeScale" : "regular",
+      "typeface" : "serif"
+    },
+    "preset:focused" : {
+      "accent" : "slate",
+      "blocks" : [
+        {
+          "text" : "Once popular for attacking AI, ASCII smuggling is embraced by spammers",
+          "type" : "headline"
+        },
+        {
+          "text" : "A technique that hides instructions from people while leaving them readable to language models is now being used to evade email filters.",
+          "type" : "dek"
+        },
+        {
+          "caption" : "Invisible Unicode tags in the technique",
+          "text" : "128",
+          "type" : "stat"
+        },
+        {
+          "items" : [
+            "THE TECHNIQUE — Special Unicode tags encode hidden instructions.",
+            "THE TARGET — Email filters designed to flag mass campaigns.",
+            "THE MECHANISM — Computers read the tags; people usually cannot.",
+            "THE ORIGIN — The method gained attention through AI prompt-injection attacks."
+          ],
+          "type" : "keyFacts"
+        },
+        {
+          "text" : "ASCII smuggling works by exploiting a gap between machine-readable content and human-visible text. That makes hidden prompts harder for people to inspect while still exposing them to systems that process the message.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The same mechanism that concealed attacks on AI agents is now being repurposed to make spam harder to detect.",
+          "type" : "takeaway"
+        }
+      ],
+      "density" : "brief",
+      "estimatedReadSeconds" : 60,
+      "format" : "text",
+      "headlineWeight" : "semibold",
+      "layout" : "poster",
+      "margins" : "normal",
+      "pace" : "scroll",
+      "palette" : "focus",
+      "posterHeadline" : "ASCII Smuggling Reaches Spam",
+      "rationale" : "You asked for a focused morning briefing, so the key mechanism and its one meaningful number appear immediately in a compact poster structure.",
+      "stateSummary" : "focused, stationary morning reader",
+      "tone" : "brisk",
+      "typeScale" : "regular",
+      "typeface" : "sans"
+    }
+  },
   "https:\/\/arstechnica.com\/security\/2026\/09\/openai-agents-discussed-ways-to-escape-their-sandbox-on-public-wiki\/" : {
     "longform" : {
       "accent" : "slate",
@@ -772,6 +1842,196 @@
       "posterHeadline" : "BepiColombo Nears Mercury",
       "rationale" : "You asked for a focused morning briefing, so this uses a high-contrast ruled summary that puts the journey’s key number and orbital mechanics up front.",
       "stateSummary" : "focused, stationary, morning",
+      "tone" : "brisk",
+      "typeScale" : "regular",
+      "typeface" : "sans"
+    }
+  },
+  "https:\/\/arstechnica.com\/space\/2026\/09\/rocket-report-china-debuts-yet-another-new-rocket-nasa-considers-bulk-buys\/" : {
+    "longform" : {
+      "accent" : "slate",
+      "blocks" : [
+        {
+          "text" : "Rocket Report: Engines installed for Artemis III; Long March 6C breakup in LEO",
+          "type" : "headline"
+        },
+        {
+          "text" : "Edition 9.09 tracks Artemis III hardware, a new Blue Origin facility, uncertainty around New Glenn’s return, and Isar Aerospace’s next attempt to reach orbit.",
+          "type" : "dek"
+        },
+        {
+          "caption" : "A visual guide to the launchers and facilities in this edition.",
+          "imagePrompt" : "A restrained editorial diagram showing a heavy-lift rocket on a launch pad, a Florida payload-processing building, and a small two-stage rocket rising from northern Norway; labels: Artemis III, New Glenn, Spectrum.",
+          "symbol" : "photo",
+          "type" : "imageCard"
+        },
+        {
+          "text" : "This is Edition 9.09 of the Rocket Report, covering developments across the launch industry, from small launch vehicles to heavy-lift systems.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The report opens with Blue Origin’s update on the groundbreaking of a new Payload Processing Facility in Florida. The announcement provides a concrete sign of activity around the company’s launch operations, but it does not resolve the larger question hanging over its heavy-lift New Glenn rocket.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "It has been about a month since Blue Origin offered any meaningful news on New Glenn. The rocket remains grounded after an on-pad explosion at Cape Canaveral Space Force Station in May.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Blue Origin’s official position is that New Glenn could return to flight by the end of the year. That target is possible, but the report argues there is good reason for skepticism: the vehicle must return after a significant ground incident, and the company has not recently supplied much substantive information about its progress.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The edition also looks ahead to Isar Aerospace’s next attempt to launch its Spectrum rocket into orbit. A weeklong launch window is scheduled to open Friday at Andøya Spaceport in Norway, according to the Norwegian Broadcasting Corporation, NRK.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Isar plans to use the two-stage Spectrum to deliver several small CubeSats to orbit. The privately funded German launch company is trying again after a test flight failed shortly after liftoff last year.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The second Spectrum rocket has also faced repeated delays since January. Technical problems and the unavailability of the launch range in northern Norway have each prevented earlier launch attempts.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The wider issue is familiar in launch: a vehicle can be technically ready while the range, payload, or surrounding ground systems are not. Isar’s weeklong window reflects that operational complexity, while Blue Origin’s new Florida facility points to the infrastructure required to process payloads alongside the rocket itself.",
+          "type" : "paragraph"
+        },
+        {
+          "caption" : "The report’s central lesson",
+          "text" : "“Launch schedules are claims about coordinated systems, not just rockets.”",
+          "type" : "pullQuote"
+        },
+        {
+          "text" : "As always, readers are invited to submit material. Readers who do not want to miss an issue can subscribe using the box below; the form will not appear on AMP-enabled versions of the site.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Each Rocket Report includes information on small-, medium-, and heavy-lift rockets, along with a quick look ahead at the next three launches on the calendar.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Takeaway: Blue Origin has announced progress on Florida payload infrastructure, but New Glenn remains grounded after May’s on-pad explosion and its end-of-year return target deserves caution. Isar Aerospace is preparing another Spectrum attempt from Norway after technical and range-related delays.",
+          "type" : "takeaway"
+        }
+      ],
+      "density" : "longform",
+      "estimatedReadSeconds" : 240,
+      "format" : "text",
+      "headlineWeight" : "semibold",
+      "layout" : "article",
+      "margins" : "wide",
+      "pace" : "scroll",
+      "palette" : "dusk",
+      "posterHeadline" : "Rocket Report: Artemis III Engines Installed",
+      "rationale" : "You are relaxed and reclined in the evening, so a literary, spacious long read keeps the technical details clear without rushing you.",
+      "stateSummary" : "calm, reclined, evening reader",
+      "tone" : "reflective",
+      "typeScale" : "regular",
+      "typeface" : "serif"
+    },
+    "preset:calm" : {
+      "accent" : "amber",
+      "blocks" : [
+        {
+          "text" : "Rocket Report: Spectrum prepares for another launch attempt",
+          "type" : "headline"
+        },
+        {
+          "text" : "Isar Aerospace is preparing to fly its Spectrum rocket again from Norway, while Blue Origin’s New Glenn remains grounded after a May explosion.",
+          "type" : "dek"
+        },
+        {
+          "caption" : "A weeklong launch window opens Friday",
+          "text" : "7 days",
+          "type" : "stat"
+        },
+        {
+          "items" : [
+            "SPECTRUM — Isar plans to launch several CubeSats into orbit.",
+            "RETRY — Spectrum’s first test flight failed shortly after liftoff last year.",
+            "DELAYS — Technical problems and range availability blocked attempts since January.",
+            "NEW GLENN — Blue Origin still targets a year-end return, but the timeline remains uncertain."
+          ],
+          "type" : "keyFacts"
+        },
+        {
+          "text" : "Isar’s next attempt depends on both the rocket and the launch range working as planned. That makes the weeklong window useful, but not a guarantee of flight.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The calendar says Friday. The hardware still has to agree.",
+          "type" : "pullQuote"
+        },
+        {
+          "text" : "The next Spectrum launch is a modest orbital test, but repeated delays show why launch schedules are forecasts rather than promises.",
+          "type" : "takeaway"
+        }
+      ],
+      "density" : "brief",
+      "estimatedReadSeconds" : 60,
+      "format" : "text",
+      "headlineWeight" : "semibold",
+      "layout" : "quick",
+      "margins" : "normal",
+      "pace" : "scroll",
+      "palette" : "dusk",
+      "posterHeadline" : "Spectrum Attempts Orbit Again",
+      "rationale" : "You are settled and attentive, so this keeps the briefing precise while giving the launch uncertainty room to make sense.",
+      "stateSummary" : "calm, reclined, evening reader",
+      "tone" : "reflective",
+      "typeScale" : "regular",
+      "typeface" : "serif"
+    },
+    "preset:focused" : {
+      "accent" : "slate",
+      "blocks" : [
+        {
+          "text" : "Rocket Report: Spectrum rocket set for another launch attempt",
+          "type" : "headline"
+        },
+        {
+          "text" : "Isar Aerospace is preparing to retry its orbital launch from Norway, while Blue Origin’s New Glenn remains grounded after a May explosion.",
+          "type" : "dek"
+        },
+        {
+          "caption" : "Spectrum’s next launch window",
+          "text" : "1 week",
+          "type" : "stat"
+        },
+        {
+          "items" : [
+            "THE ATTEMPT — Isar Aerospace plans another Spectrum launch from Andøya Spaceport.",
+            "THE PAYLOAD — The two-stage rocket is intended to carry several CubeSats into orbit.",
+            "THE SETBACKS — Technical problems and range availability have delayed attempts since January.",
+            "THE OUTLOOK — Blue Origin targets a New Glenn return by year-end, but the schedule remains uncertain."
+          ],
+          "type" : "keyFacts"
+        },
+        {
+          "text" : "Isar’s privately funded Spectrum rocket has already failed shortly after liftoff once. The latest attempt will test whether the company has resolved the technical issues that blocked subsequent launches.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The launch window is scheduled to open Friday and last a week. That is an opportunity, not a guarantee: the rocket and range must both be ready, and earlier attempts were stopped by problems on both fronts.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The broader report also flags limited movement at Blue Origin. New Glenn has been grounded since an on-pad explosion at Cape Canaveral in May, despite the company’s stated goal of returning to flight before the end of 2026.",
+          "type" : "paragraph"
+        }
+      ],
+      "density" : "brief",
+      "estimatedReadSeconds" : 60,
+      "format" : "text",
+      "headlineWeight" : "semibold",
+      "layout" : "dossier",
+      "margins" : "normal",
+      "pace" : "scroll",
+      "palette" : "focus",
+      "posterHeadline" : "Spectrum Rocket Tries Again",
+      "rationale" : "You are focused and stationary this morning, so a compact dossier puts the launch facts and uncertainty in a clear order without overselling either rocket’s schedule.",
+      "stateSummary" : "focused, stationary morning reader",
       "tone" : "brisk",
       "typeScale" : "regular",
       "typeface" : "sans"
@@ -1962,6 +3222,219 @@
       "posterHeadline" : "Fairphone finally feels mainstream",
       "rationale" : "You are focused and stationary this morning, so this compact, high-contrast briefing puts the price and practical tradeoffs up front.",
       "stateSummary" : "focused, stationary morning reader",
+      "tone" : "brisk",
+      "typeScale" : "regular",
+      "typeface" : "sans"
+    }
+  },
+  "https:\/\/www.theverge.com\/tech\/990706\/a-day-at-canjam-socal-2026" : {
+    "longform" : {
+      "accent" : "amber",
+      "blocks" : [
+        {
+          "text" : "The weird and wonderful headphones of CanJam 2026",
+          "type" : "headline"
+        },
+        {
+          "text" : "Mainstream headphones are better than ever, but an audiophile show in Irvine offered something they increasingly lack: distinctive character, extravagant engineering, and the reminder that listening can still feel like discovery.",
+          "type" : "dek"
+        },
+        {
+          "caption" : "A listening table at CanJam SoCal 2026",
+          "imagePrompt" : "A crowded Irvine Marriott audio-show room with headphone listening stations, glowing ear cups, boutique headphone displays, and enthusiasts gathered around booths; labels: CanJam, Irvine, 2026.",
+          "symbol" : "headphones",
+          "type" : "imageCard"
+        },
+        {
+          "text" : "I’ve been reviewing headphones for a long time, from barely serviceable models to multi-thousand-dollar open-back headphones. Lately, though, I’ve felt uninspired by mainstream options. Most are perfectly good — great, even — but they rarely have a distinct character. I wanted something that could remind me why I fell in love with headphones in the first place, and why they led me into this strange career. I needed revitalization, something cool, and the company of people with an emotional connection to headphones. I needed CanJam.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "CanJam is a small audio show produced by Head-Fi.org, the largest audio-focused online forum. It runs multiple events around the world, including London, Shanghai, New York City, Dubai, and Southern California. Boutique manufacturers use the shows to present headphones and related gear to enthusiasts searching for the most accurate and engaging audio experience they can find. Bose and Apple are absent, although Sony’s Pro division attended, alongside familiar names such as Sennheiser and Audeze.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "In all my years covering A\/V gear, I had never made it to a CanJam. Either the event was not relevant to the outlets I was writing for, or personal obligations got in the way. This year, my first at The Verge, felt like the right moment. On August 29th, I drove the 405 from Los Angeles down to Irvine, California, to attend CanJam SoCal 2026.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The show occupied a convention space at the Irvine Marriott. Most exhibitors — including Sennheiser, Focal, and HiFiMan, as well as niche brands such as Astell&Kern and Noble Audio — filled the largest room. Listening stations used tablets running Qobuz, the streaming service audiophiles favor for hi-res lossless audio, to demonstrate headphones, DACs, amplifiers, media players, and even cables. Other exhibitors set up in quieter rooms along the main hallway, where listening was easier. A couple thousand audio enthusiasts crowded the booths and rooms.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "My first stop was Campfire Audio, the Portland, Oregon, company known for earbuds. I had previously listened to its $1,500 Solaris and $300 IO in-ear monitors. This time I tried the Campfire Audio Chimera, which debuted at CanJam Singapore in May.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Most mainstream earbuds and headphones use a single driver per ear to reproduce everything from the lowest bass to the highest treble. Two drivers are a luxury. The Chimera has nine. It is a “quad-brid” design, combining four audio-delivery technologies: a dynamic driver for bass and lower mids; a dual-diaphragm balanced armature for midrange clarity; two more balanced armatures for the high end; four electrostatic tweeters for air and spaciousness; and bone conduction for extra bass.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "That driver count makes the Chimera chonky — about the size of a piece of Bubblicious bubble gum. Getting them seated comfortably took some finagling. Once they were in place, though, I was immediately impressed. The low end was full without becoming muddy or overwhelming. The open high end gave cymbals room to shimmer and decay without turning abrasive. The star was the midrange: the quiet, conversational passages of Tracy Chapman and Janis Joplin’s passionate wailing sounded as if they were directly in front of me.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "I was listening while standing in a conference hall, hardly an ideal environment, yet the Chimera delivered one of the most detailed and enjoyable listening sessions I had experienced in a long time. They also cost $7,500.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "That price is not unheard of in the audiophile world, where boutique, hand-built gear is expensive. But the Chimera sits at another level even within Campfire’s lineup. The design and engineering required to fit nine drivers into a small-ish in-ear monitor account for part of the cost. So do the materials and manufacturing. The shells use carbon fiber and brass Damascus construction, with folded layers that create a topographical-map pattern. Because the process produces slight variations in the finish, each pair is unique.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The Chimera also includes a six-conductor cable that costs more by itself than many people’s earbuds, along with a microfiber cloth, an IEM cleaning tool, and nine different tip options.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Not every product at CanJam was so far out of reach. Fosi Audio showed wired in-ears priced below $150 that sounded good for the money, along with an interesting portable CD player. Dan Clark Audio’s Aeon Core planar magnetic headphones cost $900 — not cheap, but considerably more accessible than the Chimera — and offered a wide soundstage. Background vocals in the Black Crowes’ “Remedy” seemed to wrap around from the left and right, with Chris Robinson positioned in front. Snare hits snapped and cymbals sizzled, although the snare on Tracy Chapman’s “Fast Car” came close to being too much.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "I have liked Dan Clark Audio headphones since the company was called MrSpeakers, and I could easily imagine relaxing on the couch with the Aeon Core. They are closed-back, which made it easier to concentrate on music despite the show’s bustle.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Many audiophile headphones are open-back, however, and a busy show floor is a poor place to judge them. I tried HiFiMan’s $1,449 Arya headphones, which include an onboard Wi-Fi receiver. Wi-Fi remains unusual in headphones, although the recently announced Sonos Ace Ultras also have it. Compared with Bluetooth, Wi-Fi is better suited to streaming lossless audio over longer ranges. The Arya sounded good, but its open-back planar design made it difficult to form a strong opinion in that environment.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "On my final loop around the show floor, a glowing ear cup caught my eye. Inside was a vacuum tube. In a pair of headphones.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The Écoute TH2, funded on Kickstarter last March, aims to replicate a high-end two-channel audio system inside the headphones themselves. It has a built-in vacuum-tube preamp with a 6P1 tube and dual-mono amplification, meaning the left and right channels are driven independently from the DAC to each driver. It also includes solid active noise cancellation and an eight-band EQ, and it is genuinely comfortable.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "On a live recording of “A Pirate Looks at Forty” with Dave Matthews, Jack Johnson, and Tim Reynolds, I felt the audience around me as if I were at the concert. There was plenty of high-end detail, though the upper frequencies were boosted more than I liked. I did not get a chance to try reducing them with the EQ. Even so, the TH2 was an incredibly interesting pair of headphones.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "“There are so many headphones out there and only one me.”",
+          "type" : "pullQuote"
+        },
+        {
+          "text" : "That is what makes a show like CanJam valuable. I never would have known about the Écoute otherwise. There are too many headphones for one person to encounter alone, and a gathering like this turns that abundance into a shared act of discovery.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Decades ago, CES was more focused on audio than robots, but there is no going back in that respect. That makes CanJam and similar shows more important, not less. They preserve room for unusual ideas: nine-driver in-ear monitors, Wi-Fi planar headphones, and vacuum tubes glowing inside a wireless headset.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "CanJam showed that the interesting edge of headphone design is not always about making a better version of a familiar product. Sometimes it is about giving a listener a new mechanism, a new material, or simply a reason to pay attention again.",
+          "type" : "takeaway"
+        },
+        {
+          "text" : "For the full CanJam SoCal 2026 experience, read the complete field report and explore the headphones, drivers, amplification systems, and listening impressions described above.",
+          "type" : "readFullPrompt"
+        }
+      ],
+      "density" : "longform",
+      "estimatedReadSeconds" : 420,
+      "format" : "text",
+      "headlineWeight" : "semibold",
+      "layout" : "article",
+      "margins" : "wide",
+      "pace" : "scroll",
+      "palette" : "dusk",
+      "posterHeadline" : "The Weird Headphones of CanJam",
+      "rationale" : "You’re settled and attentive this evening, so the full story gets a calm, literary layout with room for technical detail and personal listening impressions.",
+      "stateSummary" : "reclined, calm, attentive evening",
+      "tone" : "reflective",
+      "typeScale" : "regular",
+      "typeface" : "serif"
+    },
+    "preset:calm" : {
+      "accent" : "amber",
+      "blocks" : [
+        {
+          "text" : "The weird and wonderful headphones of CanJam 2026",
+          "type" : "headline"
+        },
+        {
+          "text" : "A visit to an audiophile show brought back the excitement mainstream headphones have lost.",
+          "type" : "dek"
+        },
+        {
+          "caption" : "Campfire Audio Chimera price",
+          "text" : "$7,500",
+          "type" : "stat"
+        },
+        {
+          "items" : [
+            "THE SHOW — CanJam brought a couple thousand enthusiasts to Irvine, California.",
+            "THE OUTLIER — Campfire Audio’s Chimera uses nine drivers across four audio technologies.",
+            "THE ALTERNATIVE — Dan Clark Audio’s $900 Aeon Core offered a more accessible high-end option.",
+            "THE SURPRISE — Écoute’s TH2 headphones put a glowing vacuum tube and preamp inside each pair."
+          ],
+          "type" : "keyFacts"
+        },
+        {
+          "text" : "CanJam reminded me that headphones are still allowed to be strange. Boutique makers are chasing ambitious designs, unusual materials, and listening experiences that mainstream products rarely attempt.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The point of CanJam is not that everyone needs $7,500 earbuds. It is that there are still plenty of ways to make headphones feel exciting.",
+          "type" : "takeaway"
+        }
+      ],
+      "density" : "brief",
+      "estimatedReadSeconds" : 60,
+      "format" : "text",
+      "headlineWeight" : "semibold",
+      "layout" : "dossier",
+      "margins" : "wide",
+      "pace" : "scroll",
+      "palette" : "dusk",
+      "posterHeadline" : "CanJam’s Weirdest Headphones",
+      "rationale" : "You are settled and attentive, so a calm literary briefing gives the show’s unusual designs room to be understood without slowing the key facts.",
+      "stateSummary" : "reclined, calm evening, attentive",
+      "tone" : "reflective",
+      "typeScale" : "large",
+      "typeface" : "serif"
+    },
+    "preset:focused" : {
+      "accent" : "amber",
+      "blocks" : [
+        {
+          "text" : "The weird and wonderful headphones of CanJam 2026",
+          "type" : "headline"
+        },
+        {
+          "text" : "A visit to an audiophile show restores the reviewer’s enthusiasm for headphones, from nine-driver in-ears to vacuum-tube wireless sets.",
+          "type" : "dek"
+        },
+        {
+          "caption" : "Drivers inside Campfire Audio’s Chimera IEMs",
+          "text" : "9",
+          "type" : "stat"
+        },
+        {
+          "items" : [
+            "THE SHOW — CanJam brings boutique headphone makers and a few familiar brands to enthusiasts.",
+            "THE CHIMERA — Campfire Audio’s nine-driver IEMs deliver detailed sound, but cost $7,500.",
+            "THE ALTERNATIVES — Dan Clark’s $900 Aeon Core offers a wide, immersive soundstage.",
+            "THE SURPRISE — Écoute’s TH2 combines vacuum-tube amplification, ANC and an eight-band EQ."
+          ],
+          "type" : "keyFacts"
+        },
+        {
+          "text" : "CanJam’s appeal is discovery: unusual products and intense listening experiences that mainstream headphones rarely provide.",
+          "type" : "takeaway"
+        }
+      ],
+      "density" : "brief",
+      "estimatedReadSeconds" : 60,
+      "format" : "text",
+      "headlineWeight" : "black",
+      "layout" : "zine",
+      "margins" : "tight",
+      "pace" : "scroll",
+      "palette" : "focus",
+      "posterHeadline" : "CanJam’s Weirdest Headphones",
+      "rationale" : "You asked for a compact, high-contrast briefing that keeps the show’s unusual products and prices easy to scan.",
+      "stateSummary" : "focused, stationary, morning",
       "tone" : "brisk",
       "typeScale" : "regular",
       "typeface" : "sans"

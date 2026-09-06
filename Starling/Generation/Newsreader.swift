@@ -10,6 +10,8 @@ final class Newsreader {
     enum CallState: Equatable { case idle, authoring, connecting, live, ended, failed(String) }
 
     private(set) var narratives: [String: String] = [:]
+    /// Two or three spoken sentences the newsreader says the instant the call connects.
+    private(set) var openings: [String: String] = [:]
     private var authoring: Set<String> = []
     private(set) var callState: CallState = .idle
     private(set) var transcript: [(role: String, text: String)] = []
@@ -35,18 +37,22 @@ final class Newsreader {
         Task {
             defer { authoring.remove(article.id) }
             let styles = sources.map { "\($0.name): \($0.style)" }.joined(separator: "; ")
-            let system = "You write spoken news narratives for a single newsreader voice. Rewrite the article as continuous prose meant to be heard: broadcast-anchor cadence, scene-setting, connective phrasing, 220–320 words, no headings, no bullet points, no numbers spelled as digits unless they are the point. Blend the house styles of the reader's sources (\(styles)), weighting the article's own source most. Use only facts that are in the article; never add context, speculation or names that are not in it. End with one plain sentence on what to watch next, only if the article says so."
+            let system = "You write spoken news for a single newsreader voice. Return JSON with two fields. \"narrative\": the article rewritten as continuous prose meant to be heard: broadcast-anchor cadence, scene-setting, connective phrasing, 220–320 words, no headings, no bullet points. \"opening\": what the newsreader says first, two or three short spoken sentences: the most striking thing in the story and why it matters, ending with a natural hand-over question such as \"Want the full rundown, or just the bits that matter?\" Use contractions; sound like a warm radio presenter talking to one person. Blend the house styles of the reader's sources (\(styles)), weighting the article's own source most. Use only facts that are in the article; never add context, speculation or names that are not in it."
             var req = URLRequest(url: URL(string: "https://api.openai.com/v1/chat/completions")!)
             req.httpMethod = "POST"; req.timeoutInterval = 60
             req.setValue("application/json", forHTTPHeaderField: "Content-Type")
             req.setValue("Bearer \(key)", forHTTPHeaderField: "Authorization")
             let body: [String: Any] = ["model": LLMClient.model, "reasoning_effort": "none",
+                "response_format": ["type": "json_object"],
                 "messages": [["role": "system", "content": system], ["role": "user", "content": "TITLE: \(article.title)\nSOURCE: \(FeedCatalog.source(article.sourceID)?.name ?? "")\n\n" + (article.body ?? [article.summary]).joined(separator: "\n\n")]]]
             req.httpBody = try? JSONSerialization.data(withJSONObject: body)
             guard let (data, _) = try? await URLSession.shared.data(for: req),
                   let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-                  let text = ((json["choices"] as? [[String: Any]])?.first?["message"] as? [String: Any])?["content"] as? String else { return }
-            narratives[article.id] = text
+                  let text = ((json["choices"] as? [[String: Any]])?.first?["message"] as? [String: Any])?["content"] as? String,
+                  let parsed = try? JSONSerialization.jsonObject(with: Data(text.utf8)) as? [String: Any],
+                  let narrative = parsed["narrative"] as? String else { return }
+            narratives[article.id] = narrative
+            openings[article.id] = (parsed["opening"] as? String) ?? String(narrative.split(separator: ".").prefix(2).joined(separator: ".")) + "."
         }
     }
 
@@ -72,6 +78,7 @@ final class Newsreader {
             "state_summary": "\(state.label.rawValue), \(state.timeOfDay.label), \(state.motion.rawValue)",
             "current_version": currentVersion,
             "narrative": narrative,
+            "opening": openings[article.id] ?? "",
         ]
         var config = ConversationConfig()
         config.dynamicVariables = vars
