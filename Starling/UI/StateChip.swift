@@ -15,10 +15,10 @@ struct StateChip: View {
                 Group {
                     if let bpm = s.bpm, s.bpmConfidence >= 0.4 {
                         Label("\(Int(bpm))", systemImage: s.pulseSource == .watch ? "applewatch" : "camera")
-                    } else if s.sensingEnabled {
+                    } else if s.sensingEnabled && hub.cameraSupported {
                         Label("calibrating", systemImage: "heart")
                     }
-                    if s.sensingEnabled {
+                    if s.sensingEnabled && hub.cameraSupported {
                         Label("\(Int(s.attention * 100))%", systemImage: s.faceDetected ? "eye" : "eye.slash")
                     }
                     Label(motionText(s), systemImage: motionSymbol(s))
@@ -30,7 +30,6 @@ struct StateChip: View {
         .padding(.horizontal, 10).padding(.vertical, 6)
         .background(.thinMaterial, in: Capsule())
     }
-
     private func motionText(_ s: UserState) -> String {
         switch s.motion {
         case .walking: return "walking"

@@ -13,11 +13,23 @@ struct FeedView: View {
                 if feeds.articles.isEmpty && feeds.isLoading {
                     ProgressView("Fetching your sources…")
                 } else if feeds.articles.isEmpty {
-                    ContentUnavailableView("No stories yet", systemImage: "newspaper", description: Text("Pick some sources to get started."))
+                    ContentUnavailableView {
+                        Label("No stories yet", systemImage: "newspaper")
+                    } description: {
+                        Text(feeds.failedSourceIDs.isEmpty ? "Pick some sources to get started." : "Couldn't reach \(failedNames) and no saved stories were bundled.")
+                    } actions: {
+                        Button("Try again") { Task { await feeds.refresh() } }
+                    }
                 } else {
-                    List(feeds.articles) { article in
-                        NavigationLink(value: article) {
-                            ArticleRow(article: article)
+                    List {
+                        if !feeds.failedSourceIDs.isEmpty {
+                            Label(feeds.usedSnapshot ? "Couldn't reach \(failedNames). Showing saved stories for those." : "Couldn't reach \(failedNames).", systemImage: "wifi.exclamationmark")
+                                .font(.caption).foregroundStyle(.secondary)
+                        }
+                        ForEach(feeds.articles) { article in
+                            NavigationLink(value: article) {
+                                ArticleRow(article: article)
+                            }
                         }
                     }
                     .listStyle(.plain)
@@ -52,6 +64,9 @@ struct FeedView: View {
 }
 
 extension FeedView {
+    var failedNames: String {
+        feeds.failedSourceIDs.compactMap { FeedCatalog.source($0)?.name }.sorted().joined(separator: ", ")
+    }
     /// Prefetch once the state is stable (calibrated or sensing off).
     func prefetch() {
         guard hub.phase == .live || !hub.isSensingEnabled || !hub.cameraSupported else { return }
