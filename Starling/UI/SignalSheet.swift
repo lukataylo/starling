@@ -17,6 +17,7 @@ struct SignalSheet: View {
     var onKeep: (() -> Void)? = nil
     var onWhy: (() -> Void)? = nil
     @State private var showCorrect = false
+    @State private var showFinger = false
 
     private var mono: Font { .system(size: 11, weight: .medium, design: .monospaced) }
     private var card: Color { theme.surface }
@@ -36,7 +37,7 @@ struct SignalSheet: View {
                 HStack(spacing: 10) {
                     tile("HR · \(s.pulseSource == .watch ? "WATCH" : (s.pulseSource == .camera ? "CAMERA" : "—"))") {
                         HStack {
-                            Text(s.bpm.map { s.bpmConfidence >= 0.4 ? "\(Int($0))" : "—" } ?? "—").font(.system(size: 28, weight: .bold, design: .rounded))
+                            Text(s.bpm.map { s.bpmConfidence >= 0.3 ? "\(Int($0))" : "—" } ?? "—").font(.system(size: 28, weight: .bold, design: .rounded))
                             Spacer()
                             bars(s)
                         }
@@ -113,6 +114,7 @@ struct SignalSheet: View {
                     if edition == nil {
                         Button { showCorrect = true } label: { Text("NOT HOW I FEEL").font(mono).padding(.horizontal, 14).padding(.vertical, 10).background(card, in: RoundedRectangle(cornerRadius: 8)) }
                     }
+                    Button { showFinger = true } label: { Text("MEASURE PULSE").font(mono).padding(.horizontal, 14).padding(.vertical, 10).background(Identity.acid, in: RoundedRectangle(cornerRadius: 8)).foregroundStyle(Identity.ink) }
                     Button { hub.recalibrate() } label: { Text("RECALIBRATE").font(mono).padding(.horizontal, 14).padding(.vertical, 10).background(card, in: RoundedRectangle(cornerRadius: 8)) }
                     Spacer()
                     Text("SENSING").font(mono).foregroundStyle(theme.secondary)
@@ -128,6 +130,7 @@ struct SignalSheet: View {
         .environment(\.colorScheme, theme.palette.scheme)
         .presentationDetents([.medium, .large])
         .presentationDragIndicator(.visible)
+        .sheet(isPresented: $showFinger) { FingerPulseView(theme: theme) }
         .confirmationDialog("How do you feel right now?", isPresented: $showCorrect, titleVisibility: .visible) {
             ForEach(ReaderLabel.allCases, id: \.self) { l in
                 Button(l.rawValue.capitalized) {

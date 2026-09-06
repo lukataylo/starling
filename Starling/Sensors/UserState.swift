@@ -70,7 +70,7 @@ struct UserState: Codable, Equatable {
         lines.append("motion: \(motion.rawValue), posture: \(posture.rawValue)")
         if sensingEnabled {
             lines.append("face_detected: \(faceDetected), attention: \(String(format: "%.2f", attention)), blink_rate_per_min: \(Int(blinkRate))")
-            if let bpm, bpmConfidence >= 0.4 {
+            if let bpm, bpmConfidence >= 0.3 {
                 lines.append("heart_rate_bpm: \(Int(bpm)) (source: \(pulseSource.rawValue), confidence \(String(format: "%.2f", bpmConfidence)))")
             } else {
                 lines.append("heart_rate_bpm: unavailable or low confidence — ignore")

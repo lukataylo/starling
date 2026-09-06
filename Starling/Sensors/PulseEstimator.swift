@@ -35,9 +35,9 @@ final class PulseEstimator {
             push(t: timestamp, y: lastMean, valid: false); return maybeEstimate(timestamp, roi: .zero)
         }
         let (mean, saturated) = Self.meanLuma(pixelBuffer, roi: roi)
-        var valid = anchor.isTracked && headSpeed < 0.05 && saturated < 0.05 && mean > 40
-        if let c = lastROICenter, hypot(c.x - roi.midX, c.y - roi.midY) > 3 { valid = false }
-        if lastMean > 0, abs(mean - lastMean) / lastMean > 0.03 { valid = false }
+        var valid = anchor.isTracked && headSpeed < 0.09 && saturated < 0.08 && mean > 30
+        if let c = lastROICenter, hypot(c.x - roi.midX, c.y - roi.midY) > 6 { valid = false }
+        if lastMean > 0, abs(mean - lastMean) / lastMean > 0.06 { valid = false }
         lastROICenter = CGPoint(x: roi.midX, y: roi.midY)
         lastMean = mean
         push(t: timestamp, y: mean, valid: valid)
@@ -103,7 +103,7 @@ final class PulseEstimator {
         let window = ring.filter { now - $0.t <= 12 }
         guard window.count >= 90 else { return nil }
         let validFraction = Double(window.filter(\.valid).count) / Double(window.count)
-        guard validFraction >= 0.66 else {
+        guard validFraction >= 0.5 else {
             return PulseEstimate(bpm: bpmSmoothed, confidence: 0, validFraction: validFraction, roiMean: lastMean, roiRect: roi)
         }
         // Interpolate invalid samples (short gaps) by carrying the previous value.
@@ -162,7 +162,7 @@ final class PulseEstimator {
         let freq = (Double(best) + Double(delta)) * binHz
         let bpm = freq * 60
         let snr = bandSum > 0 ? Double((p0 + p1 + p2) / bandSum) : 0
-        var conf = max(0, min(1, (snr - 0.12) / 0.28)) * validFraction
+        var conf = max(0, min(1, (snr - 0.08) / 0.25)) * validFraction
         // Autocorrelation cross-check
         if let acfBPM = acfEstimate(m, fs: fs), abs(acfBPM - bpm) < 6 { conf = min(1, conf + 0.2) }
         if lastBPM > 0, abs(bpm - lastBPM) > 12 { conf *= 0.5 }

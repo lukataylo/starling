@@ -117,6 +117,7 @@ struct StatePill: View {
     func text(_ s: UserState) -> String {
         var parts = [s.label.rawValue.capitalized]
         if s.sensingEnabled && s.faceDetected { parts.append("\(Int(s.attention * 100))%") }
+        if let bpm = s.bpm, s.bpmConfidence >= 0.3 { parts.append("\(Int(bpm)) bpm") }
         switch s.motion {
         case .walking: parts.append("Walking")
         case .running: parts.append("Running")

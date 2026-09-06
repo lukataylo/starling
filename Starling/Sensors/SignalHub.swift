@@ -139,8 +139,17 @@ final class SignalHub {
         self.attention = attention; self.blinkRate = blinkRate; self.faceDetected = faceDetected
         recompute()
     }
+    private var fingerAt: Date?
     func ingestCameraPulse(bpm: Double, confidence: Double) {
+        // A recent fingertip measurement is more trustworthy than a weak face estimate.
+        if let f = fingerAt, Date().timeIntervalSince(f) < 180, confidence < 0.5 { return }
         cameraBPM = bpm; cameraConf = confidence
+        recompute()
+    }
+    func ingestFingerPulse(bpm: Double, confidence: Double) {
+        fingerAt = .now
+        cameraBPM = bpm; cameraConf = max(0.6, confidence)
+        if baselineIsDefault { setBaseline(bpm: bpm, blink: nil) }
         recompute()
     }
     private(set) var watchIsLive = false
