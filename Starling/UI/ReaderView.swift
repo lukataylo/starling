@@ -85,12 +85,6 @@ struct ReaderView: View {
             .padding(.horizontal, 20).padding(.top, 8).padding(.bottom, 6)
 
             content
-                .overlay(alignment: .bottomLeading) {
-                    ModeFab(symbol: effectiveFormat == .cards ? "text.alignleft" : "rectangle.on.rectangle",
-                            label: effectiveFormat == .cards ? "Short" : "Cards",
-                            theme: theme) { flipFormat() }
-                        .padding(.leading, 16).padding(.bottom, 12)
-                }
         }
         .background(theme.palette.background.ignoresSafeArea())
         .environment(\.colorScheme, theme.palette.scheme)
@@ -246,7 +240,10 @@ struct ReaderView: View {
 
     @ViewBuilder private var dock: some View {
         VStack(spacing: 8) {
-            HStack {
+            HStack(alignment: .bottom) {
+                ModeFab(symbol: effectiveFormat == .cards ? "text.alignleft" : "rectangle.on.rectangle",
+                        label: effectiveFormat == .cards ? "Short" : "Cards",
+                        theme: theme) { flipFormat() }
                 Spacer()
                 Button {
                     withAnimation(.snappy(duration: 0.25)) { dockExpanded.toggle() }
