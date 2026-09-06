@@ -187,8 +187,12 @@ struct CardsRenderer: View {
             VStack(alignment: .leading, spacing: 16) {
                 Text("\(i + 1) of \(cards.count)").font(theme.font(11, weight: .bold)).tracking(0.6).foregroundStyle(fgSecondary(on: tile))
                 Spacer(minLength: 0)
-                EditionRenderer.blockView(trimmed(b), edition: edition, scale: 1.2, onReadFull: onReadFull)
-                    .lineLimit(6)
+                let words = ((b.text ?? "") + " " + (b.items ?? []).joined(separator: " ")).split(separator: " ").count
+                let scale: CGFloat = words <= 14 ? 2.1 : (words <= 26 ? 1.75 : (words <= 40 ? 1.45 : 1.25))
+                EditionRenderer.blockView(trimmed(b), edition: edition, scale: scale, onReadFull: onReadFull)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .lineLimit(7)
+                    .minimumScaleFactor(0.7)
                 Spacer(minLength: 0)
                 swipeHint(i, light: !isLight(tile))
             }
