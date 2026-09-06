@@ -75,7 +75,6 @@ final class Newsreader {
         ]
         var config = ConversationConfig()
         config.dynamicVariables = vars
-        config.agentOverrides = AgentOverrides(firstMessage: "")
         do {
             let conv: Conversation
             if let key = Self.apiKey, let token = try? await Self.conversationToken(agentID: agent, apiKey: key) {
