@@ -147,7 +147,7 @@ struct CardsRenderer: View {
                 Text("Swipe").font(theme.font(12, weight: .heavy))
                 Image(systemName: "chevron.right").font(.system(size: 12, weight: .bold))
             } else {
-                Text("Read full").font(theme.font(12, weight: .heavy)).onTapGesture { onReadFull?() }
+                Text("Adapted").font(theme.font(12, weight: .heavy)).onTapGesture { onReadFull?() }
             }
         }
         .foregroundStyle(light ? Color.white.opacity(0.85) : Identity.ink.opacity(0.65))

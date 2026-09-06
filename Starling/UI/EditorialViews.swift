@@ -83,7 +83,7 @@ struct QuickEditionView: View {
             }
             Text(edition.rationale).font(Identity.grotesk(11)).foregroundStyle(theme.secondary).padding(.horizontal, 16).padding(.top, 14)
             Button(action: { onReadFull?() }) {
-                HStack { Text("FULL STORY").font(Identity.grotesk(11, .bold)).tracking(1.2); Image(systemName: "arrow.right").font(.system(size: 11, weight: .bold)) }
+                HStack { Text("ADAPTED").font(Identity.grotesk(11, .bold)).tracking(1.2); Image(systemName: "arrow.right").font(.system(size: 11, weight: .bold)) }
             }
             .buttonStyle(.plain).padding(.horizontal, 16).padding(.top, 10)
         }

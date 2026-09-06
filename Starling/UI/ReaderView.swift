@@ -249,8 +249,8 @@ struct ReaderView: View {
             if dockExpanded {
             HStack(spacing: 4) {
                 segment("Cards", on: effectiveFormat == .cards && mode != .longform && mode != .original) { if mode == .longform || mode == .original { mode = .adapted }; formatOverride = .cards }
-                segment("Text", on: effectiveFormat == .text && mode != .longform && mode != .original) { if mode == .longform || mode == .original { mode = .adapted }; formatOverride = .text }
-                segment("Full Story", on: mode == .longform) { mode = .longform }
+                segment("Short", on: effectiveFormat == .text && mode != .longform && mode != .original) { if mode == .longform || mode == .original { mode = .adapted }; formatOverride = .text }
+                segment("Adapted", on: mode == .longform) { mode = .longform }
                 segment("Original", on: mode == .original) { mode = .original }
             }
             .padding(4)
@@ -272,8 +272,8 @@ struct ReaderView: View {
     private var modeTitle: String {
         switch mode {
         case .original: return "Original"
-        case .longform: return "Full Story"
-        default: return effectiveFormat == .cards ? "Cards" : "Text"
+        case .longform: return "Adapted"
+        default: return effectiveFormat == .cards ? "Cards" : "Short"
         }
     }
 

@@ -9,7 +9,7 @@ struct CompareView: View {
     let article: Article
     @State private var right: GenerationIntent = .preset(.calm)
 
-    private var options: [(String, GenerationIntent)] { [("Calm", .preset(.calm)), ("Focused", .preset(.focused)), ("Commute", .preset(.commute)), ("Full story", .longform)] }
+    private var options: [(String, GenerationIntent)] { [("Calm", .preset(.calm)), ("Focused", .preset(.focused)), ("Commute", .preset(.commute)), ("Adapted", .longform)] }
 
     var body: some View {
         VStack(spacing: 0) {
