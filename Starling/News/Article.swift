@@ -16,7 +16,7 @@ struct Article: Identifiable, Hashable, Codable {
     let sourceID: String
     let summary: String
     let published: Date?
-    let imageURL: URL?
+    var imageURL: URL?
     /// Full extracted body (paragraphs). Nil until loaded; RSS content:encoded may prefill it.
     var body: [String]?
 

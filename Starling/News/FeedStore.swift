@@ -76,8 +76,9 @@ final class FeedStore {
     func loadBody(for article: Article) async -> Article {
         if let body = article.body, body.count >= 2 { return article }
         var copy = article
-        let paras = await ArticleExtractor.fetchBody(for: article)
+        let (paras, og) = await ArticleExtractor.fetch(for: article)
         copy.body = paras.isEmpty ? [article.summary] : paras
+        if copy.imageURL == nil, let og { copy.imageURL = og }
         if let idx = articles.firstIndex(where: { $0.id == article.id }) { articles[idx] = copy }
         return copy
     }

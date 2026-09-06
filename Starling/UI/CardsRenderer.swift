@@ -1,18 +1,16 @@
 import SwiftUI
 
-/// The same Edition as swipeable cards: one block per card. For walking, standing, transport.
+/// One idea per card. Progress segments on top, pastel card, big type, swipe hint. D direction.
 struct CardsRenderer: View {
+    @Environment(ImageGenerator.self) private var imageGen
     let edition: Edition
     var hero: UIImage? = nil
+    var mood: String = "focused"
+    @Binding var page: Int
     var onReadFull: (() -> Void)? = nil
-    @State private var page = 0
 
-    private var palette: Palette { DesignGenome.palette(edition.palette) }
-    private var accent: Color { DesignGenome.accent(edition.accent, palette: edition.palette) }
-    private var design: Font.Design { DesignGenome.design(edition.typeface) }
-    private var m: (body: CGFloat, headline: CGFloat, lineSpacing: CGFloat) { DesignGenome.metrics(edition.typeScale) }
+    private var theme: Theme { Theme.forEdition(edition) }
 
-    /// Group headline + dek into the first card; every other block is its own card.
     private var cards: [[Edition.Block]] {
         var out: [[Edition.Block]] = []
         var first: [Edition.Block] = []
@@ -24,50 +22,96 @@ struct CardsRenderer: View {
     }
 
     var body: some View {
-        VStack(spacing: 10) {
+        let m = theme.metrics
+        VStack(spacing: 12) {
+            HStack(spacing: 6) {
+                ForEach(0..<cards.count, id: \.self) { i in
+                    Capsule().fill(i <= page ? theme.ink : theme.surface).frame(height: 5)
+                }
+            }
+            .padding(.horizontal, 20)
             TabView(selection: $page) {
                 ForEach(Array(cards.enumerated()), id: \.offset) { i, blocks in
-                    VStack(alignment: .leading, spacing: 18) {
-                        Spacer(minLength: 0)
-                        if i == 0, let hero {
+                    VStack(alignment: .leading, spacing: 16) {
+                        Text("\(i + 1) of \(cards.count) · \(edition.stateSummary)".uppercased())
+                            .font(theme.font(11, weight: .bold)).tracking(0.6).foregroundStyle(theme.secondary)
+                        if i == 0, let hero, !blocks.contains(where: { $0.type == .imageCard }) {
                             Image(uiImage: hero).resizable().aspectRatio(contentMode: .fill)
-                                .frame(maxWidth: .infinity).frame(height: 150).clipShape(RoundedRectangle(cornerRadius: 16))
+                                .frame(maxWidth: .infinity).frame(height: 160).clipShape(RoundedRectangle(cornerRadius: 14))
                         }
+                        Spacer(minLength: 0)
                         ForEach(Array(blocks.enumerated()), id: \.offset) { _, b in
-                            if b.type == .imageCard, let hero {
-                                Image(uiImage: hero).resizable().aspectRatio(contentMode: .fill)
-                                    .frame(maxWidth: .infinity).frame(height: 220).clipShape(RoundedRectangle(cornerRadius: 16))
-                                if let c = b.caption { Text(c).font(.caption).foregroundStyle(palette.secondary) }
+                            if b.type == .imageCard {
+                                ImageCardView(block: b, edition: edition, hero: hero, mood: mood, height: 240)
                             } else {
                                 EditionRenderer.blockView(b, edition: edition, scale: 1.15, onReadFull: onReadFull)
                             }
                         }
                         Spacer(minLength: 0)
                         HStack {
-                            Text("\(i + 1) / \(cards.count)").font(.caption).foregroundStyle(palette.secondary)
                             Spacer()
-                            if i < cards.count - 1 { Image(systemName: "chevron.right").font(.caption).foregroundStyle(palette.secondary) }
+                            if i < cards.count - 1 {
+                                Text("Swipe").font(theme.font(12, weight: .heavy)).foregroundStyle(theme.secondary)
+                                Image(systemName: "chevron.right").font(.system(size: 12, weight: .bold)).foregroundStyle(theme.secondary)
+                            }
                         }
                     }
-                    .padding(24)
+                    .padding(22)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                    .background(palette.card, in: RoundedRectangle(cornerRadius: 24))
-                    .padding(.horizontal, 14)
+                    .background(theme.tiles[i % theme.tiles.count], in: RoundedRectangle(cornerRadius: 24))
+                    .padding(.horizontal, 16)
                     .tag(i)
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
-            .frame(height: UIScreen.main.bounds.height * 0.66)
-            HStack(spacing: 6) {
-                ForEach(0..<cards.count, id: \.self) { i in
-                    Capsule().fill(i == page ? accent : palette.secondary.opacity(0.3)).frame(width: i == page ? 18 : 6, height: 6)
+        }
+        .padding(.top, 6)
+        .foregroundStyle(theme.ink)
+        .background(theme.palette.background)
+        .environment(\.colorScheme, theme.palette.scheme)
+        .onAppear { _ = m }
+    }
+}
+
+/// An image card: a generated illustration or diagram when the edition asked for one, else the article's own image, else a symbol.
+struct ImageCardView: View {
+    @Environment(ImageGenerator.self) private var imageGen
+    let block: Edition.Block
+    let edition: Edition
+    var hero: UIImage?
+    var mood: String
+    var height: CGFloat = 200
+    private var theme: Theme { Theme.forEdition(edition) }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Group {
+                if let p = block.imagePrompt, !p.isEmpty, let img = imageGen.image(prompt: p, mood: mood) {
+                    Image(uiImage: img).resizable().aspectRatio(contentMode: .fill)
+                } else if let p = block.imagePrompt, !p.isEmpty, !imageGen.isFailed(prompt: p, mood: mood) {
+                    ZStack {
+                        theme.accent.opacity(0.14)
+                        VStack(spacing: 8) {
+                            ProgressView().tint(theme.ink)
+                            Text("Drawing…").font(theme.font(11, weight: .bold)).foregroundStyle(theme.secondary)
+                        }
+                    }
+                    .task { imageGen.request(prompt: p, mood: mood) }
+                } else if let hero {
+                    Image(uiImage: hero).resizable().aspectRatio(contentMode: .fill)
+                } else {
+                    ZStack {
+                        theme.accent.opacity(0.14)
+                        Image(systemName: (block.symbol.flatMap { UIImage(systemName: $0) != nil ? $0 : nil }) ?? "newspaper")
+                            .font(.system(size: 44, weight: .light)).foregroundStyle(theme.accent)
+                    }
                 }
             }
+            .frame(maxWidth: .infinity).frame(height: height)
+            .clipShape(RoundedRectangle(cornerRadius: 14))
+            if let c = block.caption, !c.isEmpty {
+                Text(c).font(theme.font(13)).foregroundStyle(theme.secondary)
+            }
         }
-        .padding(.vertical, 12)
-        .frame(maxWidth: .infinity)
-        .foregroundStyle(palette.text)
-        .background(palette.background)
-        .environment(\.colorScheme, palette.scheme)
     }
 }

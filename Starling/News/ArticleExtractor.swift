@@ -59,6 +59,26 @@ enum HTMLText {
 }
 
 enum ArticleExtractor {
+    static func ogImage(in html: String) -> URL? {
+        for pattern in ["<meta[^>]+property=\"og:image\"[^>]+content=\"([^\"]+)\"", "<meta[^>]+content=\"([^\"]+)\"[^>]+property=\"og:image\"", "<meta[^>]+name=\"twitter:image\"[^>]+content=\"([^\"]+)\""] {
+            if let re = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive),
+               let m = re.firstMatch(in: html, range: NSRange(location: 0, length: (html as NSString).length)) {
+                let s = (html as NSString).substring(with: m.range(at: 1))
+                if let u = URL(string: HTMLText.decodeEntities(s)) { return u }
+            }
+        }
+        return nil
+    }
+
+    static func fetch(for article: Article) async -> (paragraphs: [String], image: URL?) {
+        var req = URLRequest(url: article.link)
+        req.timeoutInterval = 12
+        req.setValue("Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1", forHTTPHeaderField: "User-Agent")
+        guard let (data, _) = try? await URLSession.shared.data(for: req),
+              let html = String(data: data, encoding: .utf8) ?? String(data: data, encoding: .isoLatin1) else { return ([], nil) }
+        return (HTMLText.paragraphs(fromHTML: html), ogImage(in: html))
+    }
+
     static func fetchBody(for article: Article) async -> [String] {
         var req = URLRequest(url: article.link)
         req.timeoutInterval = 12

@@ -23,6 +23,7 @@ struct Edition: Codable, Hashable, Identifiable {
         let items: [String]?
         let symbol: String?
         let caption: String?
+        var imagePrompt: String? = nil
         enum Kind: String, Codable { case headline, dek, keyFacts, paragraph, pullQuote, imageCard, timeline, takeaway, readFullPrompt }
     }
 
@@ -54,13 +55,14 @@ enum EditionSchema {
                 "items": [
                     "type": "object",
                     "additionalProperties": false,
-                    "required": ["type", "text", "items", "symbol", "caption"],
+                    "required": ["type", "text", "items", "symbol", "caption", "imagePrompt"],
                     "properties": [
                         "type": e(["headline", "dek", "keyFacts", "paragraph", "pullQuote", "imageCard", "timeline", "takeaway", "readFullPrompt"]),
                         "text": ["type": ["string", "null"]],
                         "items": ["type": ["array", "null"], "items": ["type": "string"]],
                         "symbol": ["type": ["string", "null"]],
                         "caption": ["type": ["string", "null"]],
+                        "imagePrompt": ["type": ["string", "null"]],
                     ],
                 ],
             ],

@@ -4,6 +4,7 @@ import SwiftUI
 struct EditionRenderer: View {
     let edition: Edition
     var hero: UIImage? = nil
+    var mood: String = "focused"
     var onReadFull: (() -> Void)? = nil
 
     private var palette: Palette { DesignGenome.palette(edition.palette) }
@@ -26,7 +27,7 @@ struct EditionRenderer: View {
     /// Where the hero goes: the first imageCard, else right after the headline/dek.
     private var heroIndex: Int? {
         guard hero != nil else { return nil }
-        if let i = edition.blocks.firstIndex(where: { $0.type == .imageCard }) { return i }
+        // The hero goes after the headline; imageCards render their own (generated) image.
         var i = 0
         while i < edition.blocks.count, edition.blocks[i].type == .headline || edition.blocks[i].type == .dek { i += 1 }
         return i
@@ -96,16 +97,7 @@ struct EditionRenderer: View {
             }
             .padding(.vertical, 4)
         case .imageCard:
-            VStack(alignment: .leading, spacing: 10) {
-                Image(systemName: validSymbol(b.symbol))
-                    .font(.system(size: m.headline * 1.3, weight: .light))
-                    .foregroundStyle(accent)
-                    .frame(maxWidth: .infinity, minHeight: m.headline * 2.6)
-                    .background(accent.opacity(0.12), in: RoundedRectangle(cornerRadius: 14))
-                if let c = b.caption, !c.isEmpty {
-                    Text(c).font(.system(size: m.body * 0.85, design: design)).foregroundStyle(palette.secondary)
-                }
-            }
+            ImageCardView(block: b, edition: edition, hero: (b.imagePrompt ?? "").isEmpty ? hero : nil, mood: mood, height: 200 * scale)
         case .timeline:
             VStack(alignment: .leading, spacing: m.lineSpacing * 1.4) {
                 ForEach(Array((b.items ?? []).enumerated()), id: \.offset) { i, item in
