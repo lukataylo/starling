@@ -4,6 +4,7 @@ import SwiftUI
 /// Image cards: a generated illustration full-bleed with its caption. Everything else: big type on a tile.
 struct CardsRenderer: View {
     @Environment(ImageGenerator.self) private var imageGen
+    @Environment(Generator.self) private var generator
     let edition: Edition
     let article: Article
     var hero: UIImage? = nil
@@ -35,9 +36,20 @@ struct CardsRenderer: View {
     /// Foreground for a tile colour: ink on acid, warm white on cobalt / red / ink.
     private func fg(on color: Color) -> Color { color == Identity.acid ? Identity.ink : Identity.warmWhite }
     private func fgSecondary(on color: Color) -> Color { color == Identity.acid ? Identity.ink.opacity(0.65) : Identity.warmWhite.opacity(0.7) }
+    /// Card i's poster: the current edition's own, else the story's pre-generated poster for this mood (then the other mood).
     private func poster(_ i: Int) -> UIImage? {
-        guard i < posters.count, let p = posters[i] else { return nil }
-        return imageGen.imageAnyMood(prompt: p, mood: mood)
+        if i < posters.count, let p = posters[i], let img = imageGen.imageAnyMood(prompt: p, mood: mood) { return img }
+        let src = FeedCatalog.source(article.sourceID)?.name ?? "Starling"
+        for m in (mood == "calm" ? ["calm", "focused"] : ["focused", "calm"]) {
+            guard let e = generator.bundled(article, .preset(m == "calm" ? .calm : .focused)) else { continue }
+            let ps = PosterPrompts.prompts(edition: e, title: article.title, summary: article.summary, sourceName: src, mood: m)
+            if i < ps.count, let p = ps[i], let img = imageGen.imageAnyMood(prompt: p, mood: m) { return img }
+        }
+        return nil
+    }
+    /// Only draw on demand when there is no pre-generated poster to fall back to.
+    private var hasBundledPosters: Bool {
+        generator.bundled(article, .preset(.calm)) != nil || generator.bundled(article, .preset(.focused)) != nil
     }
 
     var body: some View {
@@ -64,6 +76,7 @@ struct CardsRenderer: View {
         .background(theme.palette.background)
         .environment(\.colorScheme, theme.palette.scheme)
         .task {
+            guard !hasBundledPosters else { return }
             for p in posters { if let p, imageGen.imageAnyMood(prompt: p, mood: mood) == nil { imageGen.request(prompt: p, mood: mood) } }
         }
     }
@@ -89,7 +102,7 @@ struct CardsRenderer: View {
                     .fixedSize(horizontal: false, vertical: true)
                 Spacer()
                 HStack(spacing: 8) {
-                    if posters.first != nil && !imageGen.isFailed(prompt: posters[0]!, mood: mood) {
+                    if !hasBundledPosters, posters.first != nil, !imageGen.isFailed(prompt: posters[0]!, mood: mood) {
                         ProgressView().tint(theme.ink).scaleEffect(0.8)
                         Text("Drawing poster…").font(theme.font(11, weight: .bold)).foregroundStyle(Identity.ink.opacity(0.65))
                     }
