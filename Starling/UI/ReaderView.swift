@@ -19,7 +19,12 @@ struct ReaderView: View {
     @State private var shownState: UserState?
     @State private var pendingState: UserState?
     @State private var pendingSince: Date?
-    @State private var formatOverride: EditionFormat?
+    /// The reader's cards/short choice, remembered across stories ("" = follow the edition).
+    @AppStorage("readerFormat") private var storedFormat = ""
+    private var formatOverride: EditionFormat? {
+        get { EditionFormat(rawValue: storedFormat) }
+        nonmutating set { storedFormat = newValue?.rawValue ?? "" }
+    }
     @State private var cardPage = 0
     @State private var showCall = false
     private let stableAfter: TimeInterval = 5

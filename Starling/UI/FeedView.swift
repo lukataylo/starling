@@ -461,11 +461,7 @@ struct StackCard: View {
                 .padding(.horizontal, 16)
                 .frame(maxWidth: .infinity, alignment: .leading)
             Spacer(minLength: 8)
-            HStack(alignment: .bottom) {
-                Text(article.summary).font(Identity.serif(17)).lineSpacing(3).lineLimit(4).foregroundStyle(ink.opacity(0.85))
-                Spacer(minLength: 10)
-                ArrowDot(light: color != Identity.acid)
-            }
+            HStack { Spacer(); ArrowDot(light: color != Identity.acid) }
             .padding(16)
             .padding(.bottom, 6)
         }
