@@ -9,10 +9,12 @@ struct FeedView: View {
     @Environment(HeroImageStore.self) private var heroes
     @Environment(ImageGenerator.self) private var imageGen
     @Environment(StateRules.self) private var rules
-    @State private var showSources = false
-    @State private var showSettings = false
-    @State private var showSignals = false
-    @State private var showBookmarks = false
+    enum HomeSheet: String, Identifiable { case sources, settings, signals, bookmarks; var id: String { rawValue } }
+    @State private var sheet: HomeSheet?
+    private var showSources: Binding<Bool> { Binding(get: { sheet == .sources }, set: { sheet = $0 ? .sources : nil }) }
+    private var showSettings: Binding<Bool> { Binding(get: { sheet == .settings }, set: { sheet = $0 ? .settings : nil }) }
+    private var showSignals: Binding<Bool> { Binding(get: { sheet == .signals }, set: { sheet = $0 ? .signals : nil }) }
+    private var showBookmarks: Binding<Bool> { Binding(get: { sheet == .bookmarks }, set: { sheet = $0 ? .bookmarks : nil }) }
     @State private var mode: HomeMode = .tiles
     @State private var modeChosen = false
     @State private var proposedMode: HomeMode?
@@ -27,10 +29,14 @@ struct FeedView: View {
             .animation(.easeInOut(duration: 0.35), value: mode)
             .toolbar(.hidden, for: .navigationBar)
             .navigationDestination(for: Article.self) { article in ReaderView(article: article) }
-            .sheet(isPresented: $showSources) { SourcePicker() }
-            .sheet(isPresented: $showSettings) { SettingsView() }
-            .sheet(isPresented: $showSignals) { SignalSheet(theme: theme) }
-            .sheet(isPresented: $showBookmarks) { BookmarksView() }
+            .sheet(item: $sheet) { which in
+                switch which {
+                case .sources: SourcePicker()
+                case .settings: SettingsView()
+                case .signals: SignalSheet(theme: theme)
+                case .bookmarks: BookmarksView()
+                }
+            }
             .task { if feeds.articles.isEmpty { await feeds.refresh() } }
             .onChange(of: feeds.enabledIDs, initial: true) { _, ids in generator.sourceSignature = ids.sorted().joined(separator: ",") }
             .onChange(of: feeds.lastRefresh) { _, _ in prefetch(); feeds.articles.prefix(16).forEach { heroes.load($0.imageURL) } }
@@ -57,7 +63,7 @@ struct FeedView: View {
         let scheme: ColorScheme = mode == .stack ? .dark : theme.palette.scheme
         Group {
             if mode == .stack { StackHome() }
-            else { TileHome(showSources: $showSources, showSettings: $showSettings, showSignals: $showSignals, showBookmarks: $showBookmarks) }
+            else { TileHome(showSources: showSources, showSettings: showSettings, showSignals: showSignals, showBookmarks: showBookmarks) }
         }
         .background(bg.ignoresSafeArea())
         .environment(\.colorScheme, scheme)
@@ -310,8 +316,9 @@ struct StackHome: View {
     @State private var hintPhase = false
 
     private var colours: [Color] { [Identity.acid, Identity.cobalt, Identity.ink] }
-    private let peek: CGFloat = 34
+    private let peek: CGFloat = 44
     private let threshold: CGFloat = 110
+    private let fan: [Double] = [0, -3.5, 3, -2]
 
     var body: some View {
         let a = feeds.articles
@@ -336,13 +343,14 @@ struct StackHome: View {
                             let isTop = depth == 0
                             // Cards behind rise and grow as the top one leaves.
                             let lift = isTop ? drag.height : -(d - progress) * peek
-                            let scale = isTop ? (touching ? 1.02 : 1) : 1 - (d - progress) * 0.035
+                            let scale = isTop ? (touching ? 1.02 : 1) : 1 - (d - progress) * 0.05
+                            let fanAngle = isTop ? 0 : fan[min(depth, fan.count - 1)] * Double(1 - progress)
                             StackCard(article: a[i], color: colours[i % colours.count], serif: i % colours.count != 0, height: cardH, parallax: isTop ? drag : .zero)
                                 .onTapGesture { if isTop { opened = a[i] } else { withAnimation(.snappy(duration: 0.35)) { index = i } } }
                                 .frame(height: cardH)
                                 .scaleEffect(scale, anchor: .top)
                                 .rotation3DEffect(.degrees(isTop ? Double(-drag.height / 40) : 0), axis: (x: 1, y: 0, z: 0), perspective: 0.6)
-                                .rotationEffect(.degrees(isTop ? Double(drag.width / 18) : 0), anchor: .bottom)
+                                .rotationEffect(.degrees(isTop ? Double(drag.width / 18) : fanAngle), anchor: .bottom)
                                 .offset(x: isTop ? drag.width : 0, y: lift)
                                 .shadow(color: .black.opacity(isTop ? (touching ? 0.45 : 0.25) : 0.15), radius: isTop && touching ? 28 : 12, y: isTop && touching ? 16 : 6)
                                 .opacity(isTop ? Double(1 - progress * 0.35) : 1)
