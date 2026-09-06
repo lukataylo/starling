@@ -4,7 +4,8 @@ import Observation
 /// Owns generated editions, caching by (article, intent, state bucket), plus reader feedback that evolves later generations.
 @Observable @MainActor
 final class Generator {
-    struct Key: Hashable { let articleID: String; let intent: String; let bucket: String }
+    struct Key: Hashable, Codable { let articleID: String; let intent: String; let bucket: String
+        var string: String { articleID + "\u{1}" + intent + "\u{1}" + bucket } }
     enum Status: Equatable { case idle, generating, failed(String) }
 
     private(set) var editions: [Key: Edition] = [:]
@@ -22,6 +23,26 @@ final class Generator {
     private let bundledEditions: [String: [String: Edition]]
     private let bundledMedia: [String: [String: String]]
 
+    private var cacheURL: URL {
+        FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0].appendingPathComponent("editions-cache.json")
+    }
+
+    /// Save generated editions so overnight work survives a relaunch.
+    func persist() {
+        var out: [String: Edition] = [:]
+        for (k, v) in editions { out[k.string] = v }
+        if let data = try? JSONEncoder().encode(out) { try? data.write(to: cacheURL) }
+    }
+
+    private func restore() {
+        guard let data = try? Data(contentsOf: cacheURL), let saved = try? JSONDecoder().decode([String: Edition].self, from: data) else { return }
+        for (ks, e) in saved {
+            let parts = ks.components(separatedBy: "\u{1}")
+            guard parts.count == 3 else { continue }
+            editions[Key(articleID: parts[0], intent: parts[1], bucket: parts[2])] = e
+        }
+    }
+
     init() {
         feedback = UserDefaults.standard.stringArray(forKey: "readerFeedback") ?? []
         if let url = Bundle.main.url(forResource: "editions", withExtension: "json"), let data = try? Data(contentsOf: url) {
@@ -30,6 +51,7 @@ final class Generator {
         if let url = Bundle.main.url(forResource: "media", withExtension: "json"), let data = try? Data(contentsOf: url) {
             bundledMedia = (try? JSONDecoder().decode([String: [String: String]].self, from: data)) ?? [:]
         } else { bundledMedia = [:] }
+        restore()
     }
 
     func bundled(_ article: Article, _ intent: GenerationIntent) -> Edition? {
@@ -124,6 +146,7 @@ final class Generator {
                 self.lastUsage = usage.map { "\($0.key)=\($0.value)" }.sorted().joined(separator: " ")
                 self.editions[k] = edition
                 self.status[k] = .idle
+                self.persist()
                 return edition
             } catch {
                 self.status[k] = .failed(error.localizedDescription)

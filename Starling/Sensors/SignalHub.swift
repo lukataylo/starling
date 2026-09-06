@@ -101,7 +101,34 @@ final class SignalHub {
         phase = .calibrating(0)
     }
 
+    /// Histogram of (time of day | label | motion) seen, one count per minute, for overnight pre-generation.
+    private var lastHistoryTick = Date.distantPast
+    private func recordHistory() {
+        guard Date().timeIntervalSince(lastHistoryTick) > 60 else { return }
+        lastHistoryTick = .now
+        var h = UserDefaults.standard.dictionary(forKey: "stateHistory") as? [String: Int] ?? [:]
+        let key = "\(state.timeOfDay.rawValue)|\(state.label.rawValue)|\(state.motion.rawValue)"
+        h[key, default: 0] += 1
+        UserDefaults.standard.set(h, forKey: "stateHistory")
+    }
+
+    /// The states this reader is most often in, synthesised from the history.
+    func frequentStates() -> [(String, UserState)] {
+        let h = UserDefaults.standard.dictionary(forKey: "stateHistory") as? [String: Int] ?? [:]
+        return h.sorted { $0.value > $1.value }.prefix(3).compactMap { entry in
+            let p = entry.key.components(separatedBy: "|")
+            guard p.count == 3, let tod = TimeOfDay(rawValue: p[0]), let label = ReaderLabel(rawValue: p[1]), let motion = MotionState(rawValue: p[2]) else { return nil }
+            var s = UserState(); s.timeOfDay = tod; s.label = label; s.motion = motion
+            s.stress = label == .tense ? 0.65 : (label == .calm ? 0.1 : 0.3)
+            s.attention = label == .distracted ? 0.3 : 0.85
+            let hour: Int = [.earlyMorning: 7, .morning: 9, .midday: 12, .afternoon: 15, .evening: 20, .night: 23][tod] ?? 12
+            s.clock = Calendar.current.date(bySettingHour: hour, minute: 0, second: 0, of: .now) ?? .now
+            return ("\(tod.label), \(label.rawValue)\(motion == .walking ? ", walking" : "")", s)
+        }
+    }
+
     private func tick() {
+        recordHistory()
         // Calibration progress: 20s after the face is first seen (extend to 45s if pulse is slow to lock).
         if let t0 = faceStartedAt, !calibrationDone {
             let elapsed = Date().timeIntervalSince(t0)

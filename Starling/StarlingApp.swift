@@ -8,6 +8,7 @@ struct StarlingApp: App {
     @State private var heroes = HeroImageStore()
     @State private var imageGen = ImageGenerator()
     @State private var rules = StateRules()
+    @State private var overnight = OvernightPregen()
     @Environment(\.scenePhase) private var scenePhase
 
     var body: some Scene {
@@ -19,9 +20,11 @@ struct StarlingApp: App {
                 .environment(heroes)
                 .environment(imageGen)
                 .environment(rules)
+                .environment(overnight)
                 .task {
                     generator.rulesTextProvider = { [rules] s in rules.promptText(for: s) }
                     generator.rulesSignature = rules.signature
+                    overnight.register(feeds: feeds, generator: generator, images: imageGen, hub: hub)
                     hub.start()
                 }
                 .onChange(of: scenePhase) { _, p in

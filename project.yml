@@ -43,6 +43,8 @@ targets:
         NSCameraUsageDescription: "Starling uses the front camera to estimate your attention and pulse so it can adapt the article to you. Camera frames never leave the device."
         NSMotionUsageDescription: "Starling uses motion to know whether you're sitting, walking or lying down."
         NSHealthShareUsageDescription: "Starling reads your heart rate from Apple Watch to sense how calm or tense you are while reading."
+        UIBackgroundModes: [processing]
+        BGTaskSchedulerPermittedIdentifiers: [com.lukadadiani.starling.overnight]
         NSAppTransportSecurity:
           NSAllowsArbitraryLoads: true
         OPENAI_API_KEY: "$(OPENAI_API_KEY)"

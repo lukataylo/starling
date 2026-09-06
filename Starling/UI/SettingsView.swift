@@ -4,6 +4,9 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(SignalHub.self) private var hub
     @Environment(Generator.self) private var generator
+    @Environment(OvernightPregen.self) private var overnight
+    @Environment(FeedStore.self) private var feeds
+    @Environment(ImageGenerator.self) private var imageGen
     @AppStorage("apiKeyOverride") private var keyOverride = ""
     @AppStorage("modelOverride") private var modelOverride = ""
     @State private var useClockOverride = false
@@ -30,6 +33,18 @@ struct SettingsView: View {
                     Text(bundledKeyStatus).font(.caption).foregroundStyle(.secondary)
                     TextField("Model (blank = \(LLMClient.defaultModel))", text: $modelOverride)
                         .autocorrectionDisabled().textInputAutocapitalization(.never)
+                }
+                Section {
+                    Toggle("Pre-generate overnight", isOn: Binding(get: { overnight.isEnabled }, set: { overnight.isEnabled = $0 }))
+                    Button(overnight.isRunning ? "Running…" : "Run now") {
+                        Task { await overnight.run(feeds: feeds, generator: generator, images: imageGen, hub: hub, perSource: 2, postersFor: 2) }
+                    }.disabled(overnight.isRunning)
+                    if overnight.isRunning { Text(overnight.progress).font(.caption).foregroundStyle(.secondary) }
+                    if let d = overnight.lastRun {
+                        Text("Last run \(d.formatted(date: .abbreviated, time: .shortened)). \(overnight.lastSummary)").font(.caption).foregroundStyle(.secondary)
+                    }
+                } header: { Text("Overnight pre-generation") } footer: {
+                    Text("While charging on wifi, Starling pre-renders the top stories from each of your sources for the states you're most often in (\(overnight.commonStates(hub: hub).map(\.name).joined(separator: ", "))), plus their posters, so the morning feed opens instantly.")
                 }
                 Section("The interface is never finished") {
                     NavigationLink("Layout rules per state") { LayoutRulesView() }
