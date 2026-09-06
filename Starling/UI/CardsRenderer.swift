@@ -86,16 +86,23 @@ struct CardsRenderer: View {
                 }
             }
             .padding(.horizontal, 20)
-            TabView(selection: $page) {
-                ForEach(Array(cards.enumerated()), id: \.offset) { i, blocks in
-                    card(i, blocks)
-                        .environment(\.colorScheme, isLight(tile(i)) || i == 0 ? .light : .dark)
-                        .clipShape(RoundedRectangle(cornerRadius: 26))
-                        .padding(.horizontal, 16)
-                        .tag(i)
+            // Every card is exactly 2:3, the posters' ratio, sized to the space available, so nothing is cropped.
+            GeometryReader { geo in
+                let maxW = geo.size.width - 32
+                let h = min(geo.size.height - 8, maxW * 1.5)
+                let w = min(maxW, h / 1.5)
+                TabView(selection: $page) {
+                    ForEach(Array(cards.enumerated()), id: \.offset) { i, blocks in
+                        card(i, blocks)
+                            .environment(\.colorScheme, isLight(tile(i)) || i == 0 ? .light : .dark)
+                            .frame(width: w, height: h)
+                            .clipShape(RoundedRectangle(cornerRadius: 26))
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .tag(i)
+                    }
                 }
+                .tabViewStyle(.page(indexDisplayMode: .never))
             }
-            .tabViewStyle(.page(indexDisplayMode: .never))
         }
         .padding(.top, 6)
         .foregroundStyle(theme.ink)
