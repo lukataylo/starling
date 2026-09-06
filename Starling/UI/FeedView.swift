@@ -302,14 +302,16 @@ struct StackHome: View {
     @Environment(FeedStore.self) private var feeds
     @Environment(SignalHub.self) private var hub
     @State private var index = 0
-    @State private var drag: CGFloat = 0
+    @State private var drag: CGSize = .zero
+    @State private var touching = false
     @State private var flying = false
     @State private var showSignals = false
     @State private var opened: Article?
     @State private var hintPhase = false
 
-    private var colours: [Color] { [Identity.acid, Identity.cobalt, Identity.red] }
+    private var colours: [Color] { [Identity.acid, Identity.cobalt, Identity.ink] }
     private let peek: CGFloat = 34
+    private let threshold: CGFloat = 110
 
     var body: some View {
         let a = feeds.articles
@@ -317,7 +319,7 @@ struct StackHome: View {
             HStack {
                 StatePill(theme: hub.theme) { showSignals = true }
                 Spacer()
-                Text("\(a.isEmpty ? 0 : index + 1) / \(a.count)").font(.system(size: 11, weight: .medium, design: .monospaced)).foregroundStyle(Identity.warmWhite.opacity(0.6)).padding(.trailing, 4)
+                Text("\(a.isEmpty ? 0 : index + 1) / \(a.count)").font(.system(size: 11, weight: .medium, design: .monospaced)).foregroundStyle(Identity.warmWhite.opacity(0.6))
             }
             .padding(.horizontal, 16).padding(.top, 6)
             if a.isEmpty {
@@ -325,21 +327,25 @@ struct StackHome: View {
             } else {
                 GeometryReader { geo in
                     let cardH = geo.size.height - peek * 3 - 8
+                    let distance = hypot(drag.width, drag.height)
+                    let progress = min(1, distance / 160)
                     ZStack(alignment: .bottom) {
                         ForEach(Array((0..<min(4, a.count)).reversed()), id: \.self) { depth in
                             let i = (index + depth) % a.count
-                            let progress = min(1, max(0, -drag / 160))   // how far the top card has been pushed
                             let d = CGFloat(depth)
-                            // Cards behind rise into place as the top one leaves.
-                            let lift = depth == 0 ? drag : -(d - progress) * peek
-                            let scale = depth == 0 ? 1 - progress * 0.04 : 1 - (d - progress) * 0.035
-                            StackCard(article: a[i], color: colours[i % colours.count], serif: i % colours.count != 0, height: cardH)
-                                .onTapGesture { if depth == 0 { opened = a[i] } else { withAnimation(.snappy(duration: 0.35)) { index = i } } }
+                            let isTop = depth == 0
+                            // Cards behind rise and grow as the top one leaves.
+                            let lift = isTop ? drag.height : -(d - progress) * peek
+                            let scale = isTop ? (touching ? 1.02 : 1) : 1 - (d - progress) * 0.035
+                            StackCard(article: a[i], color: colours[i % colours.count], serif: i % colours.count != 0, height: cardH, parallax: isTop ? drag : .zero)
+                                .onTapGesture { if isTop { opened = a[i] } else { withAnimation(.snappy(duration: 0.35)) { index = i } } }
                                 .frame(height: cardH)
                                 .scaleEffect(scale, anchor: .top)
-                                .rotationEffect(.degrees(depth == 0 ? Double(-drag / 60) : 0), anchor: .bottom)
-                                .offset(y: lift)
-                                .opacity(depth == 0 ? Double(1 - progress * 0.6) : 1)
+                                .rotation3DEffect(.degrees(isTop ? Double(-drag.height / 40) : 0), axis: (x: 1, y: 0, z: 0), perspective: 0.6)
+                                .rotationEffect(.degrees(isTop ? Double(drag.width / 18) : 0), anchor: .bottom)
+                                .offset(x: isTop ? drag.width : 0, y: lift)
+                                .shadow(color: .black.opacity(isTop ? (touching ? 0.45 : 0.25) : 0.15), radius: isTop && touching ? 28 : 12, y: isTop && touching ? 16 : 6)
+                                .opacity(isTop ? Double(1 - progress * 0.35) : 1)
                                 .zIndex(Double(10 - depth))
                                 .allowsHitTesting(!flying)
                         }
@@ -348,27 +354,33 @@ struct StackHome: View {
                     .padding(.horizontal, 16)
                     .contentShape(Rectangle())
                     .highPriorityGesture(
-                        DragGesture(minimumDistance: 8)
+                        DragGesture(minimumDistance: 4)
                             .onChanged { v in
-                                let dy = v.translation.height
-                                drag = dy < 0 ? dy : dy * 0.25   // rubber-band on downward pulls
+                                if !touching { withAnimation(.snappy(duration: 0.18)) { touching = true } }
+                                var t = v.translation
+                                if t.height > 0 { t.height *= 0.35 }   // rubber-band downward
+                                drag = t
                             }
                             .onEnded { v in
-                                let dy = v.translation.height
-                                if dy < -70 || v.predictedEndTranslation.height < -220 { advance(count: a.count, height: geo.size.height) }
-                                else if dy > 70 { withAnimation(.snappy(duration: 0.35)) { index = (index - 1 + a.count) % a.count; drag = 0 } }
-                                else { withAnimation(.snappy(duration: 0.3)) { drag = 0 } }
+                                let t = v.translation, p = v.predictedEndTranslation
+                                let flick = hypot(p.width, p.height) > 320
+                                if t.height < -threshold || abs(t.width) > threshold || (flick && t.height < 0) || (flick && abs(t.width) > 40) {
+                                    flyOff(direction: CGSize(width: p.width, height: min(p.height, -200)), count: a.count, size: geo.size)
+                                } else if t.height > 70 {
+                                    withAnimation(.snappy(duration: 0.35)) { index = (index - 1 + a.count) % a.count; drag = .zero; touching = false }
+                                } else {
+                                    withAnimation(.spring(response: 0.42, dampingFraction: 0.72)) { drag = .zero; touching = false }
+                                }
                             })
                 }
                 .padding(.top, 14)
                 HStack(spacing: 8) {
-                    Image(systemName: "chevron.up").font(.system(size: 11, weight: .bold)).offset(y: hintPhase ? -3 : 2)
-                    Text("SWIPE UP FOR NEXT").font(Identity.grotesk(10, .semibold)).tracking(2)
+                    Image(systemName: "hand.draw").font(.system(size: 12, weight: .semibold)).offset(y: hintPhase ? -2 : 2)
+                    Text("DRAG THE CARD · FLICK TO PASS").font(Identity.grotesk(10, .semibold)).tracking(2)
                 }
                 .foregroundStyle(Identity.warmWhite.opacity(0.7))
-                .frame(maxWidth: .infinity)
-                .padding(.leading, 120)   // sits to the right of the floating mode switch
                 .padding(.vertical, 12)
+                .padding(.leading, 120)
                 .onAppear { withAnimation(.easeInOut(duration: 0.9).repeatForever(autoreverses: true)) { hintPhase = true } }
             }
         }
@@ -376,13 +388,15 @@ struct StackHome: View {
         .navigationDestination(item: $opened) { ReaderView(article: $0) }
     }
 
-    /// Fly the top card off the top, then bring the next one forward.
-    private func advance(count: Int, height: CGFloat) {
+    /// Throw the top card off in the flick's direction, then bring the next one forward.
+    private func flyOff(direction: CGSize, count: Int, size: CGSize) {
         flying = true
-        withAnimation(.easeIn(duration: 0.22)) { drag = -height }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.22) {
+        let mag = max(1, hypot(direction.width, direction.height))
+        let target = CGSize(width: direction.width / mag * size.width * 1.4, height: direction.height / mag * size.height * 1.4)
+        withAnimation(.easeIn(duration: 0.24)) { drag = target; touching = false }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.24) {
             index = (index + 1) % count
-            drag = 0
+            drag = .zero
             flying = false
         }
     }
@@ -417,6 +431,7 @@ struct StackCard: View {
     let color: Color
     let serif: Bool
     var height: CGFloat = 560
+    var parallax: CGSize = .zero
     private var ink: Color { color == Identity.acid ? Identity.ink : Identity.warmWhite }
     var body: some View {
         let imageH = max(150, height * 0.36)
@@ -440,6 +455,8 @@ struct StackCard: View {
             Spacer(minLength: 8)
             ZStack(alignment: .bottomLeading) {
                 StoryArt(article: article, mono: true)
+                    .scaleEffect(1.08)
+                    .offset(x: -parallax.width * 0.08, y: -parallax.height * 0.06)
                 LinearGradient(colors: [.clear, .black.opacity(0.6)], startPoint: .center, endPoint: .bottom)
                 HStack(alignment: .bottom) {
                     Text(article.summary).font(Identity.serif(14)).lineLimit(2).foregroundStyle(Identity.warmWhite)
