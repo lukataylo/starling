@@ -1,92 +1,132 @@
 import SwiftUI
+import AVFoundation
 
-/// "Call the newsreader": live transcript, speaking indicator, a proposal card when the agent asks to change the version.
+/// The call: full acid-green screen, timer, Starling wordmark, the story, the bird, what's being said, a waveform, and Speaker / End / Mute.
 struct CallSheet: View {
     @Environment(Newsreader.self) private var reader
     @Environment(\.dismiss) private var dismiss
     let article: Article
     let theme: Theme
     let onApply: (String) -> Void
+    @State private var started = Date()
+    @State private var now = Date()
+    @State private var speaker = true
+    @State private var wave: [CGFloat] = Array(repeating: 0.2, count: 28)
+    private let tick = Timer.publish(every: 0.12, on: .main, in: .common).autoconnect()
+
+    private var latestAgentLine: String {
+        reader.transcript.last { $0.role == "newsreader" }?.text ?? ""
+    }
+    private var elapsed: String {
+        let s = Int(now.timeIntervalSince(started)); return String(format: "%02d:%02d", s / 60, s % 60)
+    }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            HStack {
-                Text("NEWSREADER").font(.system(size: 12, weight: .semibold, design: .monospaced)).tracking(1.5)
-                Spacer()
-                HStack(spacing: 8) {
-                    Circle().fill(dotColor).frame(width: 8, height: 8)
-                    Text(statusText).font(.system(size: 11, weight: .medium, design: .monospaced)).foregroundStyle(theme.secondary)
-                }
-            }
-            Text(article.title).font(Identity.grotesk(20, .heavy)).tracking(-0.6).lineSpacing(-2).fixedSize(horizontal: false, vertical: true)
-            if let p = reader.proposal {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("THE NEWSREADER SUGGESTS").font(Identity.grotesk(10, .bold)).tracking(1.4).foregroundStyle(theme.secondary)
-                    Text("Switch to the \(p.kind) version?").font(Identity.grotesk(15, .bold))
-                    Text(p.reason).font(Identity.grotesk(13)).foregroundStyle(theme.secondary)
-                    HStack { Button("Yes, switch") { onApply(p.kind) }.buttonStyle(.borderedProminent).tint(Identity.acid).foregroundStyle(Identity.ink); Text("or just say yes").font(Identity.grotesk(11)).foregroundStyle(theme.secondary) }
-                }
-                .padding(14).frame(maxWidth: .infinity, alignment: .leading).background(theme.surface, in: RoundedRectangle(cornerRadius: 12))
-            }
-            ScrollViewReader { proxy in
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 10) {
-                        ForEach(Array(reader.transcript.enumerated()), id: \.offset) { i, line in
-                            VStack(alignment: .leading, spacing: 3) {
-                                Text(line.role.uppercased()).font(Identity.grotesk(9, .bold)).tracking(1.4).foregroundStyle(line.role == "you" ? theme.accent : theme.secondary)
-                                Text(line.text).font(line.role == "you" ? Identity.grotesk(15, .medium) : Identity.serif(16)).lineSpacing(3).fixedSize(horizontal: false, vertical: true)
-                            }
-                            .id(i)
+        ZStack {
+            RadialGradient(colors: [Color(red: 0.72, green: 0.98, blue: 0.10), Identity.acid, Color(red: 0.82, green: 1.0, blue: 0.30)], center: .init(x: 0.6, y: 0.45), startRadius: 40, endRadius: 520)
+                .ignoresSafeArea()
+            VStack(spacing: 0) {
+                Text(elapsed).font(Identity.grotesk(17, .medium)).padding(.top, 14)
+                Text("Starling").font(Identity.grotesk(56, .semibold)).tracking(-2.5).padding(.top, 6)
+                Text(article.title).font(Identity.grotesk(17, .medium)).multilineTextAlignment(.center).lineLimit(2).padding(.horizontal, 32).padding(.top, 2)
+                Text(subtitle).font(Identity.grotesk(17, .medium)).opacity(0.85).padding(.top, 2)
+                Spacer(minLength: 10)
+                Image("Bird").resizable().aspectRatio(contentMode: .fit).frame(width: 250)
+                    .scaleEffect(reader.agentSpeaking ? 1.03 : 1).animation(.easeInOut(duration: 0.6).repeatForever(autoreverses: true), value: reader.agentSpeaking)
+                Spacer(minLength: 10)
+                Text(statusLabel).font(Identity.grotesk(11, .medium)).tracking(3).opacity(0.7)
+                Group {
+                    if let p = reader.proposal {
+                        VStack(spacing: 8) {
+                            Text("Switch to the \(p.kind) version?").font(Identity.grotesk(26, .semibold)).tracking(-0.8).multilineTextAlignment(.center)
+                            Button("Yes, switch") { onApply(p.kind) }.font(Identity.grotesk(14, .bold)).padding(.horizontal, 16).padding(.vertical, 9).background(Identity.ink, in: Capsule()).foregroundStyle(Identity.acid)
                         }
-                        if reader.transcript.isEmpty { Text(emptyText).font(Identity.serif(16)).foregroundStyle(theme.secondary) }
+                    } else {
+                        Text(latestAgentLine.isEmpty ? placeholder : latestAgentLine)
+                            .font(Identity.grotesk(26, .semibold)).tracking(-0.8).lineSpacing(-1)
+                            .multilineTextAlignment(.center).lineLimit(5).minimumScaleFactor(0.7)
+                            .contentTransition(.opacity)
+                            .animation(.easeInOut(duration: 0.25), value: latestAgentLine)
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .onChange(of: reader.transcript.count) { _, n in withAnimation { proxy.scrollTo(max(0, n - 1), anchor: .bottom) } }
+                .frame(minHeight: 130)
+                .padding(.horizontal, 28).padding(.top, 10)
+                Text(reader.agentSpeaking ? "Interrupt with a question" : "Ask anything about the story").font(Identity.grotesk(15)).opacity(0.7).padding(.top, 6)
+                HStack(alignment: .center, spacing: 3) {
+                    ForEach(Array(wave.enumerated()), id: \.offset) { _, h in
+                        Capsule().fill(Identity.ink).frame(width: 3, height: 4 + 44 * h)
+                    }
+                }
+                .frame(height: 52).padding(.top, 18)
+                Spacer(minLength: 10)
+                HStack(spacing: 0) {
+                    callButton("Speaker", speaker ? "speaker.wave.2.fill" : "speaker.fill", fill: Identity.ink.opacity(speaker ? 0.62 : 0.3)) { toggleSpeaker() }
+                    Spacer()
+                    callButton("End", "phone.down.fill", fill: Identity.red, size: 84) { Task { await reader.endCall() }; dismiss() }
+                    Spacer()
+                    callButton("Mute", reader.isMuted ? "mic.slash.fill" : "mic.fill", fill: Identity.ink.opacity(reader.isMuted ? 0.3 : 0.62)) { Task { await reader.toggleMute() } }
+                }
+                .padding(.horizontal, 44).padding(.bottom, 26)
             }
-            HStack(spacing: 10) {
-                Button { Task { await reader.toggleMute() } } label: { Label(reader.isMuted ? "Unmute" : "Mute", systemImage: reader.isMuted ? "mic.slash" : "mic") }
-                Button { Task { await reader.interrupt() } } label: { Label("Interrupt", systemImage: "hand.raised") }
-                Spacer()
-                Button { Task { await reader.endCall() }; dismiss() } label: { Label("End", systemImage: "phone.down.fill") }.buttonStyle(.borderedProminent).tint(Identity.red)
-            }
-            .buttonStyle(.bordered).font(Identity.grotesk(12, .semibold))
+            .foregroundStyle(Identity.ink)
         }
-        .padding(20)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .background(theme.palette.background)
-        .foregroundStyle(theme.ink)
-        .environment(\.colorScheme, theme.palette.scheme)
+        .environment(\.colorScheme, .light)
+        .onReceive(tick) { t in
+            now = t
+            let live = reader.callState == .live
+            let energy: CGFloat = live ? (reader.agentSpeaking ? 1 : (reader.isMuted ? 0.05 : 0.25)) : 0.08
+            wave = wave.indices.map { i in
+                let centre = 1 - abs(CGFloat(i) - 13.5) / 14
+                return max(0.05, min(1, CGFloat.random(in: 0...1) * energy * centre + 0.05))
+            }
+        }
+        .onAppear { started = .now; try? AVAudioSession.sharedInstance().overrideOutputAudioPort(.speaker) }
         .presentationDetents([.large])
-        .presentationDragIndicator(.visible)
-        .interactiveDismissDisabled(reader.callState == .live)
+        .presentationDragIndicator(.hidden)
+        .interactiveDismissDisabled(reader.callState == .live || reader.callState == .connecting)
     }
 
-    private var dotColor: Color {
+    private var subtitle: String {
         switch reader.callState {
-        case .live: return reader.agentSpeaking ? Identity.acid : Color.green
-        case .connecting, .authoring: return .orange
-        case .failed: return Identity.red
-        default: return theme.secondary
+        case .authoring: return "Writing the story"
+        case .connecting: return "Calling"
+        case .live: return "Talking to the article"
+        case .ended: return "Call ended"
+        case .failed: return "Couldn't connect"
+        default: return ""
         }
     }
-    private var statusText: String {
+    private var statusLabel: String {
         switch reader.callState {
-        case .idle: return "IDLE"
-        case .authoring: return "WRITING THE STORY"
-        case .connecting: return "CALLING"
-        case .live: return reader.agentSpeaking ? "SPEAKING" : "LISTENING"
-        case .ended: return "ENDED"
-        case .failed(let why): return "FAILED · " + why.uppercased().prefix(40)
+        case .live: return reader.agentSpeaking ? "STARLING IS SPEAKING" : "STARLING IS LISTENING"
+        case .connecting, .authoring: return "CONNECTING"
+        case .failed(let why): return why.uppercased().prefix(48).description
+        default: return ""
         }
     }
-    private var emptyText: String {
+    private var placeholder: String {
         switch reader.callState {
-        case .authoring: return "Writing this story for the newsreader…"
-        case .connecting: return "Connecting…"
-        case .live: return "The newsreader is about to start. Interrupt any time."
+        case .authoring: return "Reading the story so it can tell it well."
+        case .connecting: return "One moment."
+        case .live: return "Starling is about to begin."
         case .failed(let why): return why
         default: return ""
+        }
+    }
+
+    private func toggleSpeaker() {
+        speaker.toggle()
+        try? AVAudioSession.sharedInstance().overrideOutputAudioPort(speaker ? .speaker : .none)
+    }
+
+    private func callButton(_ title: String, _ symbol: String, fill: Color, size: CGFloat = 72, action: @escaping () -> Void) -> some View {
+        VStack(spacing: 10) {
+            Button(action: action) {
+                Image(systemName: symbol).font(.system(size: size * 0.36, weight: .semibold)).foregroundStyle(.white)
+                    .frame(width: size, height: size).background(fill, in: Circle())
+            }
+            .buttonStyle(.plain)
+            Text(title).font(Identity.grotesk(14, .medium))
         }
     }
 }

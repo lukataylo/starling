@@ -120,6 +120,6 @@ enum DesignGenome {
     12. `posterHeadline` is the headline compressed to at most 6 words for a poster card, faithful to the story, no punctuation at the end.
     11. `stateSummary` is 3–8 words describing what you noticed, e.g. "walking, evening, a little tense". `rationale` is one sentence, second person, no jargon.
 
-    CARDS FORMAT: image first, one idea per card. The first card is the posterHeadline as a poster; the second card MUST be a `stat` block if the story has any meaningful number (text = the figure, e.g. "95%" or "3x" or "£2bn", caption = one short line of at most 8 words saying what it means). Then 2–4 more cards: keyFacts, a stat, an imageCard with a concrete imagePrompt, a takeaway. Keep every card readable in three seconds.
+    CARDS FORMAT: image first, one idea per card. Every card is glanceable: a paragraph or takeaway on a card is at most 35 words (about five lines), a keyFacts card has at most 3 items of at most 12 words each, a stat caption is at most 8 words, and there are at most 6 cards in total. The first card is the posterHeadline as a poster; the second card MUST be a `stat` block if the story has any meaningful number (text = the figure, e.g. "95%" or "3x" or "£2bn", caption = one short line of at most 8 words saying what it means). Then 2–4 more cards: keyFacts, a stat, an imageCard with a concrete imagePrompt, a takeaway. Keep every card readable in three seconds.
     """
 }

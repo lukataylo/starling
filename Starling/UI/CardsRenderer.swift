@@ -60,6 +60,18 @@ struct CardsRenderer: View {
     private func tile(_ i: Int) -> Color { tileSet[i % tileSet.count] }
     /// Light tiles take ink; everything else takes warm white.
     private func isLight(_ color: Color) -> Bool { color == Identity.acid || color == Self.amber }
+    /// Keep every card to roughly five lines: cap words per block and items per list.
+    private func trimmed(_ b: Edition.Block) -> Edition.Block {
+        func cap(_ s: String, _ n: Int) -> String {
+            let w = s.split(separator: " ")
+            return w.count <= n ? s : w.prefix(n).joined(separator: " ").trimmingCharacters(in: .punctuationCharacters) + "…"
+        }
+        var t = b
+        if let text = b.text, b.type != .headline { t = Edition.Block(type: b.type, text: cap(text, 38), items: b.items, symbol: b.symbol, caption: b.caption, imagePrompt: b.imagePrompt) }
+        if let items = t.items { t = Edition.Block(type: t.type, text: t.text, items: Array(items.prefix(3)).map { cap($0, 14) }, symbol: t.symbol, caption: t.caption, imagePrompt: t.imagePrompt) }
+        return t
+    }
+
     private func fg(on color: Color) -> Color { isLight(color) ? Identity.ink : Identity.warmWhite }
     private func fgSecondary(on color: Color) -> Color { isLight(color) ? Identity.ink.opacity(0.65) : Identity.warmWhite.opacity(0.7) }
     /// Card i's poster: the current edition's own, else the story's pre-generated poster for this mood (then the other mood).
@@ -175,7 +187,8 @@ struct CardsRenderer: View {
             VStack(alignment: .leading, spacing: 16) {
                 Text("\(i + 1) of \(cards.count)").font(theme.font(11, weight: .bold)).tracking(0.6).foregroundStyle(fgSecondary(on: tile))
                 Spacer(minLength: 0)
-                EditionRenderer.blockView(b, edition: edition, scale: 1.2, onReadFull: onReadFull)
+                EditionRenderer.blockView(trimmed(b), edition: edition, scale: 1.2, onReadFull: onReadFull)
+                    .lineLimit(6)
                 Spacer(minLength: 0)
                 swipeHint(i, light: !isLight(tile))
             }
