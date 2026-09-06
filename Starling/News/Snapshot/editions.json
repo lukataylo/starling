@@ -1,5 +1,127 @@
 {
   "https:\/\/arstechnica.com\/science\/2026\/09\/farmed-salmon-may-not-be-as-nutritious-as-it-once-was-new-research-suggests\/" : {
+    "longform" : {
+      "accent" : "amber",
+      "blocks" : [
+        {
+          "text" : "Farmed salmon may be losing some of its nutritional edge",
+          "type" : "headline"
+        },
+        {
+          "text" : "A USDA-led study suggests that omega-3 levels in farmed salmon have fallen as producers replace small fish in feed with crops and land-based oils. The evidence is preliminary, but it raises questions about dietary guidance, environmental trade-offs and the next phase of aquaculture’s expansion.",
+          "type" : "dek"
+        },
+        {
+          "caption" : "A changing feed chain may connect salmon’s nutrition to pressures on oceans, forests and farmland.",
+          "imagePrompt" : "A precise split diagram showing farmed salmon feed shifting from small marine fish to soy and canola, with three labels: marine feed, crop feed, omega-3s.",
+          "symbol" : "fish.fill",
+          "type" : "imageCard"
+        },
+        {
+          "text" : "Dietary advice helped make salmon a global staple. US Department of Agriculture guidelines recommend at least 8 ounces of fish a week and urge people to choose salmon or similar species rich in heart-healthy omega-3 fatty acids. The American Heart Association and other organisations issue similar advice.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "That advice has helped push demand ever upward, with production following. Nearly 70 percent of the salmon eaten worldwide is now farmed in pens and cages. Farmed salmon production tripled between 2000 and 2020, outpacing every other type of finned fish.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The new research, led by USDA scientists, finds that omega-3 levels in farmed salmon have dropped considerably. If the finding holds across the industry, consumers following older guidance may be getting less of these fatty acids than they expect.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The study does not yet justify rewriting government advice. Its authors say the sample was too small and that a broader, more representative study is needed. The USDA declined interview requests and did not answer questions by email.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Laura Lee Cascada, director of the Aquaculture Accountability Project, said national guidance still relies on older figures. In her view, that leaves people with a mistaken idea of how much omega-3 they are consuming.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The proposed mechanism is straightforward. Salmon are naturally carnivorous, but small fish once used in feed were heavily exploited. Producers have shifted toward mixtures containing land-based oils and crops, including soy and canola. A 2016 study reported a similar decline in omega-3 levels and attributed it to the same broad dietary shift.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "That change creates a nutritional paradox: dietary advice encouraged a salmon boom because of the fish’s health profile, while the growth of production may be reducing the very benefit that made salmon attractive in the first place. The consequences also extend beyond nutrition, into marine and terrestrial ecosystems.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Aquaculture is the world’s fastest-growing food production system. Salmon has been central to that expansion, marketed as a healthful alternative for people trying to reduce their consumption of terrestrially farmed protein, particularly beef.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Critics have long pointed to the costs. Fish waste and feed can pollute water and threaten wild salmon. Feeding larger farmed populations has put pressure on small fish species and on coastal fishing communities that depend on them, as well as on wildlife such as seabirds.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "With oceans increasingly depleted of small fish, the industry has leaned more heavily on crops, including soy and soy oils. Roughly half of the world’s soy is grown in South America, where rainforest and other climate-important ecosystems are being cleared for livestock and aquaculture feed.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Matthew Hayek, a New York University researcher who studies the environmental impacts of protein production, said soy use across fish farming during the past two decades was associated with additional forest clearing equivalent in area to Nicaragua or Bangladesh. He cautioned that it is difficult to assign that total to any one fish species.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Other research does show the feed mix for farmed salmon becoming more crop-based. In Norway, the leading producer, marine ingredients made up 90 percent of feed ingredients in 1990. By 2020, that share had fallen to about 23 percent.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Advocacy groups in Norway found that 90 percent of the soy fed to Norwegian farmed salmon comes from three Brazilian companies. They say each has sourced soy ingredients from illegally deforested parts of the Amazon rainforest.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The emissions picture has shifted too. Research has found that moving toward crop-based ingredients doubled greenhouse-gas emissions per kilogram of farmed fish in Europe and the United Kingdom between 2000 and 2020.",
+          "type" : "paragraph"
+        },
+        {
+          "caption" : "A concise description of the central environmental trade-off.",
+          "text" : "“It’s trading one problem—marine exploitation—for another—land exploitation,” Cascada said.",
+          "type" : "pullQuote"
+        },
+        {
+          "text" : "The industry is expected to keep growing as the population expands and demand rises for seafood promoted as healthy. Nutritionists and researchers say farmed fish, including salmon, will be important for supplying protein. Some environmental groups counter that the recent increase in salmon demand has come disproportionately from wealthy countries without nutritional deficits.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Cascada argues that the industry’s promise to feed the world obscures a more unequal pattern: more salmon protein flowing to the Global North while environmental costs fall elsewhere, including in the Global South.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Policy could widen the industry’s reach. In the United States, lawmakers are considering legislation that would make it easier for salmon producers to obtain licences to farm in offshore federal waters.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "In February, environmental advocates and fishermen sent Congress a letter opposing the Marine Aquaculture Research for America Act, or MARA Act. Supporters say deeper offshore farms could reduce damage associated with sensitive nearshore waters. Opponents say the bill would enable a factory-farming model—similar to the one producing most of the world’s livestock—in the open sea.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The immediate conclusion is narrower than the headline risk. The USDA study is not large enough to overturn dietary advice, and it does not show that farmed salmon has lost all nutritional value. It does show why old averages should not be treated as permanent: feed formulas change, supply chains move environmental pressure, and a food promoted for one benefit can acquire new costs as production scales.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Salmon’s health reputation rests on omega-3 levels measured under earlier farming conditions. New research suggests those levels have declined, while the feed shift behind that decline has moved pressure from overfished marine species toward cropland, forests and climate emissions. More representative testing is needed before official guidance changes, but the broader lesson is already clear: the nutritional and environmental performance of farmed salmon depends on how it is produced.",
+          "type" : "takeaway"
+        },
+        {
+          "text" : "This article originally appeared in Inside Climate News, a nonprofit, non-partisan news organisation covering climate, energy and the environment.",
+          "type" : "readFullPrompt"
+        }
+      ],
+      "density" : "longform",
+      "estimatedReadSeconds" : 300,
+      "format" : "text",
+      "headlineWeight" : "semibold",
+      "layout" : "article",
+      "margins" : "wide",
+      "pace" : "scroll",
+      "palette" : "dusk",
+      "posterHeadline" : "Farmed Salmon’s Nutrition Declines",
+      "rationale" : "You are settled and attentive, so this full account uses a calm literary design that gives the evidence and competing claims room to unfold.",
+      "stateSummary" : "reclined, calm, evening",
+      "tone" : "reflective",
+      "typeScale" : "regular",
+      "typeface" : "serif"
+    },
     "preset:calm" : {
       "accent" : "amber",
       "blocks" : [
@@ -104,6 +226,88 @@
     }
   },
   "https:\/\/arstechnica.com\/space\/2026\/09\/after-8-years-europes-bepicolombo-mission-is-on-final-approach-to-mercury\/" : {
+    "longform" : {
+      "accent" : "amber",
+      "blocks" : [
+        {
+          "text" : "After 8 years, Europe’s BepiColombo mission is on final approach to Mercury",
+          "type" : "headline"
+        },
+        {
+          "text" : "BepiColombo has cleared a major milestone in the final stretch of its eight-year journey to Mercury, setting up a decisive encounter later this year.",
+          "type" : "dek"
+        },
+        {
+          "caption" : "A long route to a difficult orbit",
+          "imagePrompt" : "A clean diagram of BepiColombo spiraling from Earth toward Mercury, with flybys of Venus and Mercury marked; label only Earth, Venus and Mercury.",
+          "symbol" : "globe.europe.africa",
+          "type" : "imageCard"
+        },
+        {
+          "text" : "The mission’s destination is Mercury, the innermost planet in the Solar System: a small, iron-rich world exposed to intense heat and close to the Sun. Reaching it is not simply a matter of pointing a spacecraft inward and letting gravity do the rest.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Since its launch in 2018, BepiColombo has used plasma propulsion together with a sequence of gravity-assist flybys. The spacecraft visited Earth and Venus, and has also flown past Mercury, using those encounters to reshape its trajectory and manage its velocity.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Those maneuvers are the central mechanism of the mission. They gradually steered BepiColombo closer to the Sun while changing the spacecraft’s speed relative to the planets. The goal was not merely to reach Mercury, but to arrive moving slowly enough for Mercury’s gravity to capture it into orbit.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The next time BepiColombo reaches Mercury, mission planners expect it to be traveling at just the right speed for that capture. The encounter later this year therefore represents the culmination of an eight-year interplanetary voyage, rather than a routine final pass.",
+          "type" : "paragraph"
+        },
+        {
+          "caption" : "The mission’s approximate price tag",
+          "text" : "Nearly $2 billion",
+          "type" : "stat"
+        },
+        {
+          "text" : "A mission led by Europe, built through partnership",
+          "type" : "pullQuote"
+        },
+        {
+          "text" : "BepiColombo is led by the European Space Agency, with contributions from Japan and the United States. Its scale reflects the difficulty of operating a robotic science mission in the inner Solar System, where the spacecraft must manage both the Sun’s gravitational influence and Mercury’s demanding orbital geometry.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The underlying accounting is expressed in delta-v: the change in velocity a spacecraft must achieve through propulsion and carefully arranged planetary encounters. Although Mercury is much closer to Earth than Pluto, getting a probe into Mercury orbit can require more energy than sending one on a flyby to Pluto.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "That comparison helps explain why the mission has taken so long. NASA’s New Horizons spacecraft reached Pluto after nearly 10 years, but a fast trip past a distant world is a different problem from slowing down and entering orbit around a planet deep in the Sun’s gravitational well.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Scientists working on interplanetary missions are accustomed to waiting years for their scientific payoffs. For BepiColombo, the long sequence of propulsion burns and flybys has been the price of arranging a controlled arrival at one of the Solar System’s least accessible planets.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The immediate objective is therefore precise rather than dramatic: arrive at Mercury with the correct velocity, allow the planet’s gravity to capture the spacecraft, and begin the next phase of the mission. After launch in 2018 and years of orbital reshaping, BepiColombo is now in that final approach.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The takeaway: BepiColombo’s eight-year route shows why Mercury is difficult to visit. The spacecraft has combined plasma propulsion with flybys of Earth, Venus and Mercury to shed and redirect velocity, with a later-2026 encounter intended to place it into orbit around the scorching inner planet.",
+          "type" : "takeaway"
+        }
+      ],
+      "density" : "longform",
+      "estimatedReadSeconds" : 180,
+      "format" : "text",
+      "headlineWeight" : "semibold",
+      "layout" : "article",
+      "margins" : "wide",
+      "pace" : "scroll",
+      "palette" : "dusk",
+      "posterHeadline" : "BepiColombo Nears Mercury",
+      "rationale" : "You are settled and attentive, so this uses a literary long read with generous pacing while keeping the mission’s mechanics precise.",
+      "stateSummary" : "reclined, calm, evening focus",
+      "tone" : "reflective",
+      "typeScale" : "regular",
+      "typeface" : "serif"
+    },
     "preset:calm" : {
       "accent" : "amber",
       "blocks" : [
@@ -224,6 +428,107 @@
     }
   },
   "https:\/\/www.theverge.com\/games\/990691\/competitive-pokemon-champions-mobile-tournament-accessibility" : {
+    "longform" : {
+      "accent" : "amber",
+      "blocks" : [
+        {
+          "text" : "Competitive Pokémon is on phones now, but you still need a Switch to become a champion",
+          "type" : "headline"
+        },
+        {
+          "text" : "Pokémon Champions is nearly the same on mobile and Switch, yet regional tournaments and above still require Nintendo hardware—leaving phone-only players able to qualify for Worlds but potentially unable to compete there.",
+          "type" : "dek"
+        },
+        {
+          "caption" : "The same battle system, different tournament access.",
+          "imagePrompt" : "A split-screen tournament scene showing Pokémon Champions on an iPhone and Switch 2, with a phone-only player facing a championship arena; labels: Mobile, Switch, Worlds.",
+          "symbol" : "iphone.gen3",
+          "type" : "imageCard"
+        },
+        {
+          "text" : "The mobile version of Pokémon Champions is not allowed at the highest levels of organized play, and the explanation so far does not quite hold together.",
+          "type" : "pullQuote"
+        },
+        {
+          "text" : "To start competing in Pokémon battles, a phone is enough. To reach the Pokémon World Championships, however, a player currently needs a Switch. That distinction is difficult to square with the game’s design and stated promise of accessibility.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Pokémon Champions launched on Switch and Switch 2 in April, followed by its mobile release in June. The versions are nearly identical and support cross-platform play. In practice, the choice is mostly about which devices a player owns and whether they prefer tapping or a controller. The author says they play on an iPhone 14 Pro more often because it is always available and comes with unlimited data.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "At this year’s World Championships, mobile Champions was not permitted. From September 1, certain local tournaments began allowing it, but regional tournaments and every level above them still require Switch hardware.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "In a roundtable interview at Worlds the previous week, before the rules refresh, producer Masaaki Hoshino explained the decision through an interpreter. Switch 2 has better-looking graphics, he said, while mobile introduces complications because there are so many different devices players might bring.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "That reasoning is less convincing now that the rules have changed. Regional and higher-level tournaments are streamed on official channels, and VGC—the competitive Pokémon video game circuit—was the most viewed of the four games featured at Worlds this year, according to Esports Charts. The Pokémon Company may see mobile as acceptable for smaller events but not premium enough for its biggest stages. The setting reinforces that impression: this year’s Worlds finals took place at San Francisco’s Chase Center, only the second time the finals had been held in an arena rather than a hotel ballroom or convention center. Production values and attendance were especially high.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Champions is visibly sharper on Switch 2 than on the author’s iPhone 14 Pro, so wanting the best-looking version of the flagship VGC game is understandable. The Pokémon series has often been criticized for its graphics. But competitors already bring their own devices, and the official VGC rules handbook identifies a possible solution for streamed matches.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Players can create a “team ID” for the battle team they use in a tournament. Anyone can technically use that ID to create a replica of the team on their own account. The handbook says team IDs may be used for recordkeeping or team checks and may be used on hardware provided by the Tournament Organizer for streamed matches. If visual fidelity is the concern, organizers already have a route to put the best-looking version on screen while letting competitors play on their own devices.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The more technical explanation is cross-platform play. Hoshino said battle calculations happen on the server side, which enables Switch and mobile players to compete together but was also one of the trickiest parts of developing Champions. That may explain the gap between the console and mobile launches. It does not clearly explain excluding mobile now that both versions are available, aside from ordinary issues such as server maintenance.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Other competitive Pokémon games show that mobile competition is possible. Pokémon Unite allows its mobile version in high-level competition, although only one finalist at this year’s championships appeared to be using a phone rather than a Switch. Pokémon Go is mobile-only, and its competitive matches are streamed too. Neither is a perfect model: this was Unite’s final year at the World Championships, while Pokémon Go has by far the weakest spectator experience for several reasons. Still, mobile itself is not an insurmountable barrier.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Across Switch 2 and mobile, Champions has been downloaded around 25 million times, according to Hoshino. That figure exceeded the total Switch 2 install base as of June, so at least several million downloads were likely on mobile. The precise number of players who use only phones is unknown. But after a recent Switch 2 price increase and amid higher technology prices generally, some prospective competitors may own a phone without being able to afford a Switch.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Preparing a team is essentially the same on both platforms. With one exception—Eternal Flower Floette, obtainable only through Pokémon Legends: Z-A—players can get every Pokémon they might need inside Champions through its gacha-style “recruit” feature. Existing Switch Pokémon games make the process faster because players can transfer Pokémon into Champions through the cloud storage service Pokémon Home, but spending no money on Champions is still enough to obtain a usable team. Training is also much quicker: tasks that once took hours in-game can now take only a few minutes.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Mobile-only players therefore are not meaningfully disadvantaged during teambuilding. There is an important exception in practice: Eternal Flower Floette appeared on this year’s winning team and on many other competitors’ teams, and players have criticized the Pokémon as pay-to-win. Even so, a player without a Switch could start a championship run on mobile, qualify for Worlds, and then discover they lack the hardware required to compete there.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "That feels like a policy mistake, especially because Pokémon Champions presents itself as inclusive and accessible. The game makes previously hidden information easier to find and understand, and this year’s viewership suggests that VGC is expanding. Thousands watched in the San Francisco arena, while the official MLB account posted references to the championship-winning VGC play.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The author has followed and played VGC for a long time and describes it as a rich, deep game with a passionate, largely welcoming community. They are glad to see it becoming more popular and easier to enter. That growth makes the tournament hardware rule feel increasingly out of step with the game’s broader direction: if mobile can support the same battles, training, and team preparation, it should not be the device that ends a player’s championship run.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The practical question is not whether Switch 2 can present a prettier broadcast. It can. The question is whether that production choice justifies requiring a separate console from players who may have reached the top through an otherwise equivalent mobile version. The available explanations—graphics, device variety, and cross-platform complexity—do not yet make that case.",
+          "type" : "takeaway"
+        },
+        {
+          "text" : "Read the full story and join the conversation",
+          "type" : "readFullPrompt"
+        }
+      ],
+      "density" : "longform",
+      "estimatedReadSeconds" : 420,
+      "format" : "text",
+      "headlineWeight" : "semibold",
+      "layout" : "article",
+      "margins" : "wide",
+      "pace" : "scroll",
+      "palette" : "dusk",
+      "posterHeadline" : "Pokémon Champions Needs A Switch",
+      "rationale" : "You are settled and attentive, so this keeps the full argument in a calm, literary layout that rewards sustained reading.",
+      "stateSummary" : "reclined, calm, attentive evening reader",
+      "tone" : "reflective",
+      "typeScale" : "regular",
+      "typeface" : "serif"
+    },
     "preset:calm" : {
       "accent" : "amber",
       "blocks" : [
@@ -337,6 +642,109 @@
     }
   },
   "https:\/\/www.theverge.com\/tech\/990436\/fairphone-6-plus-review" : {
+    "longform" : {
+      "accent" : "amber",
+      "blocks" : [
+        {
+          "text" : "The Fairphone 6 Plus is the midrange phone we desperately needed",
+          "type" : "headline"
+        },
+        {
+          "text" : "Fairphone’s US debut feels like a triumph in the middle of rising phone prices: the 6 Plus is ordinary in the ways that matter, while making repairs and long-term ownership unusually practical.",
+          "type" : "dek"
+        },
+        {
+          "caption" : "The Fairphone 6 Plus makes repair part of the everyday phone experience.",
+          "imagePrompt" : "A Fairphone 6 Plus on a warm desk beside its tiny screwdriver, a replacement battery, and two swappable back panels; labels: $649, 12 parts, 5-year warranty.",
+          "symbol" : "iphone.gen3",
+          "type" : "imageCard"
+        },
+        {
+          "text" : "The Fairphone 6 Plus feels like an extremely average midrange Android phone, and I couldn’t be more thrilled. Fairphone’s mission has always been admirable: ethically sourced materials and a high degree of repairability. Earlier phones often required sacrifices, including underpowered processors and poor cameras. The latest generations narrowed that gap, and the 6 Plus reaches two important milestones: it feels like a normal mid-tier Android phone, and it is actually sold in the US.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "This is a light update to last year’s Fairphone 6, which Dominic Preston found easy to recommend. The 6 Plus adds a newer midrange Snapdragon chipset and a new color treatment—Fairphone calls it cobalt; around here, it is blurple. Otherwise, it is basically the same phone, and replacement parts work interchangeably between the two models. It runs about as fast as a typical mid-tier Razr or A-series Pixel, uses a pleasantly close-to-stock version of Android, and avoids bloat and gimmicky AI features. It is just a phone. That is the point.",
+          "type" : "paragraph"
+        },
+        {
+          "items" : [
+            "THE PACKAGE — Highly repairable, with a great warranty and long software-support lifespan. Swappable back panels and dumbphone-esque focus modes are welcome extras.",
+            "THE CATCH — The upfront cost is comparatively high. The phone is not as dust- and water-resistant as similarly priced devices, and power users may find the battery life lacking.",
+            "THE PRICE — At $649, it sits at the very top of midrange phones. RAMageddon has pushed phone prices higher, but 12GB of RAM, a five-year warranty, and up to six OS upgrades make the cost easier to justify.",
+            "THE REPAIR — Twelve user-replaceable parts include the battery, screen, USB-C port, and all three cameras. Repairs are designed for beginners with the included tiny screwdriver and clear directions."
+          ],
+          "text" : "THE PACKAGE — Highly repairable, with a great warranty and long software-support lifespan. Swappable back panels and dumbphone-esque focus modes are welcome extras.\nTHE CATCH — The upfront cost is comparatively high. The phone is not as dust- and water-resistant as similarly priced devices, and power users may find the battery life lacking.\nTHE PRICE — At $649, it sits at the very top of midrange phones. RAMageddon has pushed phone prices higher, but 12GB of RAM, a five-year warranty, and up to six OS upgrades make the cost easier to justify.\nTHE REPAIR — Twelve user-replaceable parts include the battery, screen, USB-C port, and all three cameras. Repairs are designed for beginners with the included tiny screwdriver and clear directions.",
+          "type" : "keyFacts"
+        },
+        {
+          "text" : "I know: calling a $649 phone midrange can feel like a stretch. At best, the 6 Plus is at the very top of that class. But the recent rise in memory costs has changed the comparison. The phone includes 12GB of RAM, a five-year warranty, and up to six OS upgrades. You also do not need to add AppleCare or a similar plan. In the reviewer’s framing, you are the AppleCare.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The repair economics are unusually clear. A Fairphone battery costs $39.99, compared with roughly $100 to $180 for a typical battery replacement without an extended warranty. A Fairphone display costs $89.99, while screen repairs elsewhere can range from $100 to nearly $300. Add a reasonable 30 minutes of your own labor, at most, and the long-term value begins to look much better.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "$649 is also a bargain beside the $899 Fairphone 6 sold in the US. That model was offered only with privacy-minded \/e\/OS, a de-Googled version of Android made by Murena; it is not really for the faint of heart. The 6 Plus is sold directly in the US with full support for T-Mobile and AT&T. The reviewer used a Verizon SIM without trouble for a week, though the phone is not certified on Verizon’s network.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Knowing that parts can be replaced changes how the phone feels over time. Battery life is merely okay: with light-to-moderate use, the reviewer usually reached bedtime with 60 percent remaining. That test used every battery-draining feature available, including the always-on display, higher refresh rate, and light mode, all of which are off by default. Normally, that result would raise concerns about the phone’s performance after several years. Here, the obvious fix is to replace the battery yourself—without a repair-shop visit or time away from the phone.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The compromises have not disappeared. The phone is rated IP55, meaning it is mostly dust-resistant and mostly water-resistant, but not fully protected. Completely sealing a phone while keeping it easy to repair would be difficult, perhaps impossible. There is no wireless charging and no ring of magnets like Qi2 or MagSafe. The screen is thoroughly decent but not as bright in daylight as the best alternatives. The speakers are tinny, and the nearly flush wake button and fingerprint scanner still lack an obvious muscle-memory feel.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The Snapdragon 7S Gen 4 handles the basic demands of modern life. Its limits appear at the edges: Google Maps can run a little stuttery on a car’s infotainment screen with wired Android Auto, and Pocket City 2 shows some judder while scrolling around town. It handles a dense Icy Veins character-build guide remarkably well, though, and can manage several consecutive Portrait-mode photos before the shutter button greys out to clear the buffer. Outside very graphically intense games, it holds up fine.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The camera system clears the basic midrange bar. The main camera does a fine job in daylight, and its 2x crop is useful. The ultrawide shows noise and smoothing in dimmer indoor light, which is typical. Portrait mode is passable, and video produced no obvious red flags in the reviewer’s clips of a child opening birthday presents. The reviewer even trusted it with a child’s fifth-birthday candles and got an in-focus photo. The cameras make occasional odd choices, but overall they are fine—not great, not a reason to avoid the phone.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The more distinctive extras begin with the modular back panels. The included screwdriver is enough to replace the back with a wallet or flexible-grip version. A crossbody strap can attach to any of those panels, although whether anyone can personally pull off that look remains unresolved. These accessories are less convenient than magnetic attachments, but they are fun—and fun is hard to come by lately.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "A small neon switch on the side enables Moments, Fairphone’s focus-mode system. Moments use minimalist homescreens and limit access to a selected handful of apps. You can create your own modes, choose which apps are available, and decide who may call. The reviewer did not use the feature as much as expected, partly because avoiding social media removed the main temptation. Still, the concept is strong and the execution appears sound. More customisation, such as custom wallpapers, would be welcome, though fewer options may also leave fewer openings for distraction.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "“It is just a phone. And that’s great.”",
+          "type" : "pullQuote"
+        },
+        {
+          "text" : "Fairphone has finally made a phone that feels ready for the mainstream. The 6 and 6 Plus are not merely ethical devices with admirable sustainability credentials; they are good total packages. The feel-good case is still there, but so are tangible benefits: you can repair the phone yourself, replace its battery, and keep using it without accepting the severe compromises attached to earlier Fairphones. As midrange prices continue to rise, the 6 Plus starts to look like smart money.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The Fairphone 6 Plus is a $649 mainstream-feeling Android phone whose strongest feature is what happens after the first year: repairs stay accessible, the battery is replaceable, support is long, and the everyday experience is good enough without chasing flagship performance. Its IP55 rating, missing wireless charging, modest speakers, merely adequate battery life, and average cameras are real tradeoffs. But for buyers who value ownership beyond the unboxing moment, those compromises now look manageable.",
+          "type" : "takeaway"
+        },
+        {
+          "text" : "Read the full review and compare the Fairphone 6 Plus with other midrange Android phones.",
+          "type" : "readFullPrompt"
+        }
+      ],
+      "density" : "longform",
+      "estimatedReadSeconds" : 420,
+      "format" : "text",
+      "headlineWeight" : "semibold",
+      "layout" : "article",
+      "margins" : "wide",
+      "pace" : "scroll",
+      "palette" : "dusk",
+      "posterHeadline" : "Fairphone 6 Plus Review",
+      "rationale" : "You’re settled in for a full evening read, so this keeps the complete review spacious, literary, and easy to follow.",
+      "stateSummary" : "reclined, calm, evening reader",
+      "tone" : "reflective",
+      "typeScale" : "regular",
+      "typeface" : "serif"
+    },
     "preset:calm" : {
       "accent" : "amber",
       "blocks" : [
@@ -441,6 +849,83 @@
     }
   },
   "https:\/\/www.theverge.com\/tech\/990873\/earth-garden-globe-field-recordings" : {
+    "longform" : {
+      "accent" : "amber",
+      "blocks" : [
+        {
+          "text" : "Explore the globe in field recordings",
+          "type" : "headline"
+        },
+        {
+          "text" : "Earth Garden turns Freesound’s environmental audio into a globe-spanning listening experience, with real places, uneven recordings and plenty of room to wander.",
+          "type" : "dek"
+        },
+        {
+          "caption" : "Earth Garden maps environmental sounds instead of radio stations.",
+          "imagePrompt" : "A dark blue globe with a glowing reticle moving between a remote Atlantic island, Tanzania, and Manhattan, with small sound-wave marks at each location.",
+          "symbol" : "globe",
+          "type" : "imageCard"
+        },
+        {
+          "text" : "I love field recordings. I love making them, and I love folding them into ambient music. They work beautifully as background noise for working or sleeping, but they reward a more deliberate kind of listening too: focusing on the fine nuances of burbling brooks, rainfall or urban chaos.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Earth Garden is built around that idea. It gives you a globe to explore using real environmental recordings from various locations, turning geography into a kind of sound map. Rather than asking you to choose a playlist, it invites you to move around the planet and see what happens next.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The closest comparison is Radio Garden, which is also worth checking out. Radio Garden lets you spin around the world’s radio stations; Earth Garden borrows the globe-based exploration but swaps broadcasts for the sounds of places themselves.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "That can mean waves lapping at the shores of remote islands in the Atlantic, a chorus of crickets in Tanzania, or rainfall on the streets of Manhattan. There is, in fact, a lot of rainfall. The variety is the appeal: each point on the globe promises a different texture, whether natural, weather-related or unmistakably urban.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The globe is most enjoyable when you stop treating it like a catalogue and let it carry you. Set it to rotate automatically, and as the reticle nears points on Earth, Earth Garden transitions to new sounds. The movement makes the listening feel continuous rather than like a sequence of files being opened one by one.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "There is also a button for adding generic ambient drones in the background. That option pushes the experience closer to an ambient-music tool, while the environmental recordings remain the thing that gives it a sense of place.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The source of those recordings is Freesound, and that is both the project’s strength and its obvious compromise. Freesound provides an enormous pool of user-contributed audio, but the quality can vary. Volume levels between clips can also be inconsistent, so a smooth trip around the globe may occasionally be interrupted by a recording that is noticeably louder, quieter or less polished than the last.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The map is uneven in another way. Recordings are more concentrated in the US and Europe, especially the UK. Earth Garden still offers a pleasing sense of global exploration, but its soundscape reflects where Freesound contributors are most active rather than distributing recordings evenly across the planet.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Those limitations do not erase the charm. Earth Garden is a simple idea executed in a way that makes environmental audio feel interactive: part map, part sampler, part ambient companion. It is not a replacement for carefully produced sound libraries, and it is not pretending to provide a perfectly balanced acoustic survey of Earth. It is a small, soothing way to listen outward.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "“It is a small, soothing way to listen outward.”",
+          "type" : "pullQuote"
+        },
+        {
+          "text" : "Earth Garden turns Freesound’s varied field recordings into a globe you can explore by sound—uneven in coverage and volume, but genuinely fun to let spin.",
+          "type" : "takeaway"
+        }
+      ],
+      "density" : "longform",
+      "estimatedReadSeconds" : 240,
+      "format" : "text",
+      "headlineWeight" : "semibold",
+      "layout" : "article",
+      "margins" : "wide",
+      "pace" : "scroll",
+      "palette" : "dusk",
+      "posterHeadline" : "Explore Earth by Sound",
+      "rationale" : "You are settled and attentive, so this keeps the full story flowing in a calm, literary layout that suits an evening read.",
+      "stateSummary" : "reclined, calm, attentive evening",
+      "tone" : "reflective",
+      "typeScale" : "regular",
+      "typeface" : "serif"
+    },
     "preset:calm" : {
       "accent" : "amber",
       "blocks" : [

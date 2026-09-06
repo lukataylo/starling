@@ -282,10 +282,13 @@ struct StackHome: View {
     let onManual: () -> Void
     @State private var index = 0
     @State private var drag: CGFloat = 0
+    @State private var flying = false
     @State private var showSignals = false
     @State private var opened: Article?
+    @State private var hintPhase = false
 
     private var colours: [Color] { [Identity.acid, Identity.cobalt, Identity.red] }
+    private let peek: CGFloat = 34
 
     var body: some View {
         let a = feeds.articles
@@ -293,6 +296,7 @@ struct StackHome: View {
             HStack {
                 StatePill(theme: hub.theme) { showSignals = true }
                 Spacer()
+                Text("\(a.isEmpty ? 0 : index + 1) / \(a.count)").font(.system(size: 11, weight: .medium, design: .monospaced)).foregroundStyle(Identity.warmWhite.opacity(0.6)).padding(.trailing, 8)
                 RoundIconButton(symbol: "square.grid.2x2", theme: Theme(paletteName: .night, accentName: .sage, scale: .regular, typeface: .sans)) { onManual(); withAnimation { mode = .tiles } }
             }
             .padding(.horizontal, 16).padding(.top, 6)
@@ -300,34 +304,65 @@ struct StackHome: View {
                 Spacer(); ProgressView().tint(.white); Spacer()
             } else {
                 GeometryReader { geo in
-                    let h = geo.size.height - 40
-                    ZStack {
+                    let cardH = geo.size.height - peek * 3 - 8
+                    ZStack(alignment: .bottom) {
                         ForEach(Array((0..<min(4, a.count)).reversed()), id: \.self) { depth in
                             let i = (index + depth) % a.count
-                            StackCard(article: a[i], color: colours[i % colours.count], serif: i % colours.count != 0)
-                            .onTapGesture { if depth == 0 { opened = a[i] } }
-                            .frame(height: h)
-                            .offset(y: CGFloat(depth) * -36 + (depth == 0 ? drag : 0))
-                            .scaleEffect(1 - CGFloat(depth) * 0.02, anchor: .top)
-                            .zIndex(Double(10 - depth))
-                            .opacity(depth == 0 ? 1 : 1)
+                            let progress = min(1, max(0, -drag / 160))   // how far the top card has been pushed
+                            let d = CGFloat(depth)
+                            // Cards behind rise into place as the top one leaves.
+                            let lift = depth == 0 ? drag : -(d - progress) * peek
+                            let scale = depth == 0 ? 1 - progress * 0.04 : 1 - (d - progress) * 0.035
+                            StackCard(article: a[i], color: colours[i % colours.count], serif: i % colours.count != 0, height: cardH)
+                                .onTapGesture { if depth == 0 { opened = a[i] } else { withAnimation(.snappy(duration: 0.35)) { index = i } } }
+                                .frame(height: cardH)
+                                .scaleEffect(scale, anchor: .top)
+                                .rotationEffect(.degrees(depth == 0 ? Double(-drag / 60) : 0), anchor: .bottom)
+                                .offset(y: lift)
+                                .opacity(depth == 0 ? Double(1 - progress * 0.6) : 1)
+                                .zIndex(Double(10 - depth))
+                                .allowsHitTesting(!flying)
                         }
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
                     .padding(.horizontal, 16)
-                    .highPriorityGesture(DragGesture(minimumDistance: 10).onChanged { v in drag = min(0, v.translation.height) * 0.6 }
-                        .onEnded { v in
-                            if v.translation.height < -70 { withAnimation(.snappy(duration: 0.3)) { index = (index + 1) % a.count; drag = 0 } }
-                            else if v.translation.height > 70 { withAnimation(.snappy(duration: 0.3)) { index = (index - 1 + a.count) % a.count; drag = 0 } }
-                            else { withAnimation(.snappy) { drag = 0 } }
-                        })
+                    .contentShape(Rectangle())
+                    .highPriorityGesture(
+                        DragGesture(minimumDistance: 8)
+                            .onChanged { v in
+                                let dy = v.translation.height
+                                drag = dy < 0 ? dy : dy * 0.25   // rubber-band on downward pulls
+                            }
+                            .onEnded { v in
+                                let dy = v.translation.height
+                                if dy < -70 || v.predictedEndTranslation.height < -220 { advance(count: a.count, height: geo.size.height) }
+                                else if dy > 70 { withAnimation(.snappy(duration: 0.35)) { index = (index - 1 + a.count) % a.count; drag = 0 } }
+                                else { withAnimation(.snappy(duration: 0.3)) { drag = 0 } }
+                            })
                 }
-                .padding(.top, 120)
-                Text("SWIPE UP FOR NEXT  →").font(Identity.grotesk(10, .semibold)).tracking(2).foregroundStyle(Identity.warmWhite.opacity(0.7)).padding(.vertical, 14)
+                .padding(.top, 14)
+                HStack(spacing: 8) {
+                    Image(systemName: "chevron.up").font(.system(size: 11, weight: .bold)).offset(y: hintPhase ? -3 : 2)
+                    Text("SWIPE UP FOR NEXT").font(Identity.grotesk(10, .semibold)).tracking(2)
+                }
+                .foregroundStyle(Identity.warmWhite.opacity(0.7))
+                .padding(.vertical, 12)
+                .onAppear { withAnimation(.easeInOut(duration: 0.9).repeatForever(autoreverses: true)) { hintPhase = true } }
             }
         }
         .sheet(isPresented: $showSignals) { SignalSheet(theme: hub.theme) }
         .navigationDestination(item: $opened) { ReaderView(article: $0) }
+    }
+
+    /// Fly the top card off the top, then bring the next one forward.
+    private func advance(count: Int, height: CGFloat) {
+        flying = true
+        withAnimation(.easeIn(duration: 0.22)) { drag = -height }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.22) {
+            index = (index + 1) % count
+            drag = 0
+            flying = false
+        }
     }
 }
 
@@ -354,13 +389,15 @@ struct HomeModeProposal: View {
     }
 }
 
-/// A magazine-cover card: flat colour, enormous headline, cinematic image in the lower third.
+/// A magazine-cover card: flat colour, enormous headline, cinematic image in the lower third. Sized by the stack.
 struct StackCard: View {
     let article: Article
     let color: Color
     let serif: Bool
+    var height: CGFloat = 560
     private var ink: Color { color == Identity.acid ? Identity.ink : Identity.warmWhite }
     var body: some View {
+        let imageH = max(150, height * 0.36)
         VStack(alignment: .leading, spacing: 0) {
             HStack {
                 Text(sourceName(article)).font(Identity.grotesk(10, .bold)).tracking(1.4)
@@ -370,31 +407,34 @@ struct StackCard: View {
             .foregroundStyle(ink)
             .padding(16)
             Text(serif ? article.title : article.title.uppercased())
-                .font(serif ? Identity.serif(38, .regular) : Identity.grotesk(44, .black))
-                .tracking(serif ? -0.5 : -2)
-                .lineSpacing(serif ? -2 : -8)
+                .font(serif ? Identity.serif(36, .regular) : Identity.grotesk(40, .black))
+                .tracking(serif ? -0.5 : -1.8)
+                .lineSpacing(serif ? -2 : -7)
                 .lineLimit(5)
-                .minimumScaleFactor(0.7)
+                .minimumScaleFactor(0.6)
                 .foregroundStyle(ink)
                 .padding(.horizontal, 16)
                 .frame(maxWidth: .infinity, alignment: .leading)
             Spacer(minLength: 8)
             ZStack(alignment: .bottomLeading) {
                 StoryArt(article: article, mono: true)
-                LinearGradient(colors: [.clear, .black.opacity(0.55)], startPoint: .center, endPoint: .bottom)
+                LinearGradient(colors: [.clear, .black.opacity(0.6)], startPoint: .center, endPoint: .bottom)
                 HStack(alignment: .bottom) {
-                    Text(article.summary).font(Identity.serif(15)).lineLimit(2).foregroundStyle(Identity.warmWhite)
+                    Text(article.summary).font(Identity.serif(14)).lineLimit(2).foregroundStyle(Identity.warmWhite)
                     Spacer(minLength: 10)
                     ArrowDot(light: false)
                 }
                 .padding(16)
             }
-            .frame(height: 220)
+            .frame(height: imageH)
+            .frame(maxWidth: .infinity)
+            .clipped()
             .background(Identity.ink)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .frame(maxWidth: .infinity)
+        .frame(height: height)
         .background(LinearGradient(colors: [color, color.opacity(0.92), color.mix(with: .black, by: 0.35)], startPoint: .top, endPoint: .bottom))
-        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 }
 
