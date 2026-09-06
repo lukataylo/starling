@@ -17,6 +17,8 @@ struct QuickEditionView: View {
     var onPending: (() -> Void)? = nil
     var onReadFull: (() -> Void)? = nil
     private var theme: Theme { Theme.forEdition(edition) }
+    private var rule: Color { theme.ink }
+    private func head(_ size: CGFloat) -> Font { theme.typeface == .serif ? Identity.serif(size, .semibold) : Identity.grotesk(size, .heavy) }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -39,13 +41,13 @@ struct QuickEditionView: View {
                     Text("\(max(1, edition.estimatedReadSeconds / 60)) MIN").font(Identity.grotesk(11, .medium)).tracking(1)
                 }
                 .padding(.top, 16)
-                Text(edition.headline).font(Identity.grotesk(36, .heavy)).tracking(-1.2).lineSpacing(-4).fixedSize(horizontal: false, vertical: true)
+                Text(edition.headline).font(head(36)).tracking(theme.typeface == .serif ? -0.5 : -1.2).lineSpacing(-4).fixedSize(horizontal: false, vertical: true)
                 if let dek = edition.blocks.first(where: { $0.type == .dek })?.text {
                     Text(dek).font(Identity.serif(19)).lineSpacing(2).fixedSize(horizontal: false, vertical: true)
                 }
             }
             .padding(.horizontal, 16)
-            Rectangle().fill(Identity.rule).frame(height: 1).padding(.top, 14)
+            Rectangle().fill(rule).frame(height: 1).padding(.top, 14)
             // Info grid from key facts + stat
             let facts = edition.blocks.filter { $0.type == .keyFacts }.flatMap { $0.items ?? [] }
             let stat = edition.blocks.first { $0.type == .stat }
@@ -60,20 +62,21 @@ struct QuickEditionView: View {
                         }
                         .padding(12)
                         .frame(maxWidth: .infinity, minHeight: 92, alignment: .topLeading)
-                        .overlay(alignment: .trailing) { if i % 2 == 0 { Rectangle().fill(Identity.rule).frame(width: 1) } }
-                        .overlay(alignment: .bottom) { if i < 2 && facts.count > 2 { Rectangle().fill(Identity.rule).frame(height: 1) } }
+                        .overlay(alignment: .trailing) { if i % 2 == 0 { Rectangle().fill(rule).frame(width: 1) } }
+                        .overlay(alignment: .bottom) { if i < 2 && facts.count > 2 { Rectangle().fill(rule).frame(height: 1) } }
                     }
                 }
-                Rectangle().fill(Identity.rule).frame(height: 1)
+                Rectangle().fill(rule).frame(height: 1)
             }
             if let stat {
                 HStack(alignment: .center, spacing: 14) {
-                    Text(stat.text ?? "").font(Identity.grotesk(50, .black)).tracking(-2).minimumScaleFactor(0.6).lineLimit(1)
-                    Rectangle().fill(Identity.rule).frame(width: 1, height: 44)
+                    Text(stat.text ?? "").font(Identity.grotesk(50, .black)).tracking(-2).minimumScaleFactor(0.6).lineLimit(1).foregroundStyle(theme.accent == Identity.acid ? theme.ink : theme.accent)
+                    Rectangle().fill(rule).frame(width: 1, height: 44)
                     Text(stat.caption ?? "").font(Identity.grotesk(14)).lineSpacing(1).fixedSize(horizontal: false, vertical: true)
                 }
                 .padding(.horizontal, 16).padding(.vertical, 14)
-                Rectangle().fill(Identity.rule).frame(height: 1)
+                .background(theme.isDark ? Color.white.opacity(0.06) : theme.accent.opacity(0.18))
+                Rectangle().fill(rule).frame(height: 1)
             }
             ForEach(Array(paras.prefix(2).enumerated()), id: \.offset) { _, p in
                 Text(p).font(Identity.grotesk(15)).lineSpacing(2).padding(.horizontal, 16).padding(.top, 12).fixedSize(horizontal: false, vertical: true)
@@ -96,11 +99,12 @@ struct ArticleView: View {
     let article: Article
     var hero: UIImage?
     private var theme: Theme { Theme.forEdition(edition) }
+    private var rule: Color { theme.ink }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text(sourceName(article)).font(Identity.grotesk(10, .bold)).tracking(2).padding(.top, 10)
-            Text(edition.headline).font(Identity.serif(42, .regular)).tracking(-0.8).lineSpacing(-4).padding(.top, 10).fixedSize(horizontal: false, vertical: true)
+            Text(edition.headline).font(theme.typeface == .serif ? Identity.serif(42, .regular) : Identity.grotesk(40, .heavy)).tracking(theme.typeface == .serif ? -0.8 : -1.5).lineSpacing(-4).padding(.top, 10).fixedSize(horizontal: false, vertical: true)
             if let dek = edition.blocks.first(where: { $0.type == .dek })?.text {
                 Text(dek).font(Identity.serif(19)).lineSpacing(5).padding(.top, 14).fixedSize(horizontal: false, vertical: true)
             }
@@ -120,11 +124,11 @@ struct ArticleView: View {
                 switch b.type {
                 case .pullQuote:
                     HStack(alignment: .top, spacing: 14) {
-                        Rectangle().fill(Identity.acid).frame(width: 4)
+                        Rectangle().fill(theme.accent).frame(width: 4)
                         Text("“\(b.text ?? "")”").font(Identity.serif(28)).italic().lineSpacing(0).fixedSize(horizontal: false, vertical: true)
                     }
                     .padding(.vertical, 22)
-                    Rectangle().fill(Identity.rule).frame(height: 1)
+                    Rectangle().fill(rule).frame(height: 1)
                 case .keyFacts, .timeline:
                     VStack(alignment: .leading, spacing: 10) {
                         ForEach(Array((b.items ?? []).enumerated()), id: \.offset) { _, it in

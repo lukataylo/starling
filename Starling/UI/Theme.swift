@@ -23,12 +23,25 @@ struct Theme {
     let typeface: Typeface
 
     var isDark: Bool { paletteName == .night || paletteName == .dusk }
+    /// Six skins, one per genome palette, deliberately far apart so a regeneration for another mood is visible at a glance.
     var palette: Palette {
-        isDark
-        ? Palette(background: Identity.night, card: Color(white: 0.12), text: Identity.warmWhite, secondary: Color(white: 0.62), scheme: .dark)
-        : Palette(background: Identity.warmWhite, card: Color.white, text: Identity.ink, secondary: Identity.grey, scheme: .light)
+        switch paletteName {
+        case .day:   return Palette(background: Identity.warmWhite, card: .white, text: Identity.ink, secondary: Identity.grey, scheme: .light)
+        case .focus: return Palette(background: .white, card: Color(white: 0.94), text: .black, secondary: Color(white: 0.35), scheme: .light)
+        case .dawn:  return Palette(background: Color(red: 0.96, green: 0.91, blue: 0.80), card: Color(red: 0.99, green: 0.96, blue: 0.90), text: Color(red: 0.20, green: 0.13, blue: 0.06), secondary: Color(red: 0.50, green: 0.40, blue: 0.28), scheme: .light)
+        case .calm:  return Palette(background: Color(red: 0.84, green: 0.88, blue: 0.80), card: Color(red: 0.92, green: 0.94, blue: 0.89), text: Color(red: 0.10, green: 0.18, blue: 0.12), secondary: Color(red: 0.33, green: 0.42, blue: 0.34), scheme: .light)
+        case .dusk:  return Palette(background: Color(red: 0.11, green: 0.09, blue: 0.09), card: Color(red: 0.18, green: 0.15, blue: 0.15), text: Color(red: 0.96, green: 0.92, blue: 0.86), secondary: Color(red: 0.70, green: 0.63, blue: 0.58), scheme: .dark)
+        case .night: return Palette(background: Identity.night, card: Color(white: 0.12), text: Identity.warmWhite, secondary: Color(white: 0.62), scheme: .dark)
+        }
     }
-    var accent: Color { Identity.acid }
+    var accent: Color {
+        switch paletteName {
+        case .dawn: return Color(red: 0.85, green: 0.55, blue: 0.10)
+        case .calm: return Color(red: 0.25, green: 0.45, blue: 0.30)
+        case .dusk: return Color(red: 0.98, green: 0.55, blue: 0.48)
+        default: return Identity.acid
+        }
+    }
     var design: Font.Design { typeface == .serif ? .serif : .default }
     var metrics: (body: CGFloat, headline: CGFloat, lineSpacing: CGFloat) { DesignGenome.metrics(scale) }
     var surface: Color { isDark ? Color(white: 0.12) : Color.white }
@@ -65,7 +78,7 @@ struct Theme {
 
     static func forEdition(_ e: Edition) -> Theme {
         let quick = e.resolvedLayout == .quick
-        return Theme(paletteName: e.palette, accentName: e.accent, scale: quick ? .large : e.typeScale, typeface: quick ? .sans : .serif)
+        return Theme(paletteName: e.palette, accentName: e.accent, scale: quick ? .large : e.typeScale, typeface: e.typeface == .serif ? .serif : .sans)
     }
 }
 

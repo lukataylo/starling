@@ -136,7 +136,7 @@ final class Generator {
         if !force, intent == .adapt, let e = bundledAdapt(article, state: state) { return e }
         if !force, let e = bundled(article, intent) { return e }
         if let t = inflight[k] { return await t.value }
-        let prompt = PromptBuilder.userMessage(article: article, sources: sources, state: state, intent: intent, feedback: feedback, rulesText: rulesTextProvider?(state))
+        let prompt = PromptBuilder.userMessage(article: article, sources: sources, state: state, intent: intent, feedback: feedback, rulesText: rulesTextProvider?(state), regenerate: force)
         status[k] = .generating
         let task = Task<Edition?, Never> {
             let start = Date()
