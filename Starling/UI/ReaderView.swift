@@ -46,7 +46,9 @@ struct ReaderView: View {
     /// the edition on screen still decides typeface and scale.
     private var theme: Theme {
         guard let cur = currentEdition else { return hub.theme }
-        let base = adapted ?? cur
+        // A chosen mood (Calm / Focused) wears its own skin; length changes keep the story's base skin.
+        var base = adapted ?? cur
+        if case .preset = mode { base = cur }
         var t = Theme.forEdition(cur)
         t = Theme(paletteName: base.palette, accentName: base.accent, scale: t.scale, typeface: t.typeface)
         return t
@@ -83,9 +85,6 @@ struct ReaderView: View {
                     Button { keep() } label: { Label(isKept ? "Kept" : "Keep", systemImage: isKept ? "bookmark.fill" : "bookmark") }
                     Button { Task { await regenerate() } } label: { Label(isRegenerating ? "Regenerating…" : "Regenerate", systemImage: "arrow.clockwise") }
                     Button { showSignals = true } label: { Label("Not how I feel", systemImage: "face.smiling") }
-                    Divider()
-                    Button { mode = .longform } label: { Label("Adapted (full)", systemImage: "text.book.closed") }
-                    Button { mode = .original } label: { Label("Original article", systemImage: "doc.plaintext") }
                     Divider()
                     Button { showCompare = true } label: { Label("Compare generations", systemImage: "rectangle.split.2x1") }
                     Button { showWhy = true } label: { Label("Why this version", systemImage: "info.circle") }
