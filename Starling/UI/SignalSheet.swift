@@ -187,7 +187,7 @@ struct SignalSheet: View {
             switch s.posture {
             case .lyingDown: return "LYING"
             case .reclined: return "RECLINED"
-            case .flat: return "TABLE"
+            case .flat: return "PHONE DOWN"
             default: return "STILL"
             }
         }

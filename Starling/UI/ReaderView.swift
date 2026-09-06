@@ -37,9 +37,14 @@ struct ReaderView: View {
         case .original: return nil
         }
     }
+    /// The page palette comes from the story's base (short) edition so switching length never flips the background;
+    /// the edition on screen still decides typeface and scale.
     private var theme: Theme {
-        if let e = currentEdition, e.resolvedLayout == .zine, mode != .longform { return Theme(paletteName: .night, accentName: .sage, scale: .large, typeface: .sans) }
-        return currentEdition.map(Theme.forEdition) ?? hub.theme
+        guard let cur = currentEdition else { return hub.theme }
+        let base = adapted ?? cur
+        var t = Theme.forEdition(cur)
+        t = Theme(paletteName: base.palette, accentName: base.accent, scale: t.scale, typeface: t.typeface)
+        return t
     }
     private var effectiveFormat: EditionFormat {
         if mode == .longform || mode == .original { return .text }
@@ -245,8 +250,9 @@ struct ReaderView: View {
         HStack {
             // Left: cards vs short
             ModeFab(symbol: inCards ? "text.alignleft" : "rectangle.on.rectangle",
-                    label: inCards ? "Short" : "Cards",
+                    label: "",
                     theme: theme) { flipFormat() }
+                .accessibilityLabel(inCards ? "Short" : "Cards")
             Spacer()
             // Right: three-state depth toggle Short · Long · Original, hidden while in cards.
             if !inCards {

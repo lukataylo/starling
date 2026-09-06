@@ -148,16 +148,15 @@ struct RoundIconButton: View {
     var filled = false
     let action: () -> Void
     var body: some View {
-        Button(action: action) {
-            Image(systemName: symbol)
-                .font(.system(size: 16, weight: .semibold))
-                .foregroundStyle(filled ? theme.palette.background : theme.ink)
-                .frame(width: 40, height: 40)
-                .background(filled ? theme.ink : Color.clear, in: Circle())
-                .overlay(Circle().strokeBorder(theme.ink.opacity(filled ? 0 : 0.9), lineWidth: 1.2))
-                .contentShape(Circle())
-        }
-        .buttonStyle(.plain)
+        Image(systemName: symbol)
+            .font(.system(size: 16, weight: .semibold))
+            .foregroundStyle(filled ? theme.palette.background : theme.ink)
+            .frame(width: 44, height: 44)
+            .background(filled ? theme.ink : Color.clear, in: Circle())
+            .overlay(Circle().strokeBorder(theme.ink.opacity(filled ? 0 : 0.9), lineWidth: 1.2).padding(2))
+            .contentShape(Circle())
+            .onTapGesture(perform: action)
+            .accessibilityAddTraits(.isButton)
     }
 }
 
@@ -189,7 +188,7 @@ struct StatePill: View {
     func text(_ s: UserState) -> String {
         var parts: [String] = []
         if s.sensingEnabled && hub.cameraSupported {
-            if !s.faceDetected { parts.append("Away") }
+            if !s.faceDetected { parts.append("Not in view") }
             else { parts.append(s.attention >= 0.5 ? "Looking" : "Not looking") }
         }
         switch s.label {
@@ -207,7 +206,7 @@ struct StatePill: View {
             switch s.posture {
             case .lyingDown: parts.append("Lying down")
             case .reclined: parts.append("Reclined")
-            case .flat: parts.append("On table")
+            case .flat: parts.append("Phone down")
             default: parts.append("Still")
             }
         }

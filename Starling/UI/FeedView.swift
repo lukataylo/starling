@@ -149,14 +149,15 @@ struct TileHome: View {
                 HStack(alignment: .top) {
                     Text("Starling").font(Identity.grotesk(56, .black)).tracking(-3.5).foregroundStyle(theme.ink)
                     Spacer()
-                    HStack(spacing: 6) {
+                    HStack(spacing: 4) {
                         RoundIconButton(symbol: "bookmark", theme: theme) { sheet = .bookmarks }
                         RoundIconButton(symbol: "line.3.horizontal", theme: theme) { sheet = .sources }
                         RoundIconButton(symbol: "gearshape", theme: theme) { sheet = .settings }
                     }
-                    .padding(.top, 10)
+                    .padding(.top, 8)
                 }
                 .padding(.horizontal, 16).padding(.top, 4)
+                .zIndex(2)
                 StatePill(theme: theme) { sheet = .signals }.padding(.horizontal, 16).padding(.top, 2)
 
                 if !feeds.failedSourceIDs.isEmpty {

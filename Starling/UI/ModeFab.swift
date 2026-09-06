@@ -10,10 +10,11 @@ struct ModeFab: View {
     var body: some View {
         Button(action: action) {
             HStack(spacing: 8) {
-                Image(systemName: symbol).font(.system(size: 16, weight: .bold)).contentTransition(.symbolEffect(.replace))
-                Text(label).font(Identity.grotesk(12, .bold)).tracking(-0.2)
+                Image(systemName: symbol).font(.system(size: 18, weight: .bold)).contentTransition(.symbolEffect(.replace))
+                if !label.isEmpty { Text(label).font(Identity.grotesk(12, .bold)).tracking(-0.2) }
             }
-            .padding(.leading, 14).padding(.trailing, 16).frame(height: 48)
+            .padding(.leading, label.isEmpty ? 0 : 14).padding(.trailing, label.isEmpty ? 0 : 16)
+            .frame(width: label.isEmpty ? 52 : nil, height: label.isEmpty ? 52 : 48)
             .background(theme.ink, in: Capsule())
             .foregroundStyle(theme.palette.background)
             .shadow(color: .black.opacity(0.18), radius: 10, y: 4)
