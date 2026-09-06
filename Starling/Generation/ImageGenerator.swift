@@ -20,14 +20,12 @@ final class ImageGenerator {
     static let styleCalm = "Editorial news-story illustration in a calm, reflective adaptation of the same mobile-first visual language: a single clear subject or quiet action sits low-right or along the right edge, with expansive uncluttered negative space in the upper-left for later statistic and caption overlay. Use muted sage, sand, warm stone, pale clay, and softened cream colour fields with restrained duotone photography. Add delicate film grain, diffuse daylight, low-contrast shadows, gentle haze, and simple graphic shapes. The mood is measured, humane, reassuring, and contemplative. No lettering, numbers, logos, interface elements, watermarks, or embedded text."
     static let styleFocused = "Editorial news-story illustration in a focused, tense adaptation of the same mobile-first visual language: one decisive subject, gesture, or object dominates the lower-right, leaving broad dark negative space in the upper-left for later statistic and caption overlay. Use high-contrast ink black, charcoal, deep slate, and off-white, punctuated by one vivid accent colour such as signal orange, red, or electric lime. Combine stark duotone photography, crisp silhouettes, directional cinematic light, hard-edged shadow, restrained grain, and subtle haze. The mood is urgent, precise, and investigative. No lettering, numbers, logos, interface elements, watermarks, or embedded text."
 
-    static func key(_ prompt: String, mood: String) -> String {
-        let h = SHA256.hash(data: Data((mood + "|" + prompt).utf8))
-        return h.prefix(10).map { String(format: "%02x", $0) }.joined()
-    }
+    static func key(_ prompt: String, mood: String) -> String { PosterPrompts.key(prompt, mood: mood) }
 
     func image(prompt: String, mood: String) -> UIImage? {
         let k = Self.key(prompt, mood: mood)
         if let i = images[k] { return i }
+        if let i = UIImage(named: "poster_" + k) { images[k] = i; return i }   // bundled, pre-generated
         let file = dir.appendingPathComponent(k + ".jpg")
         if let data = try? Data(contentsOf: file), let i = UIImage(data: data) { images[k] = i; return i }
         return nil
@@ -35,32 +33,13 @@ final class ImageGenerator {
 
     func isFailed(prompt: String, mood: String) -> Bool { failed.contains(Self.key(prompt, mood: mood)) }
 
-    /// Cover prompt for an article: the story subject in the house style.
-    static func coverPrompt(headline: String, summary: String) -> String {
-        "Cover image for a news story: \(headline). \(summary.prefix(200))"
-    }
-
+    static func coverPrompt(headline: String, summary: String) -> String { PosterPrompts.coverPrompt(headline: headline, summary: summary) }
     static func style(for mood: String) -> String { mood == "calm" ? styleCalm : styleFocused }
-
-    enum PosterKind { case headline, stat }
-
-    /// A complete poster card with the type baked in, in the bold-gradient style of the reference mockup.
-    static func posterPrompt(kind: PosterKind, big: String, line: String, subject: String, source: String, mood: String) -> String {
-        let colours: String
-        switch mood {
-        case "calm": colours = "a smooth confident gradient from soft sage green at the top to warm sand at the bottom, gentle diffuse daylight, ink-green text"
-        case "focused": colours = "a deep near-black to charcoal gradient with a warm signal-orange glow rising from the bottom-right, off-white text with the small line in orange"
-        default: colours = "a bold saturated gradient from vivid orange-coral at the top to deeper burnt orange at the bottom, near-black text"
-        }
-        let bigLine = kind == .stat ? "the figure \"\(big)\" set enormous (about a third of the width) on its own line" : "the headline \"\(big)\" set very large across up to three lines"
-        return """
-        Vertical 9:16 story card, confident graphic-design poster. Background: \(colours). Typography: minimal clean geometric sans-serif, excellent layout, generous margins; top-left, \(bigLine), then directly below in a smaller regular weight the line "\(line)". Bottom-left: a small solid circle followed by the word "starling" in the same sans-serif. One duotone photographic subject placed low-right and blending into the gradient, related to: \(subject). No other text, no logos, no interface elements. Spell every word exactly as given.
-        """
-    }
 
     func request(prompt: String, mood: String) {
         let k = Self.key(prompt, mood: mood)
         guard images[k] == nil, !inflight.contains(k), !failed.contains(k), !queue.contains(where: { $0.0 == k }), LLMClient.apiKey != nil else { return }
+        if UIImage(named: "poster_" + k) != nil { _ = image(prompt: prompt, mood: mood); return }
         if FileManager.default.fileExists(atPath: dir.appendingPathComponent(k + ".jpg").path) { _ = image(prompt: prompt, mood: mood); return }
         queue.append((k, prompt, mood))
         pump()
@@ -76,7 +55,8 @@ final class ImageGenerator {
 
     private func run(_ k: String, prompt: String, mood: String) async {
         guard let key = LLMClient.apiKey else { return }
-        let full = "\(Self.style(for: mood)) Subject: \(prompt). If a diagram is described, keep it to at most three simple elements with no labels."
+        let isPoster = prompt.hasPrefix("Vertical 9:16 story card")
+        let full = isPoster ? prompt : "\(Self.style(for: mood)) Subject: \(prompt). If a diagram is described, keep it to at most three simple elements with no labels."
         var req = URLRequest(url: URL(string: "https://api.openai.com/v1/images/generations")!)
         req.httpMethod = "POST"
         req.timeoutInterval = 120

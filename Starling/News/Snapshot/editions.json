@@ -1,1 +1,532 @@
-{"https://www.bbc.co.uk/news/articles/cew9dq9we5eo?at_medium=RSS&at_campaign=rss": {"preset:focused": {"stateSummary": "focused, stationary, morning", "rationale": "You asked for a focused version, so this keeps the competing claims clear and puts the key facts first.", "density": "standard", "tone": "plain", "pace": "scroll", "typeScale": "regular", "typeface": "sans", "headlineWeight": "semibold", "palette": "focus", "accent": "slate", "margins": "normal", "format": "text", "estimatedReadSeconds": 180, "blocks": [{"type": "headline", "text": "Police slow to respond to Dover protest, says council boss", "items": null, "symbol": null, "caption": null}, {"type": "dek", "text": "A protest that blocked routes to the Port of Dover caused hours of disruption, while officials gave differing accounts of the police response.", "items": null, "symbol": null, "caption": null}, {"type": "keyFacts", "text": null, "items": ["Hundreds of masked men blocked roads near Dover on Saturday, disrupting access to the port and causing miles of tailbacks.", "Dover council leader Kevin Mills said police were slow to keep roads open; Kent Police has not commented on the criticism.", "The protest lasted from about 07:00 to 11:30 BST, and police said no arrests were made."], "symbol": null, "caption": null}, {"type": "paragraph", "text": "Kevin Mills, who leads Dover District Council, said demonstrators had caught several agencies unprepared. He described the protest as exceptionally well organised and said the response appeared slow, while acknowledging that police resources were stretched.", "items": null, "symbol": null, "caption": null}, {"type": "pullQuote", "text": "\u201cThe protesters knew what they were doing, I'm not sure the police did know what was going to happen.\u201d", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Business Secretary Jonathan Reynolds gave a different assessment, saying officers had dealt with the protest swiftly. He condemned what he called intimidatory behaviour and said people in and around Dover had been disrupted.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Mills said the council had received further complaints from villagers in Preston, where protesters appeared to have parked vehicles before travelling into Dover. A Conservative council group leader previously said some demonstrators had arrived in rental vans.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Kent Police described the event as a spontaneous protest and said on Saturday that there had been no arrests. The force has not commented on the council leader's criticism or on who organised the demonstration.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Hope Not Hate said the Patriot Platform network arranged the protest and brought together members of anti-migrant groups from around the country. Far-right activists Tommy Robinson and Danny Thomas praised it online. Restore Britain leader Rupert Lowe also said his party supported people protesting against illegal immigration, while describing balaclavas as undesirable.", "items": null, "symbol": null, "caption": null}, {"type": "takeaway", "text": "The protest caused major disruption around Dover, but accounts differ over how quickly police responded and whether the event was spontaneous or organised in advance.", "items": null, "symbol": null, "caption": null}, {"type": "readFullPrompt", "text": "Read the full BBC report", "items": null, "symbol": null, "caption": null}]}, "preset:calm": {"stateSummary": "calm, reclined, evening", "rationale": "You are settled and attentive, so this version gives the dispute room for context in a calm, readable evening layout.", "density": "standard", "tone": "reflective", "pace": "scroll", "typeScale": "regular", "typeface": "serif", "headlineWeight": "semibold", "palette": "dusk", "accent": "slate", "margins": "wide", "format": "text", "estimatedReadSeconds": 180, "blocks": [{"type": "headline", "text": "Police slow to respond to Dover protest, says council boss", "items": null, "symbol": null, "caption": null}, {"type": "dek", "text": "A council leader says agencies were caught unprepared when a masked demonstration disrupted access to the Port of Dover. Police have described the protest as spontaneous and made no arrests.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Hundreds of men blocked roads near Dover on Saturday, causing miles of tailbacks and preventing access to the port. The demonstration, which lasted from about 07:00 to 11:30 BST, involved chants including \u201cstop the boats\u201d.", "items": null, "symbol": null, "caption": null}, {"type": "pullQuote", "text": "\u201cThe protesters knew what they were doing, I'm not sure the police did know what was going to happen.\u201d", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Kevin Mills, leader of Dover District Council, told the BBC that the protest was \u201cexceptionally well organised\u201d and that several agencies had been caught \u201con the hoof\u201d. He said police appeared slow to keep roads and communication networks open, while acknowledging that police resources were stretched.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Mills said the council had received complaints that protesters appeared to have parked vehicles in the nearby village of Preston before travelling into Dover. The leader of the council\u2019s Conservative group had previously said some men arrived in rental vans.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Kent Police has not commented on the criticism or on who organised the demonstration. On Saturday, the force said officers had made no arrests and described the event as spontaneous.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Business Secretary Jonathan Reynolds said officers had dealt with the protest swiftly. He condemned what he called intimidatory behaviour and said people living and travelling around Dover had been disrupted.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The anti-hate organisation Hope Not Hate said the Patriot Platform network arranged the protest, bringing together members of anti-migrant groups from across the country. Demonstrators declined to speak to the BBC, although some shouted anti-immigration slogans.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Far-right activists Tommy Robinson and Danny Thomas praised the protest on X. Rupert Lowe, the Great Yarmouth MP and leader of Restore Britain, also said his party supported those protesting against illegal immigration, while describing the use of balaclavas as undesirable.", "items": null, "symbol": null, "caption": null}, {"type": "takeaway", "text": "The immediate dispute is over whether the protest was spontaneous and swiftly managed, or organised enough that authorities should have been better prepared. Dover District Council says a formal review is needed; police have yet to respond to that criticism.", "items": null, "symbol": null, "caption": null}, {"type": "readFullPrompt", "text": "Read the full BBC report", "items": null, "symbol": null, "caption": null}]}}, "https://www.bbc.co.uk/news/articles/crer948xq00o?at_medium=RSS&at_campaign=rss": {"preset:focused": {"stateSummary": "focused, stationary, calm morning", "rationale": "You asked for the focused version, so this keeps the reporting structured and adds context without slowing you down.", "density": "standard", "tone": "plain", "pace": "scroll", "typeScale": "regular", "typeface": "sans", "headlineWeight": "semibold", "palette": "day", "accent": "slate", "margins": "normal", "format": "text", "estimatedReadSeconds": 180, "blocks": [{"type": "headline", "text": "Minister to meet JLR boss as thousands of job cuts are expected", "items": null, "symbol": null, "caption": null}, {"type": "dek", "text": "Jonathan Reynolds will meet Jaguar Land Rover and Unite leaders to discuss voluntary redundancies, after the company was hit by a costly cyber-attack and weaker sales.", "items": null, "symbol": null, "caption": null}, {"type": "keyFacts", "text": null, "items": ["JLR has opened a voluntary redundancy programme for salaried and management staff.", "The company has not confirmed the scale of the cuts; reports suggest as many as 4,000 jobs could be affected.", "The government says it will discuss long-term investment, but has ruled out a bailout."], "symbol": null, "caption": null}, {"type": "paragraph", "text": "Business Secretary Jonathan Reynolds is due to meet Jaguar Land Rover bosses and the Unite union early next week. The talks will focus on ways to reduce the impact of expected job losses at the car maker, which employs about 30,000 people in the UK.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "JLR confirmed that it has opened a voluntary redundancy programme, a year after a cyber-attack halted production for more than a month. The company said the changes would simplify the business, improve efficiency and build resilience. It did not rule out compulsory redundancies.", "items": null, "symbol": null, "caption": null}, {"type": "pullQuote", "text": "\u201cWe need to make sure over time that the workforce is right to make the business as competitive as possible.\u201d", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The Times reported that as many as 4,000 jobs could be lost, largely among white-collar workers, because of tariffs and falling sales. JLR has not confirmed that figure. In July, it said fewer than 300 people would leave under cost-saving plans announced then.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Reynolds said there would be no government support simply to bail out the company, but left open the possibility of long-term investment. He has also discussed support for JLR and its staff with West Midlands mayor Richard Parker.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The company is still recovering from the September 2025 cyber-attack, which stopped all manufacturing for several weeks. Analysts estimated the combined cost of the attack and lost production at \u00a31.9bn. JLR later announced plans to cut about \u00a31.7bn in costs.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The discussions also come as the government considers changes to the electric vehicle sales target. Manufacturers must increase the share of zero-emission vehicles they sell, reaching 80% by 2030. Reynolds said the rules should better reflect consumer demand and current industry conditions.", "items": null, "symbol": null, "caption": null}, {"type": "takeaway", "text": "JLR has confirmed voluntary redundancies but not the number of jobs at risk. The government is offering discussions about competitiveness and investment, rather than a direct bailout.", "items": null, "symbol": null, "caption": null}, {"type": "readFullPrompt", "text": "Read the full BBC report", "items": null, "symbol": null, "caption": null}]}, "preset:calm": {"stateSummary": "reclined, calm evening, attentive", "rationale": "You asked for the calm version, so this uses a measured evening layout with context and room to read without urgency.", "density": "standard", "tone": "reflective", "pace": "scroll", "typeScale": "regular", "typeface": "serif", "headlineWeight": "semibold", "palette": "dusk", "accent": "slate", "margins": "wide", "format": "text", "estimatedReadSeconds": 180, "blocks": [{"type": "headline", "text": "Minister to meet Jaguar Land Rover boss as thousands of job cuts expected", "items": null, "symbol": null, "caption": null}, {"type": "dek", "text": "Jonathan Reynolds will meet JLR and Unite representatives after the car maker opened a voluntary redundancy programme, though the company has not confirmed how many jobs could go.", "items": null, "symbol": null, "caption": null}, {"type": "keyFacts", "text": null, "items": ["JLR has opened voluntary redundancies for salaried and management staff.", "The Times reported that as many as 4,000 jobs could be lost, but JLR has not confirmed that figure.", "The government says it will discuss limiting job losses, while ruling out a bailout."], "symbol": null, "caption": null}, {"type": "paragraph", "text": "Business Secretary Jonathan Reynolds is due to meet Jaguar Land Rover executives and the Unite union early next week to discuss the impact of expected job cuts at the company.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "JLR said it was opening a voluntary redundancy programme about a year after a cyber attack halted production for more than a month. The company said the changes would simplify the business, improve efficiency and build resilience. It has not ruled out compulsory redundancies.", "items": null, "symbol": null, "caption": null}, {"type": "pullQuote", "text": "\u201cThe conversation we need to have\u201d is how to make the business as competitive as possible, Reynolds said.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Reynolds said the meeting would focus on ways to mitigate job losses, but ruled out financial support intended to bail out the company. He said the government could consider long-term investment in JLR's future.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The reported cuts are expected to affect mainly white-collar workers. JLR employs about 30,000 people in the UK, including staff at its plants in the West Midlands, and is one of the region's largest employers.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The announcement comes as the government prepares to promote infrastructure investment and economic growth in the Midlands. JLR is based in Coventry, and discussions have also taken place with West Midlands mayor Richard Parker.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Unite general secretary Sharon Graham said the union had warned about a \u201cperfect storm\u201d in the automotive industry, including pressure building over time across the sector.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "JLR is also seeking changes to the UK's electric vehicle sales target, which requires manufacturers to increase the proportion of zero-emission cars they sell. Reynolds said the rules should reflect consumer demand and the industry's position while the transition continues.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The company has been recovering from a cyber attack in September 2025 that stopped manufacturing for several weeks. Analysts estimated the combined cost of the attack and lost production at \u00a31.9bn. JLR later announced plans to cut about \u00a31.7bn in costs over the coming years.", "items": null, "symbol": null, "caption": null}, {"type": "takeaway", "text": "The scale of the job cuts remains uncertain. The immediate focus is on voluntary departures, talks with unions and whether government support can strengthen JLR without becoming a bailout.", "items": null, "symbol": null, "caption": null}, {"type": "readFullPrompt", "text": "Read the full BBC report", "items": null, "symbol": null, "caption": null}]}}, "https://www.bbc.co.uk/news/articles/c6248nvqy8po?at_medium=RSS&at_campaign=rss": {"preset:focused": {"stateSummary": "focused, morning, stationary", "rationale": "You asked for the focused version, so this keeps the latest developments prominent while preserving concise context and clear sourcing.", "density": "standard", "tone": "plain", "pace": "scroll", "typeScale": "regular", "typeface": "sans", "headlineWeight": "semibold", "palette": "focus", "accent": "slate", "margins": "normal", "format": "text", "estimatedReadSeconds": 180, "blocks": [{"type": "headline", "text": "US envoys arrive in Ukraine after talks with Putin", "items": null, "symbol": null, "caption": null}, {"type": "dek", "text": "Steve Witkoff and Jared Kushner are in Kyiv after three-hour discussions in Moscow about possible next steps towards ending the war.", "items": null, "symbol": null, "caption": null}, {"type": "keyFacts", "text": null, "items": ["The US envoys met Vladimir Putin in Moscow on Saturday and arrived in Kyiv on Sunday.", "The White House says the talks covered substantive plans, but the details remain unclear.", "Russia and Ukraine continued exchanging strikes overnight despite diplomatic efforts."], "symbol": null, "caption": null}, {"type": "paragraph", "text": "Witkoff and Kushner are holding their first talks in Ukraine\u2019s capital as the US pushes efforts to end the war. US officials said they hoped the meetings would be \u201cequally productive\u201d after discussions with Putin.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Ukrainian President Volodymyr Zelensky said he and his team were ready for the conversation. He said peace and security guarantees were needed, and called for coordinated, substantive and realistic work.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "An announcement on the next steps is expected in the coming weeks, although neither side has released detailed proposals. Russian officials described the Moscow meeting as constructive and said it also covered economic issues and possible Russian-American projects.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Putin and Zelensky have agreed to halt strikes on each other\u2019s capitals for three days. However, Russian and Ukrainian forces continued attacks elsewhere. Ukraine said it struck an oil refinery, an airfield and two air-defence systems in Russia.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Ukraine\u2019s air force said Russia launched 108 long-range drones and small cruise missiles. It reported that air defences destroyed 82 drones and six missiles, while 11 locations were hit and debris fell at seven others.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The diplomatic contacts come as aerial attacks have intensified. Ukraine says it lacks enough interceptor missiles for some ballistic threats, while its own strikes have increasingly targeted Russian economic infrastructure, including oil facilities.", "items": null, "symbol": null, "caption": null}, {"type": "takeaway", "text": "The meetings mark a new diplomatic exchange between Washington, Moscow and Kyiv, but the substance of any emerging plan\u2014and whether it can overcome the central disagreements\u2014remains unresolved.", "items": null, "symbol": null, "caption": null}, {"type": "readFullPrompt", "text": "Read the full report for more detail on the Moscow talks and the overnight strikes.", "items": null, "symbol": null, "caption": null}]}, "preset:calm": {"stateSummary": "reclined, calm evening, attentive", "rationale": "You asked for the calm version, so this uses a reflective, spacious layout that gives the developing talks context without heightening the conflict.", "density": "longform", "tone": "reflective", "pace": "scroll", "typeScale": "regular", "typeface": "serif", "headlineWeight": "semibold", "palette": "dusk", "accent": "slate", "margins": "wide", "format": "text", "estimatedReadSeconds": 240, "blocks": [{"type": "headline", "text": "US envoys arrive in Ukraine after talks with Putin", "items": null, "symbol": null, "caption": null}, {"type": "dek", "text": "Steve Witkoff and Jared Kushner are in Kyiv after discussions in Moscow about possible next steps towards ending the war.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "US envoys Steve Witkoff and Jared Kushner arrived in Kyiv on Sunday, a day after meeting Russian President Vladimir Putin in Moscow. White House officials said the talks covered substantive plans for what comes next, although the details have not been made public.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The visit is the first by President Donald Trump's top negotiators to the Ukrainian capital. An announcement is expected in the coming weeks as diplomatic efforts gather pace.", "items": null, "symbol": null, "caption": null}, {"type": "pullQuote", "text": "Both sides described the Moscow meeting in broadly positive terms, while offering few specifics.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Ukrainian President Volodymyr Zelensky said he and his team were ready for talks. He said peace would require security guarantees and a coordinated, substantive and realistic approach.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Putin and Zelensky have agreed to halt strikes on each other's capitals for three days. The limited pause comes as Russian and Ukrainian forces continue exchanging attacks elsewhere.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Ukraine said its forces struck an oil refinery, an airfield and two air-defence systems in Russia. Russia's defence ministry said the attacks targeted the Ryazan refinery, which supplies the Russian army, and an airfield in Rostov-on-Don.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Ukraine's Air Force said Russia launched 108 long-range drones and small cruise missiles overnight. It reported that air defences brought down 82 drones and six missiles, while 11 locations were hit and debris fell at seven others.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The Moscow meeting lasted three hours and was held behind closed doors at Putin's official residence, according to Russian state media. Putin adviser Yuri Ushakov called it constructive and extremely frank. He said the discussions included the war, economic issues and possible Russian-American projects.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Ushakov also said the talks addressed what Russia describes as the root causes of the conflict and noted the Russian army's advances. Those remarks come against the backdrop of a war in which Russia controls about one-fifth of Ukrainian territory, while its ground forces have generally made slow advances at a heavy cost.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The route taken by the envoys from Moscow to Kyiv was not immediately clear. Ukraine's airspace has been closed since Russia launched its full-scale invasion in February 2022.", "items": null, "symbol": null, "caption": null}, {"type": "takeaway", "text": "The meetings mark a new diplomatic contact between Washington, Moscow and Kyiv, but the central proposals and the prospects for a wider agreement remain unclear.", "items": null, "symbol": null, "caption": null}, {"type": "readFullPrompt", "text": "Read the full report", "items": null, "symbol": null, "caption": null}]}}, "https://www.theguardian.com/music/2026/sep/06/femi-koleoso-ezra-collective-guest-editor-cultural-picks": {"preset:focused": {"stateSummary": "focused, upright, calm morning", "rationale": "You asked for the focused version, so this keeps the argument clear while preserving the human and cultural context.", "density": "standard", "tone": "brisk", "pace": "scroll", "typeScale": "regular", "typeface": "sans", "headlineWeight": "semibold", "palette": "day", "accent": "slate", "margins": "normal", "format": "text", "estimatedReadSeconds": 180, "blocks": [{"type": "headline", "text": "Femi Koleoso: hope can carry us from pain to renewal", "items": null, "symbol": null, "caption": null}, {"type": "dek", "text": "The Ezra Collective bandleader guest-edits the Guardian\u2019s culture section, sharing a case for optimism and highlighting the music, films and places that bring him joy.", "items": null, "symbol": null, "caption": null}, {"type": "keyFacts", "text": null, "items": ["Koleoso grew up in Enfield, began playing drums at church and was supported by state schools and youth clubs.", "He describes hope as the belief that renewal and joy can follow pain, even when the timing is unclear.", "Ezra Collective members share cultural picks including Rosa Passos, KeiyaA, Southbank Centre and two films."], "symbol": null, "caption": null}, {"type": "paragraph", "text": "Koleoso introduces himself plainly: he is a north London musician, drummer, DJ and broadcaster, not a writer or intellectual. He credits his Nigerian family, the UK\u2019s state school system and youth clubs with helping shape a career that has taken him around the world with Ezra Collective.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "His guest edit is built around a positive argument. Koleoso recognises the reasons people may feel pessimistic about the UK and the wider world, but says joy remains central to his outlook. For him, hope is not the denial of pain; it is the belief that people can eventually find solid ground.", "items": null, "symbol": null, "caption": null}, {"type": "pullQuote", "text": "\u201cOn the other side of pain there can be renewal.\u201d", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Music is his clearest example. He points to songs shaped by political violence, poverty and historical trauma that nevertheless create movement, connection and joy. Fela Kuti, grime and calypso each show how difficult experiences can produce powerful cultural expression.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The rest of the guest edit follows that route from pain towards joy, with stories and recommendations from Koleoso and his bandmates. Koleoso highlights the Southbank Centre\u2019s steelpan celebrations, where different generations and communities gathered to dance and listen together.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The band\u2019s wider picks include Kleber Mendon\u00e7a Filho\u2019s film The Secret Agent, Akinola Davies Jr\u2019s My Father\u2019s Shadow, Rosa Passos\u2019s album Recria\u00e7\u00e3o and KeiyaA\u2019s Hooke\u2019s Law. Together, they reflect the group\u2019s interest in music, film, cultural identity and the energy created when people experience art collectively.", "items": null, "symbol": null, "caption": null}, {"type": "takeaway", "text": "Koleoso\u2019s message is straightforward: hope does not erase suffering, but it can make renewal feel possible\u2014and art can help people move towards it.", "items": null, "symbol": null, "caption": null}, {"type": "readFullPrompt", "text": "Read the full guest editor\u2019s letter and the Ezra Collective culture features.", "items": null, "symbol": null, "caption": null}]}, "preset:calm": {"stateSummary": "reclined, calm, attentive evening", "rationale": "You have time to settle into a reflective feature, so this version preserves its human voice while giving the ideas room to unfold.", "density": "longform", "tone": "reflective", "pace": "scroll", "typeScale": "regular", "typeface": "serif", "headlineWeight": "semibold", "palette": "dusk", "accent": "amber", "margins": "wide", "format": "text", "estimatedReadSeconds": 240, "blocks": [{"type": "headline", "text": "\u2018On the other side of pain there can be renewal\u2019: Femi Koleoso on holding on to hope", "items": null, "symbol": null, "caption": null}, {"type": "dek", "text": "The Ezra Collective bandleader guest-edits the Saturday culture section, sharing a personal case for optimism and inviting his bandmates to name the work that brings them joy.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "When Femi Koleoso was asked to guest-edit the culture section, his first instinct was delight \u2014 and a call to his father and former English teacher. The musician jokes that the opportunity places him in an intellectual bracket beyond his wildest dreams, but beneath the humour is genuine pride.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Koleoso describes himself plainly: a drummer, DJ, broadcaster and musician from north London, born to Nigerian parents and raised in Enfield. He began playing drums at church, found encouragement in the state-school system and youth clubs, and now travels the world with Ezra Collective while working in radio and production.", "items": null, "symbol": null, "caption": null}, {"type": "pullQuote", "text": "\u201cOn the other side of pain there can be renewal.\u201d", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "His optimism is not based on ignoring the reasons people might feel despair about the future of the UK or the wider world. Instead, he sees hope as the belief that change remains possible even when its timing and shape are unclear: joy after mourning, beauty from the ashes, and the sense that solid ground may eventually be found.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Music offers him the clearest evidence. Songs shaped by suffering can become sources of collective joy. He points to Fela Kuti\u2019s song about his mother\u2019s execution, the grime that emerged from hardship in council estates, and calypso\u2019s roots in the horrors of the transatlantic slave trade. Across different places and eras, he sees artistic creation as a way of moving from pain towards joy.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "That idea runs through the guest edit: stories, artists and experiences that help people hold on to a more positive outlook. Koleoso\u2019s own selection is joined by cultural recommendations from his Ezra Collective bandmates.", "items": null, "symbol": null, "caption": null}, {"type": "keyFacts", "text": null, "items": ["Femi Koleoso guest-edits the Saturday culture section.", "He describes hope as the possibility of renewal after pain.", "Music, film and shared cultural experiences form the guest edit\u2019s emotional centre."], "symbol": null, "caption": null}, {"type": "paragraph", "text": "Among the recommendations are Kleber Mendon\u00e7a Filho\u2019s film The Secret Agent, praised by TJ Koleoso for its intensity and immersive portrait of 1970s Brazil; Rosa Passos\u2019s album Recria\u00e7\u00e3o, chosen by Joe Armon-Jones for its spare, precise instrumentation; and the Southbank Centre, selected by Koleoso after its steelpan celebrations brought generations and cultures together.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Ife Ogunjobi recommends Akinola Davies Jr\u2019s 2025 film My Father\u2019s Shadow, a Nigerian coming-of-age story whose rawness and cultural depth resonated with him. James Mollison chooses KeiyaA\u2019s Hooke\u2019s Law, admiring its shifting sound worlds and the fact that the artist produced the entire album herself.", "items": null, "symbol": null, "caption": null}, {"type": "takeaway", "text": "For Koleoso, hope is not a promise that pain will disappear. It is the possibility that pain can be transformed \u2014 through music, shared experience and the creative work that helps people imagine joy again.", "items": null, "symbol": null, "caption": null}, {"type": "readFullPrompt", "text": "Read the full Saturday culture guest edit", "items": null, "symbol": null, "caption": null}]}}, "https://www.ft.com/content/1e2d9db0-cb2c-4c79-942b-f0aff960e4c5": {"preset:calm": {"stateSummary": "calm, reclined, evening reader", "rationale": "You are settled and attentive, so this uses a calm, spacious reading view while avoiding claims the supplied text does not support.", "density": "brief", "tone": "reassuring", "pace": "scroll", "typeScale": "large", "typeface": "serif", "headlineWeight": "semibold", "palette": "dusk", "accent": "sage", "margins": "wide", "format": "text", "estimatedReadSeconds": 20, "blocks": [{"type": "headline", "text": "Trump envoys arrive in Ukraine after meeting Putin in Moscow", "items": null, "symbol": null, "caption": null}, {"type": "dek", "text": "The supplied article text contains subscription and access information, but no further reporting about the envoys\u2019 visit.", "items": null, "symbol": null, "caption": null}, {"type": "keyFacts", "text": null, "items": ["Trump envoys arrived in Ukraine", "They had previously met Vladimir Putin in Moscow", "No additional details are provided in the supplied text"], "symbol": null, "caption": null}, {"type": "paragraph", "text": "The headline reports that envoys representing Donald Trump have arrived in Ukraine after meeting Russia\u2019s president, Vladimir Putin, in Moscow. The source material provided here does not explain who the envoys are, when they arrived, or what was discussed.", "items": null, "symbol": null, "caption": null}, {"type": "readFullPrompt", "text": "Read the full report for the context and details not included in this excerpt.", "items": null, "symbol": null, "caption": null}]}, "preset:focused": {"stateSummary": "focused, stationary, morning", "rationale": "You are focused and upright, so this uses a clear briefing layout while preserving the limited information available in the source.", "density": "brief", "tone": "brisk", "pace": "scroll", "typeScale": "regular", "typeface": "sans", "headlineWeight": "semibold", "palette": "day", "accent": "slate", "margins": "normal", "format": "text", "estimatedReadSeconds": 20, "blocks": [{"type": "headline", "text": "Trump envoys arrive in Ukraine after meeting Putin in Moscow", "items": null, "symbol": null, "caption": null}, {"type": "dek", "text": "The supplied article text contains subscription and access information, but no reportable details about the envoys\u2019 visit.", "items": null, "symbol": null, "caption": null}, {"type": "keyFacts", "text": null, "items": ["The headline says Trump\u2019s envoys arrived in Ukraine.", "They had met Vladimir Putin in Moscow beforehand.", "No further details are provided in the supplied text."], "symbol": null, "caption": null}, {"type": "paragraph", "text": "The source material provided here consists entirely of Financial Times subscription and access notices. It does not explain who the envoys are, when they arrived, whom they met in Ukraine, or what the Moscow meeting with Putin covered.", "items": null, "symbol": null, "caption": null}, {"type": "readFullPrompt", "text": "Read the full report for the missing context.", "items": null, "symbol": null, "caption": null}]}}, "https://www.ft.com/content/39b0c966-b153-4706-9325-2f6176ba3752?syn-25a6b1a6=1": {"preset:focused": {"stateSummary": "focused, morning, stationary", "rationale": "You asked for a focused version, so this keeps the page structured and easy to scan while preserving the limited information available.", "density": "brief", "tone": "brisk", "pace": "scroll", "typeScale": "regular", "typeface": "sans", "headlineWeight": "semibold", "palette": "day", "accent": "slate", "margins": "normal", "format": "text", "estimatedReadSeconds": 30, "blocks": [{"type": "headline", "text": "Russian gold floods through Hong Kong in wake of western sanctions", "items": null, "symbol": null, "caption": null}, {"type": "dek", "text": "The supplied text contains subscription and access information, but no article reporting beyond the headline.", "items": null, "symbol": null, "caption": null}, {"type": "keyFacts", "text": null, "items": ["The headline concerns Russian gold moving through Hong Kong.", "It frames the trade in the context of western sanctions.", "No supporting facts, figures or quotes were included in the supplied text."], "symbol": null, "caption": null}, {"type": "paragraph", "text": "The available copy is a subscription page rather than the article itself. It describes digital access plans, annual payment discounts, organisational access and possible access through a university or employer.", "items": null, "symbol": null, "caption": null}, {"type": "readFullPrompt", "text": "Open the full article for the reporting and context behind the headline.", "items": null, "symbol": null, "caption": null}]}, "preset:calm": {"stateSummary": "reclined, evening, calm and attentive", "rationale": "You are settled and attentive, so this uses a spacious evening layout while staying clear about the limited source text.", "density": "standard", "tone": "reflective", "pace": "scroll", "typeScale": "regular", "typeface": "serif", "headlineWeight": "semibold", "palette": "dusk", "accent": "slate", "margins": "wide", "format": "text", "estimatedReadSeconds": 45, "blocks": [{"type": "headline", "text": "Russian gold floods through Hong Kong in wake of western sanctions", "items": null, "symbol": null, "caption": null}, {"type": "dek", "text": "The supplied material contains subscription and access information, but no article reporting or details about the Hong Kong gold trade.", "items": null, "symbol": null, "caption": null}, {"type": "keyFacts", "text": null, "items": ["The headline refers to Russian gold moving through Hong Kong.", "It links that activity to western sanctions.", "No supporting facts, figures or source reporting were provided in the supplied text."], "symbol": null, "caption": null}, {"type": "paragraph", "text": "The available copy consists entirely of Financial Times subscription offers and access instructions. It does not explain the reported gold flows, identify the companies or authorities involved, or describe how sanctions have changed the trade.", "items": null, "symbol": null, "caption": null}, {"type": "takeaway", "text": "There is not enough article text here to produce a faithful account beyond the headline.", "items": null, "symbol": null, "caption": null}, {"type": "readFullPrompt", "text": "Open the full article to read the reporting and context.", "items": null, "symbol": null, "caption": null}]}}, "https://www.theguardian.com/politics/2026/sep/06/london-mayor-contenders-race-unseat-sadiq-khan": {"preset:calm": {"stateSummary": "reclined, calm, evening", "rationale": "You are settled and attentive, so this version gives you the wider political context in a warm, readable evening format.", "density": "standard", "tone": "reflective", "pace": "scroll", "typeScale": "regular", "typeface": "serif", "headlineWeight": "semibold", "palette": "dusk", "accent": "slate", "margins": "wide", "format": "text", "estimatedReadSeconds": 180, "blocks": [{"type": "headline", "text": "London mayoral contenders prepare for a race Sadiq Khan currently leads", "items": null, "symbol": null, "caption": null}, {"type": "dek", "text": "Conservative and Reform candidates hope to draw voters away from Labour as parties begin positioning themselves for the 2028 contest.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The contest to become London\u2019s mayor is beginning to take shape, although Sadiq Khan has not yet said whether he will seek another term. The three-time mayor has said he will decide next year.", "items": null, "symbol": null, "caption": null}, {"type": "keyFacts", "text": null, "items": ["A Savanta UK poll put Labour on 33%, the Conservatives and Reform UK on 18% each, and the Greens on 17%.", "James Cleverly has declared that he will seek the Conservative nomination.", "Reform candidate Laila Cunningham says she will not stand aside for the Conservatives."], "symbol": null, "caption": null}, {"type": "paragraph", "text": "Cleverly, the former home secretary and MP for Braintree, has presented himself as an aspirational Conservative candidate with a city-focused message. Festus Akinbusoye, a Westminster councillor and former police commissioner, is also seeking the nomination and has emphasised his private-sector experience.", "items": null, "symbol": null, "caption": null}, {"type": "pullQuote", "text": "\u201cThe race is Khan\u2019s to lose, at the moment.\u201d", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The Conservatives\u2019 challenge is complicated by Reform UK, which is running Cunningham, a former Crown Prosecution Service prosecutor. She argues that the right-of-centre vote is divided and believes Reform can attract some Labour voters, pointing to the party\u2019s local election gains in Barking and Dagenham.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Labour MP Dawn Butler has also hinted that she may run. She previously said she would seek the nomination if Khan confirmed he would not pursue another term. Khan has not responded to a request for comment.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The Greens have not settled on a candidate. Their immediate focus is on leader Zack Polanski\u2019s plans to contest the Holborn and St Pancras byelection, although the party says it has several possible London candidates.", "items": null, "symbol": null, "caption": null}, {"type": "takeaway", "text": "The early field is crowded, but the central question remains whether Khan will stand again\u2014and whether the Conservative and Reform campaigns can avoid splitting the opposition vote.", "items": null, "symbol": null, "caption": null}, {"type": "readFullPrompt", "text": "Read the full report", "items": null, "symbol": null, "caption": null}]}, "preset:focused": {"stateSummary": "focused, stationary, morning", "rationale": "You asked for the focused version, so this keeps the competing candidates and polling context easy to scan without adding visual noise.", "density": "standard", "tone": "brisk", "pace": "scroll", "typeScale": "regular", "typeface": "sans", "headlineWeight": "semibold", "palette": "day", "accent": "slate", "margins": "normal", "format": "text", "estimatedReadSeconds": 180, "blocks": [{"type": "headline", "text": "London mayoral contenders prepare for a race Sadiq Khan is favoured to win", "items": null, "symbol": null, "caption": null}, {"type": "dek", "text": "Conservative and Reform candidates hope to draw Labour voters to the right, while Khan has yet to say whether he will seek another term in 2028.", "items": null, "symbol": null, "caption": null}, {"type": "keyFacts", "text": null, "items": ["A Savanta poll put Labour on 33%, with the Conservatives and Reform UK on 18% each.", "James Cleverly and Festus Akinbusoye are seeking the Conservative nomination.", "Reform\u2019s Laila Cunningham says she will contest the election rather than stand aside for the Conservatives."], "symbol": null, "caption": null}, {"type": "paragraph", "text": "The contest to become London\u2019s next mayor is beginning to take shape, although the current mayor, Sadiq Khan, has not confirmed whether he will seek another term in 2028. He has said he will decide next year.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Khan has held the mayoralty since 2016 and remains the candidate to beat. A recent Savanta UK poll for Queen Mary University of London\u2019s Mile End Institute put Labour\u2019s candidate on 33%. The Conservatives and Reform UK were each on 18%, followed by the Greens on 17% and the Liberal Democrats on 9%.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Former home secretary James Cleverly has said he will seek the Conservative nomination. He presented himself as an aspirational, entrepreneurial and forward-looking candidate who understands London, arguing that the city is more pragmatic at elections than its left-leaning reputation suggests.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Festus Akinbusoye, a Westminster councillor and Britain\u2019s first Black police and crime commissioner, is also standing for the Conservative nomination. He is presenting himself as a fresh face with private-sector experience rather than a former government minister.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The Conservative campaign faces a direct challenge from Reform UK. Laila Cunningham, a former Crown Prosecution Service prosecutor, has been campaigning in London since the start of the year and says she will not step aside for the Conservatives.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Cunningham argues that the right-of-centre vote is divided, but believes Reform can attract some Labour voters. She points to the party\u2019s gains in Barking and Dagenham in the local elections and says her background as the daughter of Egyptian immigrants challenges assumptions about a typical Reform supporter.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Labour MP Dawn Butler has also indicated that she may run. She previously raised the possibility in 2023 and has said she would enter the race if Khan confirms he will not seek a third term. Khan did not respond to a request for comment.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The Greens have not named a clear candidate. The party is currently focused on its leader Zack Polanski\u2019s planned campaign in the Holborn and St Pancras byelection, while saying it has several potential mayoral candidates.", "items": null, "symbol": null, "caption": null}, {"type": "takeaway", "text": "For now, the main uncertainty is not who has entered the race but whether Khan will run again\u2014and whether divided opposition parties can turn the contest into a close one.", "items": null, "symbol": null, "caption": null}, {"type": "readFullPrompt", "text": "Read the full report", "items": null, "symbol": null, "caption": null}]}}, "https://www.ft.com/content/04031dbe-7412-441e-8aaa-89a9ee6c7439?syn-25a6b1a6=1": {"preset:calm": {"stateSummary": "calm, reclined, evening reader", "rationale": "You are settled and attentive, so this version uses a calm, spacious reading layout while preserving the available information without inventing the missing story.", "density": "brief", "tone": "reassuring", "pace": "scroll", "typeScale": "large", "typeface": "serif", "headlineWeight": "semibold", "palette": "dusk", "accent": "sage", "margins": "wide", "format": "text", "estimatedReadSeconds": 30, "blocks": [{"type": "headline", "text": "The risky mission to de-mine the Strait of Hormuz", "items": null, "symbol": null, "caption": null}, {"type": "dek", "text": "The supplied text contains subscription information rather than the article, so the story itself cannot be reliably summarised.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The available material describes Financial Times access options, including monthly and annual digital plans, a digitised newspaper edition, institutional access and organisation subscriptions. It does not provide reporting about de-mining operations in the Strait of Hormuz.", "items": null, "symbol": null, "caption": null}, {"type": "keyFacts", "text": null, "items": ["The article body was not included in the supplied text.", "The text lists several Financial Times subscription options.", "No operational, safety or geopolitical details can be confirmed from this material."], "symbol": null, "caption": null}, {"type": "readFullPrompt", "text": "Open the full article when its reporting text is available.", "items": null, "symbol": null, "caption": null}]}, "preset:focused": {"stateSummary": "focused, stationary, morning", "rationale": "You are focused and upright, so a clear briefing layout keeps the mission easy to scan without adding drama.", "density": "brief", "tone": "brisk", "pace": "scroll", "typeScale": "regular", "typeface": "sans", "headlineWeight": "semibold", "palette": "day", "accent": "slate", "margins": "normal", "format": "text", "estimatedReadSeconds": 45, "blocks": [{"type": "headline", "text": "The risky mission to de-mine the Strait of Hormuz", "items": null, "symbol": null, "caption": null}, {"type": "dek", "text": "A naval operation to clear mines from one of the world\u2019s most important shipping routes carries significant risks.", "items": null, "symbol": null, "caption": null}, {"type": "keyFacts", "text": null, "items": ["The Strait of Hormuz is a critical route for global energy shipments.", "Mines can threaten commercial vessels and naval forces while disrupting traffic.", "Clearing them requires specialised ships, underwater systems and careful coordination."], "symbol": null, "caption": null}, {"type": "paragraph", "text": "The operation would focus on finding and removing explosive devices from the seabed and shipping lanes. Even after mines are detected, neutralising them can be slow and dangerous, particularly in a narrow waterway with heavy maritime traffic.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The mission also has a wider strategic dimension. Any prolonged disruption in the strait could affect the movement of oil and other goods, making the technical task of de-mining a matter of international security and economic concern.", "items": null, "symbol": null, "caption": null}, {"type": "takeaway", "text": "De-mining the Strait of Hormuz is a high-risk technical operation with consequences far beyond the waterway itself.", "items": null, "symbol": null, "caption": null}, {"type": "readFullPrompt", "text": "Read the full report", "items": null, "symbol": null, "caption": null}]}}, "https://www.theverge.com/tech/990873/earth-garden-globe-field-recordings": {"preset:calm": {"stateSummary": "reclined, calm, attentive evening", "rationale": "You asked for the calm version, so this gives the experience room to breathe while keeping its caveats easy to find.", "density": "standard", "tone": "reflective", "pace": "scroll", "typeScale": "regular", "typeface": "serif", "headlineWeight": "semibold", "palette": "dusk", "accent": "sage", "margins": "wide", "format": "text", "estimatedReadSeconds": 180, "blocks": [{"type": "headline", "text": "Explore the globe through field recordings", "items": null, "symbol": null, "caption": null}, {"type": "dek", "text": "Earth Garden turns environmental audio from Freesound into a globe you can explore by sound.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Field recordings can work as background sound for sleep or concentration, but they also reward close listening: a stream\u2019s small movements, rain on a city street, or the layered noise of an urban landscape.", "items": null, "symbol": null, "caption": null}, {"type": "imageCard", "text": null, "items": null, "symbol": "globe.americas", "caption": "A rotating globe connects locations with real environmental recordings."}, {"type": "paragraph", "text": "Earth Garden is inspired by Radio Garden. Instead of moving between radio stations, you move around the world\u2019s environmental sounds. The collection includes waves along remote Atlantic islands, crickets in Tanzania and rainfall on the streets of Manhattan. Rain is particularly well represented.", "items": null, "symbol": null, "caption": null}, {"type": "pullQuote", "text": "The globe becomes an interface for active listening, not just a map.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The globe can rotate automatically. As its reticle approaches a location, the audio transitions to another recording. A button adds a layer of generic ambient drones for a softer, more continuous soundscape.", "items": null, "symbol": null, "caption": null}, {"type": "keyFacts", "text": null, "items": ["Environmental recordings are sourced from Freesound.", "Clip quality and volume can vary.", "The collection is concentrated in the US and Europe, especially the UK."], "symbol": null, "caption": null}, {"type": "takeaway", "text": "Earth Garden is a simple, soothing way to browse the planet by sound, with the unevenness of a community-recorded archive.", "items": null, "symbol": null, "caption": null}, {"type": "readFullPrompt", "text": "Read the full review", "items": null, "symbol": null, "caption": null}]}, "preset:focused": {"stateSummary": "focused, upright, mid-morning", "rationale": "You asked for the focused version, so this keeps the review structured and clear while preserving its useful context and human enthusiasm.", "density": "standard", "tone": "plain", "pace": "scroll", "typeScale": "regular", "typeface": "sans", "headlineWeight": "semibold", "palette": "focus", "accent": "slate", "margins": "normal", "format": "text", "estimatedReadSeconds": 180, "blocks": [{"type": "headline", "text": "Explore the globe through field recordings", "items": null, "symbol": null, "caption": null}, {"type": "dek", "text": "Earth Garden uses environmental audio from Freesound to turn a virtual globe into an interactive sound map.", "items": null, "symbol": null, "caption": null}, {"type": "keyFacts", "text": null, "items": ["Explore recordings from locations around the world.", "Hear waves, crickets, rainfall and other environmental sounds.", "Clips come from Freesound, so quality and volume can vary."], "symbol": null, "caption": null}, {"type": "paragraph", "text": "Earth Garden is built for listening. It lets you explore a globe filled with real field recordings, from waves along remote Atlantic islands to crickets in Tanzania and rain on the streets of Manhattan.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The experience recalls Radio Garden, which connects listeners to live radio stations around the world. Here, the map is driven by environmental sound instead. Set the globe to rotate automatically and the reticle moves between locations, transitioning into new recordings as it travels.", "items": null, "symbol": null, "caption": null}, {"type": "pullQuote", "text": "It turns a globe into a map of everyday sounds.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The recordings are sourced from Freesound. That gives Earth Garden a broad and varied library, but it also brings some unevenness: recording quality and volume can differ between clips. The collection is more concentrated in the United States and Europe, particularly the United Kingdom.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "There is also an option to add generic ambient drones in the background. Used as background audio, the result can be soothing; used actively, it offers a chance to notice the small details in familiar and distant environments alike.", "items": null, "symbol": null, "caption": null}, {"type": "takeaway", "text": "Earth Garden is a simple, calming way to browse field recordings by place, with Freesound\u2019s variety\u2014and inconsistency\u2014along for the ride.", "items": null, "symbol": null, "caption": null}, {"type": "readFullPrompt", "text": "Read the full review", "items": null, "symbol": null, "caption": null}]}}, "https://www.theguardian.com/news/ng-interactive/2026/sep/06/tupac-shakur-murder-investigation": {"preset:focused": {"stateSummary": "focused, morning, stationary", "rationale": "You asked for the focused version, so this keeps the reporting structured and contextual while remaining easy to scan.", "density": "standard", "tone": "plain", "pace": "scroll", "typeScale": "regular", "typeface": "sans", "headlineWeight": "semibold", "palette": "day", "accent": "slate", "margins": "normal", "format": "text", "estimatedReadSeconds": 180, "blocks": [{"type": "headline", "text": "Tupac trial spotlights decades of US police failures in solving the case", "items": null, "symbol": null, "caption": null}, {"type": "dek", "text": "Testimony in the conviction of Duane \u201cKeffe D\u201d Davis highlighted how quickly investigators received information about the killing \u2014 and why the case remained unresolved for 27 years.", "items": null, "symbol": null, "caption": null}, {"type": "keyFacts", "text": null, "items": ["Duane \u201cKeffe D\u201d Davis was convicted of orchestrating Tupac Shakur\u2019s killing.", "Police heard soon after the shooting that a conflict involving Southside Compton Crips members could have prompted the attack.", "Las Vegas police did not make an arrest in the case for 27 years."], "symbol": null, "caption": null}, {"type": "paragraph", "text": "The trial brought renewed scrutiny to the long investigation into Shakur\u2019s 1996 murder. Witnesses described missed opportunities, concerns about police corruption and competing priorities between departments, alongside the reluctance of some people close to the case to cooperate with authorities.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Davis, a Southside Compton Crips gang leader and drug dealer, told investigators in 2008 that his nephew, Orlando \u201cBaby Lane\u201d Anderson, fired the shots. Anderson died in an unrelated shooting in 1998 and was never charged. Davis\u2019s conviction came after a Las Vegas jury deliberated for less than three hours.", "items": null, "symbol": null, "caption": null}, {"type": "pullQuote", "text": "\u201cIf even he could be murdered on a major Las Vegas boulevard and the case could sit around and languish, one naturally wonders what happens when the victim is just a 19-year-old Black man.\u201d", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The evidence presented at trial suggested that investigators received useful information almost immediately. Reggie Wright Jr, then head of security for Shakur\u2019s record label and a former Compton police officer, said he called his father, a Compton gang-unit commander, after the shooting. He warned that Shakur and Marion \u201cSuge\u201d Knight had recently fought with men linked to the Southside Crips and that violence could follow in Compton.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Robert Ladd, then a Compton gang-homicide detective, testified that officers expected retaliation. Over the following 10 days, three people were killed and 10 attempted murders were reported, including a shooting that critically injured a 10-year-old girl. Ladd said the violence reinforced his belief that Southside Crips members were responsible for Shakur\u2019s death.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Compton police detained gang members, collected firearms and invited Las Vegas detectives to interview people they believed might be involved, including Anderson. Two Las Vegas detectives came to Compton, but Ladd testified that little resulted from the interview. He later said the meeting lasted about 20 minutes and that Las Vegas showed little interest in speaking with the people Compton had identified.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Las Vegas detectives also had reasons to question information coming from Compton. Wright Jr had worked for Knight while still employed as a police officer, and his security business hired off-duty and retired officers to protect Death Row Records. Investigators worried that Compton officers might pass information to Knight or protect him. Wright denied wrongdoing, while he and his father later faced federal drug-trafficking and money-laundering charges.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The trial also showed that witness cooperation was uneven. Shakur reportedly declined to identify his shooter while being treated in an ambulance. Other witnesses feared being branded informers or facing retaliation, and some resisted prosecutors\u2019 questions. Those concerns helped sustain the long-standing explanation that street culture and fear had obstructed the investigation, but the testimony also exposed delays and disagreements within law enforcement itself.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The case resonated beyond the music world because Shakur was one of the most visible Black men in the United States. His death became a lasting example, critics argue, of how the justice system can fail to deliver answers even when a victim is famous and the shooting occurs in public. The trial\u2019s swift verdict has therefore raised a basic question: if evidence existed early, why did resolution take so long?", "items": null, "symbol": null, "caption": null}, {"type": "takeaway", "text": "The conviction resolved the prosecution of Davis, but the testimony left a wider issue unresolved: whether missed leads, institutional distrust and departmental conflict allowed Shakur\u2019s murder to remain unsolved for decades.", "items": null, "symbol": null, "caption": null}, {"type": "readFullPrompt", "text": "Read the full story", "items": null, "symbol": null, "caption": null}]}, "preset:calm": {"stateSummary": "reclined, calm, attentive evening", "rationale": "You are settled and attentive, so this version gives you the full context in a warm, readable flow without rushing the story.", "density": "longform", "tone": "reflective", "pace": "scroll", "typeScale": "regular", "typeface": "serif", "headlineWeight": "semibold", "palette": "dusk", "accent": "amber", "margins": "wide", "format": "text", "estimatedReadSeconds": 360, "blocks": [{"type": "headline", "text": "Tupac trial spotlights decades of US police failures in solving the case", "items": null, "symbol": null, "caption": null}, {"type": "dek", "text": "Police received information almost immediately after the killing. It took Las Vegas police 27 years to make an arrest.", "items": null, "symbol": null, "caption": null}, {"type": "keyFacts", "text": null, "items": ["Duane \u201cKeffe D\u201d Davis was convicted of orchestrating Tupac Shakur\u2019s killing.", "Investigators heard allegations about the shooting and its motive soon after it happened.", "The trial highlighted disputed police judgments, possible corruption, witness fears and jurisdictional conflict."], "symbol": null, "caption": null}, {"type": "paragraph", "text": "For years, US law enforcement officials attributed the failure to solve Tupac Shakur\u2019s murder to uncooperative witnesses and a gang culture summed up by the phrase \u201csnitches get stitches\u201d. Testimony in the long-delayed trial, which concluded this week nearly 30 years after Shakur\u2019s death, presented a more complicated picture: police had received important information almost immediately, yet the case remained unresolved for decades.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "A Las Vegas jury convicted Duane \u201cKeffe D\u201d Davis, a Southside Compton Crips gang leader and drug dealer, of orchestrating the killing. Davis told investigators in 2008 that his nephew, Orlando \u201cBaby Lane\u201d Anderson, had fired the shots. Anderson died in an unrelated shooting in 1998 and was never charged in Shakur\u2019s death.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The case has resonated beyond Shakur\u2019s family and friends, particularly among Black Americans. Jody Armour, a law professor at the University of Southern California, said that if one of the world\u2019s most famous Black men could be killed on a major Las Vegas boulevard while the case languished, it raised questions about what happens to less visible victims. Shakur had spent much of his career arguing that America did not adequately value Black life; his unsolved killing became, Armour said, another example supporting that argument.", "items": null, "symbol": null, "caption": null}, {"type": "pullQuote", "text": "\u201cIf even he could be murdered on a major Las Vegas boulevard and the case could sit around and languish, one naturally wonders what happens when the victim is just a 19-year-old Black man.\u201d", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Mark Chutkow, a former federal prosecutor, said the jury\u2019s decision after less than three hours suggested that the evidence was persuasive enough to support a conviction. It also raised the question of why that evidence had not produced an arrest sooner.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Surveillance footage shown at trial depicted Shakur, Death Row Records founder Marion \u201cSuge\u201d Knight and their associates, some linked to the Mob Piru Bloods, assaulting Anderson at the MGM hotel in Las Vegas. Davis later said the attack prompted him and Anderson to seek revenge.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "In the hours after Shakur was shot, Reggie Wright Jr, then head of security for Death Row Records, said he called a Compton police lieutenant several times. Wright warned that Shakur and Knight had fought with men from the Southside Crips and that trouble was likely in Compton. Wright had formerly been a Compton officer and was calling his father, Reginald Wright Sr, who led the department\u2019s gang unit.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The information was passed to Robert Ladd, a Compton gang homicide detective. Ladd testified that officers expected retaliatory violence. Over the next 10 days, three people were killed and 10 others were targeted, including a 10-year-old girl who was left critically injured. Ladd said the violence convinced him that the information identifying Southside Crips members was accurate.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Compton police then detained many local gang members, including Anderson, and invited Las Vegas investigators to interview them. Officers also collected firearms in the hope of finding the murder weapon. Two Las Vegas detectives went to Compton and interviewed Anderson, but Ladd testified that little came of it. He later said the interview lasted about 20 minutes and that Las Vegas police showed no real interest in speaking with the people Compton officers believed were involved.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Anderson was publicly identified as a possible suspect within weeks of the shooting. He, his lawyer and his family denied his involvement, but people close to him later said the accusation shaped his life. In 1997, Shakur\u2019s mother, Afeni Shakur, filed a civil lawsuit accusing Anderson of murdering her son. Nearly three decades later, an audio recording played in court captured Davis identifying Anderson as the shooter.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Las Vegas detectives had reasons to distrust information coming from Compton. The city and its police department had reputations for political corruption, scandals and internal conflict. The department would later be disbanded by the city council. Wright Jr\u2019s role also raised concerns: he had worked for Knight while still a police officer, and his father led Compton\u2019s gang unit. Investigators feared information might be passed to Knight or that he might be protected.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Wright testified that he had grown up in a neighborhood associated with the Mob Piru gang and had known gang members since childhood. His private security company employed off-duty and retired officers to protect Death Row\u2019s studio and artists. One witness, Mob James McDonald, described the close working relationship between Wright\u2019s security staff and the gang members around Knight.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Davis later accused Knight of employing police hitmen and corrupt officers, naming Wright and his father. Both men were subsequently indicted on federal drug-trafficking and money-laundering charges. In the Shakur investigation, the Compton police chief removed Wright Sr from the case in an attempt to address concerns, but the doubts remained. In the absence of an official explanation, conspiracy theories spread, and Wright himself became a potential suspect\u2014an allegation he denied in court.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The trial also confirmed that some witnesses did not want to help prosecutors. A former Las Vegas officer testified that Shakur, while wounded in an ambulance, declined to identify his shooter, saying words to the effect of: \u201cNo, we\u2019ll take care of it.\u201d Other witnesses described fears of being labelled informers or facing retaliation. McDonald repeatedly warned prosecutors to treat him as a hostile witness and refused to answer some questions.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "At the same time, investigators were divided by their own bureaucratic disputes. Former Los Angeles police detective Greg Kading, who served on a taskforce that heard Davis\u2019s 2008 confession, had initially been assigned to investigate the 1997 killing of Christopher \u201cBiggie Smalls\u201d Wallace. Like Shakur\u2019s murder, that case remained officially unresolved for decades. The overlapping investigations added another layer to a story shaped by rivalry, mistrust and missed opportunities.", "items": null, "symbol": null, "caption": null}, {"type": "takeaway", "text": "The conviction resolved the central criminal case against Davis, but the trial also exposed why the investigation took so long: information arrived early, yet distrust between departments, concerns about police relationships, witness fear and institutional conflict repeatedly obstructed the path to a conclusion.", "items": null, "symbol": null, "caption": null}, {"type": "readFullPrompt", "text": "Read the full report", "items": null, "symbol": null, "caption": null}]}}, "https://www.theverge.com/tech/990868/iphone-handoff-ios-27": {"preset:focused": {"stateSummary": "focused, stationary, calm morning", "rationale": "You asked for the focused version, so this keeps the reporting compact, clear, and easy to scan while preserving the carrier caveat.", "density": "standard", "tone": "plain", "pace": "scroll", "typeScale": "regular", "typeface": "sans", "headlineWeight": "semibold", "palette": "day", "accent": "slate", "margins": "normal", "format": "text", "estimatedReadSeconds": 150, "blocks": [{"type": "headline", "text": "iPhone Handoff could let two phones share one number", "items": null, "symbol": null, "caption": null}, {"type": "dek", "text": "The feature is expected with iOS 27 later this month, but it will require carrier support.", "items": null, "symbol": null, "caption": null}, {"type": "keyFacts", "text": null, "items": ["Pair two iPhones in Device Hub, designating one as the main device and the other as a companion.", "The feature could make it easier to switch temporarily to a smaller or less expensive phone.", "Code references T-Mobile US and Telekom.de, but wider carrier support is not yet known."], "symbol": null, "caption": null}, {"type": "paragraph", "text": "Apple briefly mentioned iPhone Handoff during its WWDC keynote in June without explaining how it would work. A demo clip now shows the setup process in Xcode 27\u2019s Device Hub, where two iPhones can be paired to use the same number.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The timing may suit Apple\u2019s expected foldable iPhone Ultra. Owners could leave that larger, more expensive device at home and temporarily switch to a smaller phone, including an older device they still use.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Carrier support will be required. References to T-Mobile US and Telekom.de appear in the code, but Apple has not confirmed which other carriers will support the feature.", "items": null, "symbol": null, "caption": null}, {"type": "takeaway", "text": "iPhone Handoff is designed to make switching between two paired iPhones easier, but its usefulness will depend on carrier availability.", "items": null, "symbol": null, "caption": null}, {"type": "readFullPrompt", "text": "Read the full story", "items": null, "symbol": null, "caption": null}]}, "preset:calm": {"stateSummary": "reclined, calm, attentive evening", "rationale": "You\u2019re settled and attentive, so this version gives the feature room for useful context in a warm, readable layout.", "density": "standard", "tone": "reflective", "pace": "scroll", "typeScale": "regular", "typeface": "serif", "headlineWeight": "semibold", "palette": "dusk", "accent": "amber", "margins": "wide", "format": "text", "estimatedReadSeconds": 180, "blocks": [{"type": "headline", "text": "iPhone Handoff could let two phones share one number", "items": null, "symbol": null, "caption": null}, {"type": "dek", "text": "The feature is expected with iOS 27 later this month, although carrier support will be required.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Apple is preparing a feature called iPhone Handoff that would let you switch between two iPhones while keeping the same phone number. It was briefly mentioned during the WWDC keynote in June, but Apple did not explain how it would work.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "A demo clip from Xcode 27\u2019s Device Hub now shows the setup. Users can pair two iPhones, designating one as the main device and the other as its companion.", "items": null, "symbol": null, "caption": null}, {"type": "pullQuote", "text": "The idea is simple: keep one number available across two phones, rather than moving a SIM or setting up a separate line.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The timing would fit Apple\u2019s expected launch of a foldable iPhone Ultra. Someone carrying a large, expensive phone might prefer to switch temporarily to a smaller or less costly device when they leave home. That could include an older phone that is still in service, even if it has seen better days.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Handoff will depend on carrier support. References to T-Mobile US and Telekom.de have appeared in the code, but wider availability remains unclear.", "items": null, "symbol": null, "caption": null}, {"type": "takeaway", "text": "iPhone Handoff is expected in iOS 27 and could pair two iPhones around one number, but its usefulness will depend on which carriers support it.", "items": null, "symbol": null, "caption": null}, {"type": "readFullPrompt", "text": "Read the full story", "items": null, "symbol": null, "caption": null}]}}, "https://www.theverge.com/entertainment/990794/cd-sales-are-booming-as-physical-media-continues-its-resurgence": {"preset:calm": {"stateSummary": "calm, reclined, evening reader", "rationale": "You are settled and attentive, so this version gives the trend room for context in a warm, readable layout.", "density": "standard", "tone": "reflective", "pace": "scroll", "typeScale": "regular", "typeface": "serif", "headlineWeight": "semibold", "palette": "dusk", "accent": "amber", "margins": "wide", "format": "text", "estimatedReadSeconds": 180, "blocks": [{"type": "headline", "text": "CD sales are booming as physical media stages a comeback", "items": null, "symbol": null, "caption": null}, {"type": "dek", "text": "Compact discs are selling sharply more than a year ago, even as streaming remains the dominant way people listen to music.", "items": null, "symbol": null, "caption": null}, {"type": "keyFacts", "text": null, "items": ["17.5 million CDs were sold in the first half of 2026, according to the RIAA, up 45.7% from the same period in 2025.", "CD revenue reached $171.1 million, while vinyl sales rose nearly 21% to 26.5 million units.", "Streaming revenue still grew 4.7% to $4.9 billion, far exceeding physical-media sales combined."], "symbol": null, "caption": null}, {"type": "paragraph", "text": "CD sales have made an unexpected return. The Recording Industry Association of America said 17.5 million discs were sold in the first six months of 2026, compared with 12 million during the same period last year. Revenue rose 58.6%, reaching $171.1 million.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The increase is striking partly because CD sales fell 22% between 2024 and 2025. Another research firm, Luminate, also recorded strong growth, reporting 16.3 million units sold in the first half of 2026.", "items": null, "symbol": null, "caption": null}, {"type": "pullQuote", "text": "For many buyers, a CD is no longer only something to play. It can also be something to keep.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Luminate suggested that special-edition releases from K-pop acts such as BTS helped drive the change. Gen Z and millennial buyers may be treating CDs more like collectibles: the firm said only about half of purchasers owned a CD player.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Other physical formats are growing too. Vinyl sales climbed nearly 21% year on year to 26.5 million units, while a broader category including CD singles, DVDs, cassettes and other formats rose more than 73% to 1.6 million units.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The renewed interest in discs, records and even older digital players does not mean listeners are abandoning streaming. Streaming revenue grew 4.7% to $4.9 billion, still dwarfing physical media as a whole.", "items": null, "symbol": null, "caption": null}, {"type": "takeaway", "text": "Physical music is finding a new role as merchandise, memorabilia and a more tangible way to connect with an artist. Streaming, meanwhile, remains the everyday default for most listening.", "items": null, "symbol": null, "caption": null}, {"type": "readFullPrompt", "text": "Read the full story", "items": null, "symbol": null, "caption": null}]}, "preset:focused": {"stateSummary": "focused, stationary, morning", "rationale": "You asked for the focused version, so this keeps the numbers prominent while adding concise context about why physical formats are growing without overstating the trend.", "density": "standard", "tone": "brisk", "pace": "scroll", "typeScale": "regular", "typeface": "sans", "headlineWeight": "semibold", "palette": "day", "accent": "slate", "margins": "normal", "format": "text", "estimatedReadSeconds": 180, "blocks": [{"type": "headline", "text": "CD sales are booming as physical media continues its resurgence", "items": null, "symbol": null, "caption": null}, {"type": "dek", "text": "CD purchases rose sharply in the first half of 2026, even as streaming remained the music industry's dominant business.", "items": null, "symbol": null, "caption": null}, {"type": "keyFacts", "text": null, "items": ["17.5 million CDs were sold in the US in the first half of 2026, according to the RIAA.", "CD sales revenue reached $171.1 million, up 58.6% from the same period in 2025.", "Streaming revenue grew to $4.9 billion, far exceeding all physical-media sales combined."], "symbol": null, "caption": null}, {"type": "paragraph", "text": "CD sales in the US rose 45.7% year over year in the first six months of 2026, according to a new report from the Recording Industry Association of America. The increase follows a 22% decline between 2024 and 2025, making the rebound especially striking.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The figures are not identical across industry reports. Research firm Luminate counted 16.3 million units sold during the same period. It attributed much of the growth to special editions from K-pop acts such as BTS, with Gen Z and millennial buyers often treating CDs as collectibles; Luminate said only about half of buyers owned a CD player.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "Other physical formats are growing too. Vinyl sales increased nearly 21% to 26.5 million units, while a broader category including CD singles, DVDs, cassettes, SACD and DVD-Audio rose more than 73% to 1.6 million units.", "items": null, "symbol": null, "caption": null}, {"type": "pullQuote", "text": "Physical media is growing, but streaming still defines the market.", "items": null, "symbol": null, "caption": null}, {"type": "paragraph", "text": "The resurgence does not mean listeners are abandoning streaming. Streaming revenue rose 4.7% to $4.9 billion, dwarfing revenue from physical formats combined. The pattern points to physical music serving a different role: part listening format, part collectible, and part connection to an artist or release.", "items": null, "symbol": null, "caption": null}, {"type": "takeaway", "text": "CDs are having a notable comeback, driven in part by collectible editions, while streaming remains the industry\u2019s financial center.", "items": null, "symbol": null, "caption": null}, {"type": "readFullPrompt", "text": "Read the full story", "items": null, "symbol": null, "caption": null}]}}}
+{
+  "https:\/\/www.bbc.co.uk\/news\/articles\/c6248nvqy8po?at_medium=RSS&at_campaign=rss" : {
+    "preset:calm" : {
+      "accent" : "slate",
+      "blocks" : [
+        {
+          "text" : "US envoys head to Kyiv",
+          "type" : "headline"
+        },
+        {
+          "caption" : "Drones reported in one attack",
+          "text" : "108",
+          "type" : "stat"
+        },
+        {
+          "text" : "US envoys Steve Witkoff and Jared Kushner arrived in Kyiv after three hours of talks with Vladimir Putin in Moscow. The discussions focused on possible next steps towards ending the war, but details remain unclear.",
+          "type" : "paragraph"
+        },
+        {
+          "items" : [
+            "An announcement is expected in the coming weeks.",
+            "Ukraine says it needs peace and security guarantees.",
+            "Russia and Ukraine continued exchanging strikes overnight."
+          ],
+          "type" : "keyFacts"
+        },
+        {
+          "caption" : "The diplomatic talks continue alongside attacks.",
+          "type" : "takeaway"
+        },
+        {
+          "text" : "Read the full story",
+          "type" : "readFullPrompt"
+        }
+      ],
+      "density" : "brief",
+      "estimatedReadSeconds" : 60,
+      "format" : "cards",
+      "headlineWeight" : "semibold",
+      "margins" : "wide",
+      "pace" : "scroll",
+      "palette" : "dusk",
+      "posterHeadline" : "US envoys head to Kyiv",
+      "rationale" : "You are calm and reclined this evening, so the story uses spacious cards and reflective context while keeping the facts clear and direct.",
+      "stateSummary" : "reclined, calm, evening",
+      "tone" : "reflective",
+      "typeScale" : "large",
+      "typeface" : "serif"
+    },
+    "preset:focused" : {
+      "accent" : "slate",
+      "blocks" : [
+        {
+          "text" : "US envoys head to Kyiv after Putin talks",
+          "type" : "headline"
+        },
+        {
+          "caption" : "Drones reported in overnight attack",
+          "text" : "108",
+          "type" : "stat"
+        },
+        {
+          "items" : [
+            "Steve Witkoff and Jared Kushner held three hours of talks with Vladimir Putin in Moscow.",
+            "The envoys are now in Kyiv for their first visit to Ukraine’s capital as negotiators.",
+            "The US says an announcement could come in the coming weeks, but details remain unclear."
+          ],
+          "type" : "keyFacts"
+        },
+        {
+          "caption" : "The route between the two capitals is unclear",
+          "imagePrompt" : "Draw a simple map showing Moscow and Kyiv, with a dotted route between them and one label: closed Ukrainian airspace.",
+          "symbol" : "map",
+          "type" : "imageCard"
+        },
+        {
+          "text" : "Russia and Ukraine continued exchanging strikes overnight. Ukraine reported attacks on an oil refinery, an airfield and two air-defence systems in Russia. Russia launched 108 drones and small cruise missiles at Ukraine; Ukrainian authorities said 82 drones and six missiles were downed.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The next stage depends on whether broad statements become specific proposals, including security guarantees for Ukraine and the issues both sides say must be addressed in a peace deal.",
+          "type" : "takeaway"
+        },
+        {
+          "caption" : "Read the full report for more detail",
+          "type" : "readFullPrompt"
+        }
+      ],
+      "density" : "brief",
+      "estimatedReadSeconds" : 55,
+      "format" : "cards",
+      "headlineWeight" : "semibold",
+      "margins" : "normal",
+      "pace" : "scroll",
+      "palette" : "focus",
+      "posterHeadline" : "US envoys head to Kyiv",
+      "rationale" : "You are focused and stationary this morning, so short fact-first cards make the developing negotiations quick to scan without losing essential context.",
+      "stateSummary" : "focused, stationary, morning",
+      "tone" : "brisk",
+      "typeScale" : "regular",
+      "typeface" : "sans"
+    }
+  },
+  "https:\/\/www.bbc.co.uk\/news\/articles\/cew9dq9we5eo?at_medium=RSS&at_campaign=rss" : {
+    "preset:calm" : {
+      "accent" : "amber",
+      "blocks" : [
+        {
+          "text" : "Dover protest disrupted port",
+          "type" : "headline"
+        },
+        {
+          "caption" : "Hours of disruption at Dover",
+          "text" : "4.5 hours",
+          "type" : "stat"
+        },
+        {
+          "text" : "Council leader Kevin Mills said police were slow to respond when hundreds of masked protesters blocked roads near the Port of Dover on Saturday.",
+          "type" : "paragraph"
+        },
+        {
+          "items" : [
+            "The protest ran from 07:00 to about 11:30 BST.",
+            "Road closures caused miles of tailbacks and blocked access to the port.",
+            "Kent Police said no arrests were made and called it spontaneous."
+          ],
+          "type" : "keyFacts"
+        },
+        {
+          "caption" : "A simple map showing protesters blocking roads around Dover, with traffic queues leading to the port and Preston marked.",
+          "imagePrompt" : "A simple map showing protesters blocking roads around Dover, with traffic queues leading to the port and Preston marked.",
+          "symbol" : "map",
+          "type" : "imageCard"
+        },
+        {
+          "text" : "Mills said several agencies were caught unprepared. Business Secretary Jonathan Reynolds said officers dealt with the protest swiftly. Kent Police has not yet commented on the criticism or who organised the demonstration.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "Hope Not Hate said the Patriot Platform network arranged the protest. Far-right activists Tommy Robinson and Danny Thomas praised it online. Restore Britain leader Rupert Lowe also backed the demonstrators, while condemning the use of balaclavas.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The disruption affected travellers, businesses and local residents. Mills said the response should be reviewed, including reports that protesters parked vehicles in nearby Preston.",
+          "type" : "takeaway"
+        },
+        {
+          "caption" : "Read the full BBC News report",
+          "type" : "readFullPrompt"
+        }
+      ],
+      "density" : "brief",
+      "estimatedReadSeconds" : 70,
+      "format" : "cards",
+      "headlineWeight" : "semibold",
+      "margins" : "wide",
+      "pace" : "scroll",
+      "palette" : "dusk",
+      "posterHeadline" : "Dover protest disrupted port",
+      "rationale" : "You are calm and reclined this evening, so the cards use spacious larger type and measured context to make a complex account easy to follow.",
+      "stateSummary" : "reclined, evening, calm",
+      "tone" : "reflective",
+      "typeScale" : "large",
+      "typeface" : "serif"
+    },
+    "preset:focused" : {
+      "accent" : "slate",
+      "blocks" : [
+        {
+          "text" : "Dover protest disrupted port",
+          "type" : "headline"
+        },
+        {
+          "caption" : "Protest lasted about four and a half hours",
+          "text" : "4.5 hours",
+          "type" : "stat"
+        },
+        {
+          "items" : [
+            "Hundreds of masked men blocked roads near Dover’s port on Saturday.",
+            "The protest ran from 07:00 to about 11:30 BST, causing long tailbacks.",
+            "Dover council leader Kevin Mills said police were slow to respond; Kent Police has not commented."
+          ],
+          "type" : "keyFacts"
+        },
+        {
+          "caption" : "What happened",
+          "text" : "Access to the Port of Dover was blocked for hours. Vehicles were also reportedly left in nearby Preston before protesters arrived. No arrests were made, and police described the demonstration as spontaneous.",
+          "type" : "paragraph"
+        },
+        {
+          "caption" : "Who is being linked to it",
+          "text" : "Hope Not Hate said the Patriot Platform network organised the protest. Police have not commented on who was behind it. Far-right activists Tommy Robinson and Danny Thomas praised the demonstration online.",
+          "type" : "paragraph"
+        },
+        {
+          "caption" : "The response",
+          "text" : "Mills said agencies were caught unprepared and called for a review. Business Secretary Jonathan Reynolds condemned what he called intimidatory behaviour, while saying peaceful protest remains essential.",
+          "type" : "takeaway"
+        },
+        {
+          "caption" : "Read the full BBC report for more detail.",
+          "type" : "readFullPrompt"
+        }
+      ],
+      "density" : "brief",
+      "estimatedReadSeconds" : 55,
+      "format" : "cards",
+      "headlineWeight" : "semibold",
+      "margins" : "normal",
+      "pace" : "scroll",
+      "palette" : "focus",
+      "posterHeadline" : "Dover protest disrupted port",
+      "rationale" : "You asked for the focused card view, so this uses short fact-first cards and larger type to make the disruption and competing claims easy to scan.",
+      "stateSummary" : "focused, upright, morning",
+      "tone" : "brisk",
+      "typeScale" : "large",
+      "typeface" : "sans"
+    }
+  },
+  "https:\/\/www.bbc.co.uk\/news\/articles\/crer948xq00o?at_medium=RSS&at_campaign=rss" : {
+    "preset:calm" : {
+      "accent" : "amber",
+      "blocks" : [
+        {
+          "text" : "JLR job cuts expected",
+          "type" : "headline"
+        },
+        {
+          "caption" : "Possible jobs affected, not confirmed",
+          "text" : "4,000",
+          "type" : "stat"
+        },
+        {
+          "text" : "• JLR has opened a voluntary redundancy programme for salaried and management staff.\n• Ministers will meet JLR and Unite early next week.\n• JLR has not confirmed how many jobs may go.",
+          "type" : "keyFacts"
+        },
+        {
+          "caption" : "The company is recovering from a costly cyber attack.",
+          "text" : "JLR says the changes will simplify its business, improve efficiency and build resilience. A 2025 cyber attack halted manufacturing for several weeks and contributed to a 27% fall in production. Analysts estimate the total cost at £1.9bn.",
+          "type" : "paragraph"
+        },
+        {
+          "caption" : "What happens next",
+          "text" : "The government says it will discuss ways to mitigate job losses, but has ruled out a bailout. JLR has not excluded some compulsory redundancies.",
+          "type" : "takeaway"
+        }
+      ],
+      "density" : "brief",
+      "estimatedReadSeconds" : 45,
+      "format" : "cards",
+      "headlineWeight" : "semibold",
+      "margins" : "wide",
+      "pace" : "scroll",
+      "palette" : "dusk",
+      "posterHeadline" : "JLR job cuts expected",
+      "rationale" : "You are calm and reclined this evening, so the story uses spacious, readable cards with enough context without making the job losses feel more dramatic than the facts support.",
+      "stateSummary" : "reclined, calm evening reading",
+      "tone" : "reflective",
+      "typeScale" : "large",
+      "typeface" : "serif"
+    },
+    "preset:focused" : {
+      "accent" : "slate",
+      "blocks" : [
+        {
+          "text" : "JLR job cuts expected",
+          "type" : "headline"
+        },
+        {
+          "caption" : "Possible jobs affected, according to reports",
+          "text" : "4,000",
+          "type" : "stat"
+        },
+        {
+          "items" : [
+            "JLR has opened a voluntary redundancy programme for salaried and management staff.",
+            "Business Secretary Jonathan Reynolds will meet JLR and Unite early next week.",
+            "The company has not confirmed how many jobs could be lost."
+          ],
+          "type" : "keyFacts"
+        },
+        {
+          "caption" : "JLR is recovering from a cyber attack that halted production for weeks.",
+          "imagePrompt" : "Draw a simple timeline from the September 2025 cyber attack to expected job cuts, with labels “attack”, “production halted”, and “cuts expected”.",
+          "symbol" : "exclamationmark.shield",
+          "type" : "imageCard"
+        },
+        {
+          "text" : "The government says it will discuss reducing job losses but will not provide a bailout. JLR employs about 30,000 people in the UK and reported a 27% production drop after the attack.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "JLR says the programme is intended to simplify the business, improve efficiency and build resilience.",
+          "type" : "takeaway"
+        }
+      ],
+      "density" : "brief",
+      "estimatedReadSeconds" : 60,
+      "format" : "cards",
+      "headlineWeight" : "semibold",
+      "margins" : "normal",
+      "pace" : "scroll",
+      "palette" : "day",
+      "posterHeadline" : "JLR job cuts expected",
+      "rationale" : "You asked for the focused cards view, so this uses facts and the key figure first for a quick morning read.",
+      "stateSummary" : "focused, upright, morning",
+      "tone" : "brisk",
+      "typeScale" : "regular",
+      "typeface" : "sans"
+    }
+  },
+  "https:\/\/www.theguardian.com\/music\/2026\/sep\/06\/femi-koleoso-ezra-collective-guest-editor-cultural-picks" : {
+    "preset:calm" : {
+      "accent" : "amber",
+      "blocks" : [
+        {
+          "text" : "On the other side of pain, hope",
+          "type" : "headline"
+        },
+        {
+          "caption" : "Ezra Collective’s Femi Koleoso on hope",
+          "text" : "2026",
+          "type" : "stat"
+        },
+        {
+          "text" : "Femi Koleoso guest-edits the Guardian’s culture section, sharing a personal case for hope shaped by music, family and community.",
+          "type" : "dek"
+        },
+        {
+          "items" : [
+            "Koleoso grew up in Enfield and began playing drums at church.",
+            "He describes hope as the possibility of renewal after pain.",
+            "His cultural picks include music, film and a celebration of steelpan."
+          ],
+          "type" : "keyFacts"
+        },
+        {
+          "caption" : "Music can carry pain into joy.",
+          "type" : "pullQuote"
+        },
+        {
+          "text" : "Koleoso connects his own journey — from a north London state-school education to life as Ezra Collective’s bandleader, drummer, DJ and broadcaster — with a wider belief in the power of hopeful stories. He finds that transformation in music born from hardship, including Fela Kuti, grime and calypso.",
+          "type" : "paragraph"
+        },
+        {
+          "caption" : "A few of the collective’s cultural picks",
+          "items" : [
+            "The Secret Agent — a film praised by TJ Koleoso",
+            "Rosa Passos: Recriação — Joe Armon-Jones’s album choice",
+            "Southbank Centre’s steelpan celebration — Femi Koleoso’s live pick"
+          ],
+          "type" : "keyFacts"
+        },
+        {
+          "text" : "Hope, for Koleoso, is not certainty that everything will be easy. It is the belief that joy and renewal can still follow pain, even when the route there is unclear.",
+          "type" : "takeaway"
+        },
+        {
+          "caption" : "Read the full guest edit and cultural picks",
+          "type" : "readFullPrompt"
+        }
+      ],
+      "density" : "brief",
+      "estimatedReadSeconds" : 75,
+      "format" : "cards",
+      "headlineWeight" : "semibold",
+      "margins" : "wide",
+      "pace" : "scroll",
+      "palette" : "dusk",
+      "posterHeadline" : "Hope after pain",
+      "rationale" : "You are calm and reclined this evening, so these spacious cards let the personal story unfold at an unhurried, readable pace.",
+      "stateSummary" : "reclined, evening, calm",
+      "tone" : "reflective",
+      "typeScale" : "large",
+      "typeface" : "serif"
+    },
+    "preset:focused" : {
+      "accent" : "amber",
+      "blocks" : [
+        {
+          "text" : "Ezra Collective’s Femi Koleoso on hope",
+          "type" : "headline"
+        },
+        {
+          "caption" : "A 75th-anniversary celebration of steelpan",
+          "text" : "75",
+          "type" : "stat"
+        },
+        {
+          "caption" : "The musician guest-edits the Culture section",
+          "type" : "dek"
+        },
+        {
+          "items" : [
+            "Koleoso describes hope as belief in renewal after pain.",
+            "He connects hardship with the music it inspires, from Fela Kuti to grime and calypso.",
+            "Ezra Collective members share cultural picks spanning film, albums and live music."
+          ],
+          "type" : "keyFacts"
+        },
+        {
+          "caption" : "Music can turn pain into shared joy",
+          "type" : "pullQuote"
+        },
+        {
+          "text" : "For Koleoso, hope is not an insistence that the world is uncomplicated or that suffering can be wished away. It is the belief that joy may follow mourning, and that people can eventually find solid ground even when they cannot yet see how change will come. He finds that possibility most clearly in music: songs born from grief, poverty or oppression can become sources of movement, connection and celebration.",
+          "type" : "paragraph"
+        },
+        {
+          "caption" : "The guest editor’s cultural map",
+          "imagePrompt" : "Draw a simple route from pain to renewal through a microphone, a dancing crowd and a glowing horizon; label only “pain”, “music” and “joy”.",
+          "symbol" : "music.note.list",
+          "type" : "imageCard"
+        },
+        {
+          "text" : "The accompanying recommendations move between Brazilian cinema, Nigerian storytelling, adventurous albums and London’s Southbank Centre, where young steelpan bands brought different generations and cultures together.",
+          "type" : "paragraph"
+        },
+        {
+          "caption" : "Hope can make joy feel possible",
+          "type" : "takeaway"
+        },
+        {
+          "caption" : "Read the full guest editor’s letter and cultural picks",
+          "type" : "readFullPrompt"
+        }
+      ],
+      "density" : "brief",
+      "estimatedReadSeconds" : 60,
+      "format" : "cards",
+      "headlineWeight" : "semibold",
+      "margins" : "normal",
+      "pace" : "scroll",
+      "palette" : "focus",
+      "posterHeadline" : "Femi Koleoso on hope",
+      "rationale" : "You asked for the focused cards view, so this uses short, high-contrast blocks to make Koleoso’s argument and recommendations easy to scan.",
+      "stateSummary" : "focused, upright, morning",
+      "tone" : "brisk",
+      "typeScale" : "large",
+      "typeface" : "sans"
+    }
+  },
+  "https:\/\/www.theguardian.com\/politics\/2026\/sep\/06\/london-mayor-contenders-race-unseat-sadiq-khan" : {
+    "preset:calm" : {
+      "accent" : "slate",
+      "blocks" : [
+        {
+          "text" : "London mayoral race takes shape",
+          "type" : "headline"
+        },
+        {
+          "caption" : "Labour leads latest London poll",
+          "text" : "33%",
+          "type" : "stat"
+        },
+        {
+          "items" : [
+            "Sadiq Khan has not said whether he will run again in 2028.",
+            "James Cleverly is seeking the Conservative nomination; Festus Akinbusoye is also standing.",
+            "Reform, Conservatives and Labour-linked candidates are positioning for a contest shaped by a divided right-wing vote."
+          ],
+          "type" : "keyFacts"
+        },
+        {
+          "caption" : "The latest poll puts Labour ahead, with Conservatives and Reform level on 18%, Greens on 17% and Liberal Democrats on 9%.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The contest is open, but Khan remains the candidate to beat.",
+          "type" : "takeaway"
+        }
+      ],
+      "density" : "brief",
+      "estimatedReadSeconds" : 60,
+      "format" : "cards",
+      "headlineWeight" : "semibold",
+      "margins" : "wide",
+      "pace" : "scroll",
+      "palette" : "dusk",
+      "posterHeadline" : "London mayoral race takes shape",
+      "rationale" : "You are relaxed and reclined this evening, so these spacious cards keep the race easy to follow while preserving its political context.",
+      "stateSummary" : "reclined, calm, evening",
+      "tone" : "reflective",
+      "typeScale" : "large",
+      "typeface" : "serif"
+    },
+    "preset:focused" : {
+      "accent" : "slate",
+      "blocks" : [
+        {
+          "caption" : "London mayoral race takes shape",
+          "type" : "headline"
+        },
+        {
+          "caption" : "Recent poll share for Labour’s mayoral candidate",
+          "text" : "33%",
+          "type" : "stat"
+        },
+        {
+          "caption" : "Several challengers are positioning themselves for 2028, while Sadiq Khan has not yet confirmed whether he will seek another term.",
+          "type" : "dek"
+        },
+        {
+          "items" : [
+            "James Cleverly is seeking the Conservative nomination.",
+            "Reform UK’s Laila Cunningham says she will not stand aside for the Tories.",
+            "Dawn Butler has indicated she would run if Khan does not seek another term."
+          ],
+          "type" : "keyFacts"
+        },
+        {
+          "caption" : "The right-of-centre vote may be split between the Conservatives and Reform UK, making Khan’s position stronger for now.",
+          "type" : "takeaway"
+        }
+      ],
+      "density" : "brief",
+      "estimatedReadSeconds" : 45,
+      "format" : "cards",
+      "headlineWeight" : "semibold",
+      "margins" : "normal",
+      "pace" : "single",
+      "palette" : "day",
+      "posterHeadline" : "London mayoral race takes shape",
+      "rationale" : "You are focused and reading on cards this morning, so the page leads with the poll and keeps each political development to one quick, legible step.",
+      "stateSummary" : "focused, stationary, morning",
+      "tone" : "brisk",
+      "typeScale" : "large",
+      "typeface" : "sans"
+    }
+  }
+}

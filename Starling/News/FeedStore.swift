@@ -11,6 +11,14 @@ final class FeedStore {
     private(set) var failedSourceIDs: Set<String> = []
     private(set) var usedSnapshot = false
     private(set) var lastRefresh: Date?
+    /// Bundled example stories with pre-generated editions and posters, pinned to the top for an instant, offline-safe demo.
+    let featured: [Article] = {
+        let all = Snapshot.load()
+        guard let url = Bundle.main.url(forResource: "featured", withExtension: "json"), let data = try? Data(contentsOf: url),
+              let obj = try? JSONSerialization.jsonObject(with: data) as? [String: [String]], let ids = obj["featured"] else { return Array(all.prefix(5)) }
+        return ids.compactMap { id in all.first { $0.id == id } }
+    }()
+    var featuredIDs: Set<String> { Set(featured.map(\.id)) }
 
     init() {
         if let saved = UserDefaults.standard.array(forKey: "enabledFeeds") as? [String], !saved.isEmpty {
@@ -18,6 +26,7 @@ final class FeedStore {
         } else {
             enabledIDs = FeedCatalog.defaultEnabled
         }
+        articles = featured
     }
 
     var enabledSources: [FeedSource] { FeedCatalog.all.filter { enabledIDs.contains($0.id) } }
@@ -68,7 +77,8 @@ final class FeedStore {
                 if seen.insert(a.id).inserted { merged.append(a) }
             }
         }
-        articles = merged
+        let featuredSet = featuredIDs
+        articles = featured + merged.filter { !featuredSet.contains($0.id) }
         lastRefresh = .now
     }
 

@@ -107,7 +107,7 @@ struct LeadCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             if let img = generator.heroImageName(for: article, edition: nil).flatMap(UIImage.init(named:)) ?? heroes.image(for: article.imageURL) {
-                Image(uiImage: img).resizable().aspectRatio(contentMode: .fill)
+                Color.clear.overlay(Image(uiImage: img).resizable().aspectRatio(contentMode: .fill))
                     .frame(maxWidth: .infinity).frame(height: 150).clipShape(RoundedRectangle(cornerRadius: 12))
             }
             Text("\(FeedCatalog.source(article.sourceID)?.name ?? "") · \(readTime(article))".uppercased())
@@ -123,13 +123,14 @@ struct LeadCard: View {
 
 struct Tile: View {
     @Environment(HeroImageStore.self) private var heroes
+    @Environment(Generator.self) private var generator
     let article: Article
     let color: Color
     let theme: Theme
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            if let img = heroes.image(for: article.imageURL) {
-                Image(uiImage: img).resizable().aspectRatio(contentMode: .fill)
+            if let img = generator.heroImageName(for: article, edition: nil).flatMap(UIImage.init(named:)) ?? heroes.image(for: article.imageURL) {
+                Color.clear.overlay(Image(uiImage: img).resizable().aspectRatio(contentMode: .fill))
                     .frame(maxWidth: .infinity).frame(height: 84).clipShape(RoundedRectangle(cornerRadius: 10))
             }
             Text((FeedCatalog.source(article.sourceID)?.name ?? "").uppercased())

@@ -36,6 +36,13 @@ final class Generator {
         bundledEditions[article.id]?[intent.cacheKey]
     }
 
+    /// Featured stories: the live "adapt" resolves to the pre-generated edition that matches the mood, instantly and offline.
+    func bundledAdapt(_ article: Article, state: UserState) -> Edition? {
+        guard let set = bundledEditions[article.id] else { return nil }
+        let calmish = state.label == .calm || state.label == .tired || state.timeOfDay == .evening || state.timeOfDay == .night
+        return set[calmish ? "preset:calm" : "preset:focused"] ?? set.values.first
+    }
+
     /// Bundled hero image name for an article, matched to the edition's mood.
     func heroImageName(for article: Article, edition: Edition?) -> String? {
         guard let m = bundledMedia[article.id] else { return nil }
@@ -63,7 +70,8 @@ final class Generator {
     func prefetch(_ articles: [Article], state: UserState, sources: [FeedSource], feeds: FeedStore, images: ImageGenerator? = nil, mood: String = "focused") {
         guard LLMClient.apiKey != nil else { return }
         let intents: [GenerationIntent] = [.adapt, .preset(.calm), .preset(.focused), .preset(.commute)]
-        for a in articles.prefix(5) {
+        let live = articles.filter { self.bundledEditions[$0.id] == nil }
+        for a in live.prefix(5) {
             Task {
                 let full = await feeds.loadBody(for: a)
                 for intent in intents {
@@ -87,7 +95,9 @@ final class Generator {
     }
 
     func edition(for article: Article, intent: GenerationIntent, state: UserState) -> Edition? {
-        editions[key(article, intent, state)] ?? bundled(article, intent)
+        if let e = editions[key(article, intent, state)] { return e }
+        if intent == .adapt, let e = bundledAdapt(article, state: state) { return e }
+        return bundled(article, intent)
     }
 
     func status(for article: Article, intent: GenerationIntent, state: UserState) -> Status {
@@ -98,6 +108,7 @@ final class Generator {
     func generate(article: Article, intent: GenerationIntent, state: UserState, sources: [FeedSource], force: Bool = false) async -> Edition? {
         let k = key(article, intent, state)
         if !force, let e = editions[k] { return e }
+        if !force, intent == .adapt, let e = bundledAdapt(article, state: state) { return e }
         if !force, let e = bundled(article, intent) { return e }
         if let t = inflight[k] { return await t.value }
         let prompt = PromptBuilder.userMessage(article: article, sources: sources, state: state, intent: intent, feedback: feedback)

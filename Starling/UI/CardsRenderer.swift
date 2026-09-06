@@ -28,23 +28,7 @@ struct CardsRenderer: View {
 
     /// Poster prompts for the first two cards; nil when there's nothing to say.
     static func posterPrompts(edition: Edition, article: Article, mood: String) -> [String?] {
-        let src = FeedCatalog.source(article.sourceID)?.name ?? "Starling"
-        let subject = String(article.summary.prefix(160))
-        let headline = edition.posterHeadline ?? edition.headline.split(separator: " ").prefix(6).joined(separator: " ")
-        let p0 = ImageGenerator.posterPrompt(kind: .headline, big: headline, line: src, subject: subject, source: src, mood: mood)
-        var p1: String? = nil
-        let rest = edition.blocks.filter { $0.type != .headline && $0.type != .dek }
-        if let b = rest.first {
-            if b.type == .stat, let big = b.text {
-                p1 = ImageGenerator.posterPrompt(kind: .stat, big: big, line: b.caption ?? "", subject: subject, source: src, mood: mood)
-            } else if let first = b.items?.first ?? b.text, !first.isEmpty {
-                let words = first.split(separator: " ")
-                let big = words.prefix(4).joined(separator: " ")
-                let line = words.dropFirst(4).prefix(12).joined(separator: " ")
-                p1 = ImageGenerator.posterPrompt(kind: .headline, big: big, line: line, subject: subject, source: src, mood: mood)
-            }
-        }
-        return [p0, p1]
+        PosterPrompts.prompts(edition: edition, title: article.title, summary: article.summary, sourceName: FeedCatalog.source(article.sourceID)?.name ?? "Starling", mood: mood)
     }
     private var posters: [String?] { Self.posterPrompts(edition: edition, article: article, mood: mood) }
     private func poster(_ i: Int) -> UIImage? {
@@ -85,41 +69,33 @@ struct CardsRenderer: View {
         let b = blocks.first!
         if i < 2, let img = poster(i) {
             // Fully generated poster: the type is in the image.
-            ZStack(alignment: .bottomTrailing) {
-                Image(uiImage: img).resizable().aspectRatio(contentMode: .fill)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity).clipped()
-                swipeHint(i, light: true).padding(22)
-            }
-            .background(tile)
+            Color.clear
+                .overlay(Image(uiImage: img).resizable().aspectRatio(contentMode: .fill))
+                .clipped()
+                .overlay(alignment: .bottomTrailing) { swipeHint(i, light: true).padding(22) }
+                .background(tile)
         } else if i == 0 {
             // Cover: headline over the image
-            ZStack(alignment: .bottomLeading) {
-                Group {
-                    if let cover {
-                        Image(uiImage: cover).resizable().aspectRatio(contentMode: .fill)
-                    } else {
-                        tile
-                        VStack(spacing: 8) { ProgressView().tint(theme.ink); Text("Drawing cover…").font(theme.font(11, weight: .bold)).foregroundStyle(theme.secondary) }
+            // Poster not ready yet: a clean typographic card in the same spirit, never the scraped photo.
+            VStack(alignment: .leading, spacing: 12) {
+                Text("\(FeedCatalog.source(article.sourceID)?.name ?? "")".uppercased())
+                    .font(theme.font(11, weight: .bold)).tracking(0.6).foregroundStyle(theme.ink.opacity(0.7))
+                Text(edition.posterHeadline ?? edition.headline)
+                    .font(theme.font(38, weight: theme.heavy)).tracking(-1).lineSpacing(0)
+                    .fixedSize(horizontal: false, vertical: true)
+                Spacer()
+                HStack(spacing: 8) {
+                    if posters.first != nil && !imageGen.isFailed(prompt: posters[0]!, mood: mood) {
+                        ProgressView().tint(theme.ink).scaleEffect(0.8)
+                        Text("Drawing poster…").font(theme.font(11, weight: .bold)).foregroundStyle(theme.secondary)
                     }
+                    Spacer()
+                    swipeHint(i, light: false)
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .clipped()
-                LinearGradient(colors: [.clear, .black.opacity(0.15), .black.opacity(0.78)], startPoint: .center, endPoint: .bottom)
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("\(FeedCatalog.source(article.sourceID)?.name ?? "") · \(edition.stateSummary)".uppercased())
-                        .font(theme.font(11, weight: .bold)).tracking(0.6).foregroundStyle(.white.opacity(0.75))
-                    ForEach(Array(blocks.enumerated()), id: \.offset) { _, bb in
-                        if bb.type == .headline {
-                            Text(bb.text ?? "").font(theme.font(30, weight: theme.heavy)).lineSpacing(0).foregroundStyle(.white).fixedSize(horizontal: false, vertical: true)
-                        } else {
-                            Text(bb.text ?? "").font(theme.font(15, weight: .medium)).foregroundStyle(.white.opacity(0.85))
-                        }
-                    }
-                    swipeHint(i, light: true)
-                }
-                .padding(22)
             }
-            .background(tile)
+            .padding(24)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .background(theme.accent.opacity(theme.isDark ? 0.55 : 0.8))
         } else if b.type == .stat {
             VStack(alignment: .leading, spacing: 6) {
                 Text(b.text ?? "").font(theme.font(76, weight: theme.heavy)).tracking(-2).minimumScaleFactor(0.5).lineLimit(1)
@@ -131,16 +107,18 @@ struct CardsRenderer: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .background(i % 2 == 0 ? theme.accent.opacity(theme.isDark ? 0.55 : 0.75) : tile)
         } else if b.type == .imageCard {
-            ZStack(alignment: .bottomLeading) {
-                ImageCardFill(block: b, edition: edition, hero: hero, mood: mood)
-                LinearGradient(colors: [.clear, .black.opacity(0.7)], startPoint: .center, endPoint: .bottom)
-                VStack(alignment: .leading, spacing: 8) {
-                    if let c = b.caption, !c.isEmpty { Text(c).font(theme.font(20, weight: .bold)).foregroundStyle(.white).fixedSize(horizontal: false, vertical: true) }
-                    swipeHint(i, light: true)
+            Color.clear
+                .overlay(ImageCardFill(block: b, edition: edition, hero: nil, mood: mood))
+                .clipped()
+                .overlay(LinearGradient(colors: [.clear, .black.opacity(0.7)], startPoint: .center, endPoint: .bottom))
+                .overlay(alignment: .bottomLeading) {
+                    VStack(alignment: .leading, spacing: 8) {
+                        if let c = b.caption, !c.isEmpty { Text(c).font(theme.font(20, weight: .bold)).foregroundStyle(.white).fixedSize(horizontal: false, vertical: true) }
+                        swipeHint(i, light: true)
+                    }
+                    .padding(22)
                 }
-                .padding(22)
-            }
-            .background(tile)
+                .background(tile)
         } else {
             VStack(alignment: .leading, spacing: 16) {
                 Text("\(i + 1) of \(cards.count)").font(theme.font(11, weight: .bold)).tracking(0.6).foregroundStyle(theme.secondary)
@@ -180,7 +158,7 @@ struct ImageCardFill: View {
     var body: some View {
         Group {
             if let p = block.imagePrompt, !p.isEmpty, let img = imageGen.image(prompt: p, mood: mood) {
-                Image(uiImage: img).resizable().aspectRatio(contentMode: .fill)
+                Color.clear.overlay(Image(uiImage: img).resizable().aspectRatio(contentMode: .fill))
             } else if let p = block.imagePrompt, !p.isEmpty, !imageGen.isFailed(prompt: p, mood: mood) {
                 ZStack {
                     theme.accent.opacity(0.2)
@@ -188,7 +166,7 @@ struct ImageCardFill: View {
                 }
                 .task { imageGen.request(prompt: p, mood: mood) }
             } else if let hero {
-                Image(uiImage: hero).resizable().aspectRatio(contentMode: .fill)
+                Color.clear.overlay(Image(uiImage: hero).resizable().aspectRatio(contentMode: .fill))
             } else {
                 ZStack { theme.accent.opacity(0.25); Image(systemName: "photo").font(.system(size: 40, weight: .light)).foregroundStyle(theme.accent) }
             }
