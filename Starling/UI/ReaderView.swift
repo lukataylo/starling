@@ -67,7 +67,7 @@ struct ReaderView: View {
         VStack(spacing: 0) {
             HStack {
                 RoundIconButton(symbol: "chevron.left", theme: theme) { dismiss() }
-                StatePill(theme: theme, badge: pendingChange != nil, suffix: currentEdition.map { $0.density == .glance || $0.density == .brief ? "Short edition" : "Article" }) { showSignals = true }
+                StatePill(theme: theme, badge: pendingChange != nil, compact: true) { showSignals = true }
                 Spacer()
                 RoundIconButton(symbol: isKept ? "bookmark.fill" : "bookmark", theme: theme, filled: isKept) { keep() }
                 RoundIconButton(symbol: "phone.fill", theme: theme, filled: newsreader.callState == .live) {

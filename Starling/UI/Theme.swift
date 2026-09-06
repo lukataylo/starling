@@ -166,6 +166,8 @@ struct StatePill: View {
     let theme: Theme
     var badge = false
     var suffix: String? = nil
+    /// Icons only, for tight bars.
+    var compact = false
     let action: () -> Void
 
     @AppStorage("devMode") private var devMode = false
@@ -178,10 +180,11 @@ struct StatePill: View {
             HStack(spacing: 0) {
                 ForEach(Array(segs.enumerated()), id: \.element.id) { i, seg in
                     HStack(spacing: 5) {
-                        Image(systemName: seg.symbol).font(.system(size: 11, weight: .bold))
-                        Text(seg.text).font(Identity.grotesk(12, .semibold)).tracking(-0.2).lineLimit(1).strikethrough(seg.struck)
+                        Image(systemName: seg.symbol).font(.system(size: compact ? 13 : 11, weight: .bold)).opacity(seg.struck ? 0.35 : 1)
+                        if !compact { Text(seg.text).font(Identity.grotesk(12, .semibold)).tracking(-0.2).lineLimit(1).strikethrough(seg.struck) }
                     }
-                    .padding(.horizontal, 10).padding(.vertical, 8)
+                    .padding(.horizontal, compact ? 9 : 10).padding(.vertical, compact ? 9 : 8)
+                    .accessibilityLabel(seg.text)
                     if i < segs.count - 1 { Rectangle().fill(Identity.ink).frame(width: 1.2, height: 18) }
                 }
                 if badge { Circle().fill(Identity.ink).frame(width: 6, height: 6).padding(.trailing, 10) }
