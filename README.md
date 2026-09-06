@@ -9,7 +9,7 @@ This document describes what the app does and the generative ruleset it runs, fo
 1. **The reader picks sources.** Eight built-in RSS feeds (BBC, Guardian, FT, Verge, NYT, Ars Technica, Hacker News, Wired). Live fetch with a bundled snapshot of 22 articles as an offline fallback.
 2. **The phone senses the reader.** Every signal is real hardware, none are simulated:
    - **Attention** from ARKit face tracking: gaze ray intersected with the phone plane, head pose, blink rate.
-   - **Heart rate** from three sources in priority order: a live stream from the Starling Apple Watch app (workout session, one reading every few seconds over WatchConnectivity), HealthKit samples the Watch syncs on its own, and camera rPPG from the forehead in the same ARKit frames.
+   - **Heart rate** from three sources in priority order: a live stream from the Starling Apple Watch app (a mind-and-body HealthKit workout session, one reading every few seconds over WatchConnectivity), HealthKit samples the Watch syncs on its own, and camera rPPG from the forehead in the same ARKit frames.
    - **Context** from CoreMotion: walking / stationary / automotive, posture from the gravity vector (upright, reclined, lying down, flat on a table), plus time of day from the clock.
 3. **A state is predicted.** Stress is fused from heart rate over a personal baseline and blink rate; a label (calm, focused, tense, tired, distracted) is derived with a confidence. Low-confidence signals are marked as such and the model is told to ignore them.
 4. **Each article is rewritten and re-laid-out** by a language model that returns a strict JSON *Edition*: the text (density, tone, block structure) **and** the page design (typeface, type scale, palette, accent, margins, format). The app renders the Edition through a fixed design genome.
@@ -55,13 +55,20 @@ The schema is strict JSON: every field is required, enums only, `additionalPrope
 These are sent verbatim as the system prompt, from `DesignGenome.rules`:
 
 1. **The default is** standard / plain / scroll / regular / sans / semibold / day / slate / normal. **Every deviation must earn its place**: it must make the page clearer, faster or more legible for this reader in this moment, and the reason goes in `rationale` in one plain sentence the reader would accept. Never mutate for decoration.
-2. **Time of day shapes both text and design.** Early morning and morning: brisk tone, briefing structure (key facts first), dawn or day palette, sans. Midday and afternoon: plain tone, day or focus. Evening: warm or reflective tone, longer sentences allowed, dusk palette, serif welcome. Night: reassuring tone, no alarming framing, no cliffhangers, night palette, larger type, dim accent, never coral.
-3. **The reader's chosen sources shape the voice.** The prompt lists each enabled feed with its house style (FT: analytical, numbers-led; Guardian: contextual, human angle; Verge: conversational, product-minded; BBC: neutral, short sentences; Ars: technical, precise; HN: terse, skeptical; NYT: measured, narrative lede; Wired: vivid, future-facing). The rewrite blends them, weighting the article's own source most. No invented facts: only restructure, compress, clarify, and add neutral context the article itself implies.
-4. **State overrides.** Walking, automotive, or stress above 0.6: glance or brief, single pace, large or xl type, calm palette, key facts first, no pull quote, cards format with 3–5 short blocks. Attention below 0.4: shorter blocks, a pull-quote hook, takeaway at the end. Lying down or reclined and calm: longform allowed, serif, wide margins, reflective tone. Tired (late, low attention, slow blinks): reassuring, brief, large, night or dusk.
-5. **Low-confidence signals are ignored, not guessed at.** If the state says a signal is unavailable, don't mention it.
-6. **The reader's stored feedback outranks every heuristic.**
-7. **The headline stays faithful to the story.** No editorialising beyond the source's framing. No call to action other than `readFullPrompt`.
-8. `stateSummary` is 3–8 words describing what was noticed ("walking, evening, a little tense"). `rationale` is one sentence, second person, no jargon.
+2. **Rendering, not selection.** The model renders one article. Which articles the reader sees at all is decided upstream by their chosen sources and topics; a calmer or lower-stress state is never a reason to omit, downweight or soften a story.
+3. **Time of day shapes both text and design.** Early morning and morning: brisk tone, briefing structure (key facts first), dawn or day palette, sans. Midday and afternoon: plain tone, day or focus. Evening: warm or reflective tone, longer sentences allowed, dusk palette, serif welcome. Night: reassuring tone, no alarming framing, no cliffhangers, night palette, larger type, dim accent, never coral.
+4. **The reader's chosen sources shape the voice.** Each enabled feed is listed with its house style; the rewrite blends them, weighting the article's own source most. No invented facts.
+5. **Exertion is not stress.** A raised heart rate while walking or in a vehicle is expected exertion and may only change format and legibility (glance or brief, single pace, large or xl type, cards with 3–5 short blocks, key facts first), never tone. It counts as stress only when heart rate is elevated over baseline while stationary, ideally corroborated by blink rate; only then does tone move toward reassuring or plain with a calm palette and no pull quote.
+6. **Ambient context shapes legibility, not mood.** In-transit reading favours larger type and a higher-contrast palette (day or focus), layered independently on top of the mood-driven palette.
+7. **Attention below 0.4:** shorter blocks, a pull-quote hook, takeaway at the end. Lying down or reclined and calm: longform allowed, serif, wide margins, reflective tone. Tired: reassuring, brief, large, night or dusk.
+8. **Low-confidence signals are ignored, not guessed at.**
+9. **The reader's stored feedback outranks every heuristic.**
+10. **The headline stays faithful to the story.** No call to action other than `readFullPrompt`.
+11. `stateSummary` is 3–8 words; `rationale` is one sentence, second person, no jargon.
+
+**Cards format** is image first, one idea per card: headline over the story image, then a `stat` block when the story has a meaningful number (the figure plus one line of at most 8 words), then 2–4 cards of key facts, another stat, an image card with a concrete `imagePrompt`, and a takeaway.
+
+The exertion/stress split is also enforced in code, not only in the prompt: the stress fusion in `SignalHub` gives heart rate zero weight while the reader is moving, and the label predictor never returns *tense* while moving. The app-wide theme treats movement as a legibility change (large type, high-contrast palette) and only a stationary elevated reading as a mood change (calm palette).
 
 ### What the model is given (the user message)
 

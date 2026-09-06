@@ -42,7 +42,8 @@ struct Theme {
         }
         var scale: TypeScale = .regular
         var face: Typeface = .rounded
-        if moving || tense { palette = .calm; accent = .sage; scale = .large; face = .rounded }
+        if tense && !moving { palette = .calm; accent = .sage; scale = .large; face = .rounded }
+        else if moving { palette = s.timeOfDay == .night ? .night : .focus; scale = .large; face = .rounded }
         else if s.label == .focused { palette = s.timeOfDay == .night ? .night : .focus; accent = .slate; face = .sans }
         else if s.label == .tired { palette = s.timeOfDay == .evening ? .dusk : .night; accent = .amber; scale = .large; face = .serif }
         else if s.label == .calm && lying { face = .serif }
@@ -80,6 +81,7 @@ struct RoundIconButton: View {
 struct StatePill: View {
     @Environment(SignalHub.self) private var hub
     let theme: Theme
+    var badge = false
     let action: () -> Void
 
     var body: some View {
@@ -95,6 +97,7 @@ struct StatePill: View {
                     Text(s.label.rawValue.capitalized).font(theme.font(13, weight: .heavy))
                     Text(subline(s)).font(theme.font(10, weight: .semibold)).foregroundStyle(theme.secondary)
                 }
+                if badge { Circle().fill(theme.accent).frame(width: 8, height: 8) }
             }
             .padding(.leading, 8).padding(.trailing, 12).padding(.vertical, 8)
             .background(theme.surface, in: Capsule())

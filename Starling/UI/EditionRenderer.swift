@@ -96,6 +96,14 @@ struct EditionRenderer: View {
                     .lineSpacing(m.lineSpacing)
             }
             .padding(.vertical, 4)
+        case .stat:
+            VStack(alignment: .leading, spacing: 4) {
+                Text(b.text ?? "").font(.system(size: m.headline * 1.7, weight: .heavy, design: design)).tracking(-1)
+                Text(b.caption ?? "").font(.system(size: m.body * 1.1, weight: .semibold, design: design)).foregroundStyle(palette.secondary)
+            }
+            .padding(pad * 0.8)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(accent.opacity(0.18), in: RoundedRectangle(cornerRadius: 16))
         case .imageCard:
             ImageCardView(block: b, edition: edition, hero: (b.imagePrompt ?? "").isEmpty ? hero : nil, mood: mood, height: 200 * scale)
         case .timeline:

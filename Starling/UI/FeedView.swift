@@ -5,6 +5,7 @@ struct FeedView: View {
     @Environment(Generator.self) private var generator
     @Environment(SignalHub.self) private var hub
     @Environment(HeroImageStore.self) private var heroes
+    @Environment(ImageGenerator.self) private var imageGen
     @State private var showSources = false
     @State private var showSettings = false
     @State private var showSignals = false
@@ -68,12 +69,13 @@ struct FeedView: View {
             .navigationDestination(for: Article.self) { article in ReaderView(article: article) }
             .sheet(isPresented: $showSources) { SourcePicker() }
             .sheet(isPresented: $showSettings) { SettingsView() }
-            .sheet(isPresented: $showSignals) { SignalSheet() }
+            .sheet(isPresented: $showSignals) { SignalSheet(theme: theme) }
             .task { if feeds.articles.isEmpty { await feeds.refresh() } }
             .onChange(of: feeds.enabledIDs, initial: true) { _, ids in
                 generator.sourceSignature = ids.sorted().joined(separator: ",")
             }
             .onChange(of: feeds.lastRefresh) { _, _ in prefetch(); feeds.articles.prefix(12).forEach { heroes.load($0.imageURL) } }
+            .onChange(of: hub.state.bucket) { _, _ in prefetch() }
             .onChange(of: hub.phase) { _, p in if p == .live { prefetch() } }
         }
     }
@@ -84,7 +86,11 @@ struct FeedView: View {
 
     func prefetch() {
         guard hub.phase == .live || !hub.isSensingEnabled || !hub.cameraSupported else { return }
-        generator.prefetch(feeds.articles, state: hub.state, sources: feeds.enabledSources, feeds: feeds)
+        generator.prefetch(feeds.articles, state: hub.state, sources: feeds.enabledSources, feeds: feeds, images: imageGen, mood: moodName(hub.theme))
+    }
+    private func moodName(_ t: Theme) -> String {
+        let calm: Set<PaletteName> = [.calm, .dusk, .night, .dawn]
+        return calm.contains(t.paletteName) ? "calm" : "focused"
     }
 }
 

@@ -59,14 +59,28 @@ final class Generator {
     }
 
     /// Warm the cache for the first few visible stories so tapping one is instant.
-    func prefetch(_ articles: [Article], state: UserState, sources: [FeedSource], feeds: FeedStore) {
+    /// Pre-render the top five stories for the live state and the key moods, then draw their images, so opening one is instant.
+    func prefetch(_ articles: [Article], state: UserState, sources: [FeedSource], feeds: FeedStore, images: ImageGenerator? = nil, mood: String = "focused") {
         guard LLMClient.apiKey != nil else { return }
-        for a in articles.prefix(3) {
-            let k = key(a, .adapt, state)
-            if editions[k] != nil || inflight[k] != nil { continue }
+        let intents: [GenerationIntent] = [.adapt, .preset(.calm), .preset(.focused), .preset(.commute)]
+        for a in articles.prefix(5) {
             Task {
                 let full = await feeds.loadBody(for: a)
-                await self.generate(article: full, intent: .adapt, state: state, sources: sources)
+                for intent in intents {
+                    let k = self.key(full, intent, state)
+                    if self.editions[k] == nil && self.inflight[k] == nil {
+                        _ = await self.generate(article: full, intent: intent, state: state, sources: sources)
+                    }
+                    if let images, let e = self.edition(for: full, intent: intent, state: state) {
+                        let m: String = [.calm, .dusk, .night, .dawn].contains(e.palette) ? "calm" : mood
+                        if e.format == .cards || intent == .adapt {
+                            images.request(prompt: ImageGenerator.coverPrompt(headline: full.title, summary: full.summary), mood: m)
+                        }
+                        for b in e.blocks where b.type == .imageCard {
+                            if let p = b.imagePrompt, !p.isEmpty { images.request(prompt: p, mood: m) }
+                        }
+                    }
+                }
             }
         }
     }

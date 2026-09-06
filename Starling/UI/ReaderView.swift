@@ -14,7 +14,6 @@ struct ReaderView: View {
     @State private var showWhy = false
     @State private var showCompare = false
     @State private var showSignals = false
-    @State private var showProposal = false
     @State private var shownState: UserState?
     @State private var pendingState: UserState?
     @State private var pendingSince: Date?
@@ -57,7 +56,7 @@ struct ReaderView: View {
         VStack(spacing: 0) {
             HStack {
                 RoundIconButton(symbol: "chevron.left", theme: theme) { dismiss() }
-                StatePill(theme: theme) { showSignals = true }
+                StatePill(theme: theme, badge: pendingChange != nil) { showSignals = true }
                 Spacer()
                 RoundIconButton(symbol: "rectangle.split.2x1", theme: theme) { showCompare = true }
                 Menu {
@@ -80,7 +79,19 @@ struct ReaderView: View {
         .safeAreaInset(edge: .bottom) { dock }
         .sheet(isPresented: $showWhy) { WhyThisSheet(article: article, edition: currentEdition) }
         .sheet(isPresented: $showCompare) { CompareView(article: article) }
-        .sheet(isPresented: $showSignals) { SignalSheet(mode: $mode) }
+        .sheet(isPresented: $showSignals) {
+            SignalSheet(theme: theme, mode: $mode, edition: currentEdition,
+                        format: Binding(get: { effectiveFormat }, set: { formatOverride = $0 }),
+                        pending: pendingChange,
+                        pendingReady: pendingChange.map { generator.edition(for: article, intent: .adapt, state: $0) != nil } ?? false,
+                        onSwitch: { if let p = pendingChange { switchTo(p) } },
+                        onDismissPending: { pendingState = nil; pendingSince = nil },
+                        onKeep: {
+                            pendingState = nil
+                            if let e = currentEdition { generator.addFeedback("At \(pageState.timeOfDay.label) while \(pageState.motion.rawValue) I kept: \(e.density.rawValue), \(e.palette.rawValue), \(e.typeface.rawValue), \(effectiveFormat.rawValue)") }
+                        },
+                        onWhy: { showWhy = true })
+        }
         .task {
             heroes.load(article.imageURL)
             article = await feeds.loadBody(for: article)
@@ -120,7 +131,7 @@ struct ReaderView: View {
             ScrollView { originalView }
         } else if let e = currentEdition {
             if effectiveFormat == .cards {
-                CardsRenderer(edition: e, hero: heroImage, mood: mood, page: $cardPage, onReadFull: { mode = .longform })
+                CardsRenderer(edition: e, article: article, hero: heroImage, mood: mood, page: $cardPage, onReadFull: { mode = .longform })
                     .id(e.id)
             } else {
                 ScrollView {
@@ -189,36 +200,6 @@ struct ReaderView: View {
     // MARK: dock
     @ViewBuilder private var dock: some View {
         VStack(spacing: 10) {
-            if let e = currentEdition, mode != .original {
-                Button { showProposal = true } label: {
-                    HStack(spacing: 10) {
-                        Image(systemName: "sparkles").foregroundStyle(theme.accent)
-                        Text(e.rationale).font(theme.font(13, weight: .bold)).lineLimit(1)
-                        Spacer()
-                        if pendingChange != nil { Circle().fill(theme.accent).frame(width: 8, height: 8) }
-                        Image(systemName: "chevron.up").font(.system(size: 12, weight: .bold)).foregroundStyle(theme.secondary)
-                    }
-                    .padding(.horizontal, 14).padding(.vertical, 12)
-                    .background(theme.surface, in: RoundedRectangle(cornerRadius: 14))
-                    .foregroundStyle(theme.ink)
-                }
-                .buttonStyle(.plain)
-                .sheet(isPresented: $showProposal) {
-                    ProposalSheet(edition: e,
-                                  format: Binding(get: { effectiveFormat }, set: { formatOverride = $0 }),
-                                  pending: pendingChange,
-                                  pendingReady: pendingChange.map { generator.edition(for: article, intent: .adapt, state: $0) != nil } ?? false,
-                                  onSwitch: { if let p = pendingChange { switchTo(p) } },
-                                  onDismissPending: { pendingState = nil; pendingSince = nil },
-                                  onReadFull: { mode = .longform },
-                                  onKeep: {
-                                      pendingState = nil
-                                      generator.addFeedback("At \(pageState.timeOfDay.label) while \(pageState.motion.rawValue) I kept: \(e.density.rawValue), \(e.palette.rawValue), \(e.typeface.rawValue), \(effectiveFormat.rawValue)")
-                                  },
-                                  onNotMe: { showSignals = true },
-                                  onWhy: { showWhy = true })
-                }
-            }
             HStack(spacing: 10) {
                 dockButton("Cards", "rectangle.on.rectangle", on: effectiveFormat == .cards && mode != .longform && mode != .original) {
                     if mode == .longform || mode == .original { mode = .adapted }

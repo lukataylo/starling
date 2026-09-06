@@ -1,80 +1,131 @@
 import SwiftUI
 
-/// The readout behind the state pill: night palette, mono labels, HR / EYES / MOTION, and the view chips.
+/// Behind the state pill: the readout (HR / EYES / MOTION), the view chips, and — in the reader — the adaptation controls.
+/// Styled by the current theme so it matches the page it opens from.
 struct SignalSheet: View {
     @Environment(SignalHub.self) private var hub
     @Environment(Generator.self) private var generator
     @Environment(\.dismiss) private var dismiss
+    let theme: Theme
     var mode: Binding<ReaderMode>? = nil
+    var edition: Edition? = nil
+    var format: Binding<EditionFormat>? = nil
+    var pending: UserState? = nil
+    var pendingReady = false
+    var onSwitch: (() -> Void)? = nil
+    var onDismissPending: (() -> Void)? = nil
+    var onKeep: (() -> Void)? = nil
+    var onWhy: (() -> Void)? = nil
     @State private var showCorrect = false
 
-    private let bg = Color(red: 0.06, green: 0.07, blue: 0.08)
-    private let card = Color(red: 0.10, green: 0.11, blue: 0.13)
-    private let ink = Color(red: 0.91, green: 0.89, blue: 0.85)
-    private let sec = Color(red: 0.55, green: 0.54, blue: 0.51)
-    private let coral = Color(red: 0.95, green: 0.55, blue: 0.49)
+    private var mono: Font { .system(size: 11, weight: .medium, design: .monospaced) }
+    private var card: Color { theme.surface }
 
     var body: some View {
         let s = hub.state
-        VStack(alignment: .leading, spacing: 18) {
-            HStack {
-                Text("STARLING").font(.system(size: 13, weight: .medium, design: .monospaced)).foregroundStyle(ink)
-                Spacer()
-                HStack(spacing: 8) {
-                    Circle().fill(coral).frame(width: 8, height: 8)
-                    Text(s.label.rawValue.uppercased()).font(.system(size: 13, weight: .medium, design: .monospaced)).foregroundStyle(coral)
-                }
-            }
-            HStack(spacing: 10) {
-                tile("HR · \(s.pulseSource == .watch ? "WATCH" : (s.pulseSource == .camera ? "CAMERA" : "—"))") {
-                    HStack {
-                        Text(s.bpm.map { s.bpmConfidence >= 0.4 ? "\(Int($0))" : "—" } ?? "—").font(.system(size: 30, weight: .bold, design: .rounded))
-                        Spacer()
-                        bars(s)
-                    }
-                }
-                tile("EYES") {
-                    HStack {
-                        Text(!s.sensingEnabled || !hub.cameraSupported ? "—" : (s.faceDetected ? (s.attention >= 0.5 ? "ON" : "OFF") : "—")).font(.system(size: 30, weight: .bold, design: .rounded))
-                        Spacer()
-                        Image(systemName: s.faceDetected && s.attention >= 0.5 ? "eye" : "eye.slash").foregroundStyle(ink)
-                    }
-                }
-                tile("MOTION") {
-                    HStack {
-                        Text(motionText(s)).font(.system(size: 15, weight: .bold, design: .rounded)).minimumScaleFactor(0.6).lineLimit(1)
-                        Spacer()
-                        Image(systemName: s.motion == .walking || s.motion == .running ? "figure.walk" : (s.motion == .automotive ? "tram" : "figure.seated.side")).foregroundStyle(ink)
-                    }
-                }
-            }
-            if let mode {
-                ScrollView(.horizontal, showsIndicators: false) {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 18) {
+                HStack {
+                    Text("STARLING").font(.system(size: 13, weight: .semibold, design: .monospaced))
+                    Spacer()
                     HStack(spacing: 8) {
-                        chip("NOW", .adapted, mode); chip("CALM", .preset(.calm), mode); chip("FOCUSED", .preset(.focused), mode); chip("FULL", .longform, mode); chip("ORIGINAL", .original, mode)
+                        Circle().fill(theme.accent).frame(width: 8, height: 8)
+                        Text(s.label.rawValue.uppercased()).font(.system(size: 13, weight: .semibold, design: .monospaced)).foregroundStyle(theme.accent)
                     }
                 }
+                HStack(spacing: 10) {
+                    tile("HR · \(s.pulseSource == .watch ? "WATCH" : (s.pulseSource == .camera ? "CAMERA" : "—"))") {
+                        HStack {
+                            Text(s.bpm.map { s.bpmConfidence >= 0.4 ? "\(Int($0))" : "—" } ?? "—").font(.system(size: 28, weight: .bold, design: .rounded))
+                            Spacer()
+                            bars(s)
+                        }
+                    }
+                    tile("EYES") {
+                        HStack {
+                            Text(!s.sensingEnabled || !hub.cameraSupported ? "—" : (s.faceDetected ? (s.attention >= 0.5 ? "ON" : "OFF") : "—")).font(.system(size: 28, weight: .bold, design: .rounded))
+                            Spacer()
+                            Image(systemName: s.faceDetected && s.attention >= 0.5 ? "eye" : "eye.slash")
+                        }
+                    }
+                    tile("MOTION") {
+                        HStack {
+                            Text(motionText(s)).font(.system(size: 14, weight: .bold, design: .rounded)).minimumScaleFactor(0.6).lineLimit(1)
+                            Spacer()
+                            Image(systemName: s.motion == .walking || s.motion == .running ? "figure.walk" : (s.motion == .automotive ? "tram" : "figure.seated.side"))
+                        }
+                    }
+                }
+                if let mode {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 8) {
+                            chip("NOW", .adapted, mode); chip("CALM", .preset(.calm), mode); chip("FOCUSED", .preset(.focused), mode); chip("FULL", .longform, mode); chip("ORIGINAL", .original, mode)
+                        }
+                    }
+                }
+                if let e = edition {
+                    VStack(alignment: .leading, spacing: 12) {
+                        HStack(spacing: 8) {
+                            Image(systemName: "sparkles").foregroundStyle(theme.accent)
+                            Text(e.stateSummary.prefix(1).uppercased() + e.stateSummary.dropFirst()).font(theme.font(15, weight: .bold))
+                            Spacer()
+                            Text("~\(max(5, e.estimatedReadSeconds))s").font(mono).foregroundStyle(theme.secondary)
+                        }
+                        Text(e.rationale).font(theme.font(14)).foregroundStyle(theme.secondary)
+                        Text("\(e.density.rawValue) · \(e.tone.rawValue) · \(e.typeface.rawValue) \(e.typeScale.rawValue) · \(e.palette.rawValue)".uppercased()).font(mono).foregroundStyle(theme.secondary)
+                        if let p = pending {
+                            HStack(spacing: 10) {
+                                Image(systemName: p.label.symbol)
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("You seem \(p.label.rawValue) now\(p.motion == .walking ? ", walking" : "")").font(theme.font(14, weight: .bold))
+                                    Text(pendingReady ? "A version for this moment is ready." : "Preparing a version for this moment…").font(theme.font(12)).foregroundStyle(theme.secondary)
+                                }
+                                Spacer()
+                                Button("Switch") { onSwitch?(); dismiss() }.disabled(!pendingReady).buttonStyle(.borderedProminent).tint(theme.accent)
+                                Button { onDismissPending?() } label: { Image(systemName: "xmark") }.buttonStyle(.bordered)
+                            }
+                            .padding(12).background(theme.palette.background, in: RoundedRectangle(cornerRadius: 12))
+                        }
+                        if let format {
+                            Picker("Format", selection: format) {
+                                Text("Cards").tag(EditionFormat.cards)
+                                Text("Text").tag(EditionFormat.text)
+                            }.pickerStyle(.segmented)
+                        }
+                        HStack(spacing: 10) {
+                            Button { onKeep?(); dismiss() } label: { Label("Keep this", systemImage: "checkmark") }
+                            Button { showCorrect = true } label: { Label("Not how I feel", systemImage: "hand.raised") }
+                            Button { dismiss(); onWhy?() } label: { Label("Why", systemImage: "info.circle") }
+                        }
+                        .buttonStyle(.bordered).tint(theme.accent).font(theme.font(13, weight: .bold))
+                    }
+                    .padding(14)
+                    .background(card, in: RoundedRectangle(cornerRadius: 14))
+                }
+                VStack(alignment: .leading, spacing: 8) {
+                    row("STRESS", String(format: "%.2f", s.stress))
+                    row("BLINKS", "\(Int(s.blinkRate)) / MIN")
+                    row("ATTENTION", "\(Int(s.attention * 100))%")
+                    row("BASELINE", hub.baselineIsDefault ? "DEFAULT 70" : "\(Int(hub.baselineBPM)) BPM")
+                    row("CONFIDENCE", "\(Int(s.labelConfidence * 100))%")
+                }
+                HStack(spacing: 10) {
+                    if edition == nil {
+                        Button { showCorrect = true } label: { Text("NOT HOW I FEEL").font(mono).padding(.horizontal, 14).padding(.vertical, 10).background(card, in: RoundedRectangle(cornerRadius: 8)) }
+                    }
+                    Button { hub.recalibrate() } label: { Text("RECALIBRATE").font(mono).padding(.horizontal, 14).padding(.vertical, 10).background(card, in: RoundedRectangle(cornerRadius: 8)) }
+                    Spacer()
+                    Text("SENSING").font(mono).foregroundStyle(theme.secondary)
+                    Toggle("", isOn: Binding(get: { hub.isSensingEnabled }, set: { hub.isSensingEnabled = $0 })).labelsHidden().tint(theme.accent)
+                }
+                .buttonStyle(.plain)
             }
-            VStack(alignment: .leading, spacing: 8) {
-                row("STRESS", String(format: "%.2f", s.stress))
-                row("BLINKS", "\(Int(s.blinkRate)) / MIN")
-                row("BASELINE", hub.baselineIsDefault ? "DEFAULT 70" : "\(Int(hub.baselineBPM)) BPM")
-                row("CONFIDENCE", "\(Int(s.labelConfidence * 100))%")
-            }
-            HStack(spacing: 10) {
-                Button { showCorrect = true } label: { Text("NOT HOW I FEEL").font(.system(size: 12, weight: .medium, design: .monospaced)).padding(.horizontal, 14).padding(.vertical, 10).background(card, in: RoundedRectangle(cornerRadius: 8)) }
-                Button { hub.recalibrate() } label: { Text("RECALIBRATE").font(.system(size: 12, weight: .medium, design: .monospaced)).padding(.horizontal, 14).padding(.vertical, 10).background(card, in: RoundedRectangle(cornerRadius: 8)) }
-                Spacer()
-                Toggle("", isOn: Binding(get: { hub.isSensingEnabled }, set: { hub.isSensingEnabled = $0 })).labelsHidden().tint(coral)
-            }
-            .foregroundStyle(ink)
-            Spacer(minLength: 0)
+            .padding(20)
         }
-        .padding(20)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .background(bg)
-        .foregroundStyle(ink)
-        .environment(\.colorScheme, .dark)
+        .background(theme.palette.background)
+        .foregroundStyle(theme.ink)
+        .environment(\.colorScheme, theme.palette.scheme)
         .presentationDetents([.medium, .large])
         .presentationDragIndicator(.visible)
         .confirmationDialog("How do you feel right now?", isPresented: $showCorrect, titleVisibility: .visible) {
@@ -91,7 +142,7 @@ struct SignalSheet: View {
 
     private func tile<C: View>(_ title: String, @ViewBuilder _ content: () -> C) -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(title).font(.system(size: 10, weight: .medium, design: .monospaced)).foregroundStyle(sec)
+            Text(title).font(.system(size: 10, weight: .medium, design: .monospaced)).foregroundStyle(theme.secondary)
             content()
         }
         .padding(12)
@@ -103,24 +154,23 @@ struct SignalSheet: View {
         let base = Int(max(1, min(12, ((s.bpm ?? 70) - 50) / 6)))
         return HStack(alignment: .bottom, spacing: 2) {
             ForEach(0..<8, id: \.self) { i in
-                RoundedRectangle(cornerRadius: 1).fill(coral).frame(width: 3, height: CGFloat(4 + (base + i * 3) % 12))
+                RoundedRectangle(cornerRadius: 1).fill(theme.accent).frame(width: 3, height: CGFloat(4 + (base + i * 3) % 12))
             }
         }
         .frame(height: 14)
     }
 
     private func row(_ k: String, _ v: String) -> some View {
-        HStack { Text(k).foregroundStyle(sec); Spacer(); Text(v) }.font(.system(size: 11, weight: .medium, design: .monospaced))
+        HStack { Text(k).foregroundStyle(theme.secondary); Spacer(); Text(v) }.font(mono)
     }
 
     private func chip(_ title: String, _ m: ReaderMode, _ binding: Binding<ReaderMode>) -> some View {
         let on = binding.wrappedValue == m
         return Button { binding.wrappedValue = m; dismiss() } label: {
-            Text(title).font(.system(size: 12, weight: .medium, design: .monospaced))
+            Text(title).font(mono)
                 .padding(.horizontal, 12).padding(.vertical, 9)
-                .background(on ? card : Color.clear, in: RoundedRectangle(cornerRadius: 8))
-                .overlay(RoundedRectangle(cornerRadius: 8).strokeBorder(Color.white.opacity(0.12)))
-                .foregroundStyle(on ? ink : sec)
+                .background(on ? theme.ink : card, in: RoundedRectangle(cornerRadius: 8))
+                .foregroundStyle(on ? theme.palette.background : theme.ink)
         }
         .buttonStyle(.plain)
     }

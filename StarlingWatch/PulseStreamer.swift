@@ -26,7 +26,7 @@ final class PulseStreamer: NSObject, HKWorkoutSessionDelegate, HKLiveWorkoutBuil
             guard let self else { return }
             guard ok else { DispatchQueue.main.async { self.status = "Health access denied" }; return }
             let config = HKWorkoutConfiguration()
-            config.activityType = .other
+            config.activityType = .mindAndBody
             config.locationType = .indoor
             do {
                 let session = try HKWorkoutSession(healthStore: self.store, configuration: config)

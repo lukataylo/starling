@@ -24,7 +24,7 @@ struct Edition: Codable, Hashable, Identifiable {
         let symbol: String?
         let caption: String?
         var imagePrompt: String? = nil
-        enum Kind: String, Codable { case headline, dek, keyFacts, paragraph, pullQuote, imageCard, timeline, takeaway, readFullPrompt }
+        enum Kind: String, Codable { case headline, dek, keyFacts, paragraph, pullQuote, imageCard, stat, timeline, takeaway, readFullPrompt }
     }
 
     var headline: String { blocks.first { $0.type == .headline }?.text ?? "" }
@@ -57,7 +57,7 @@ enum EditionSchema {
                     "additionalProperties": false,
                     "required": ["type", "text", "items", "symbol", "caption", "imagePrompt"],
                     "properties": [
-                        "type": e(["headline", "dek", "keyFacts", "paragraph", "pullQuote", "imageCard", "timeline", "takeaway", "readFullPrompt"]),
+                        "type": e(["headline", "dek", "keyFacts", "paragraph", "pullQuote", "imageCard", "stat", "timeline", "takeaway", "readFullPrompt"]),
                         "text": ["type": ["string", "null"]],
                         "items": ["type": ["array", "null"], "items": ["type": "string"]],
                         "symbol": ["type": ["string", "null"]],

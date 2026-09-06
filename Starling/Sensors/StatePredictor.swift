@@ -7,7 +7,7 @@ enum StatePredictor {
         let late = s.timeOfDay == .night || s.timeOfDay == .earlyMorning
         let sensing = s.sensingEnabled && s.faceDetected
         if sensing && s.attention < 0.35 { return (.distracted, 0.6 + 0.3 * (0.35 - s.attention) / 0.35) }
-        if s.stress > 0.6 || (moving && s.stress > 0.4) { return (.tense, min(0.95, 0.5 + s.stress * 0.5)) }
+        if s.stress > 0.6 && !moving { return (.tense, min(0.95, 0.5 + s.stress * 0.5)) }
         if late && (s.posture == .lyingDown || s.posture == .reclined) && s.stress < 0.4 { return (.tired, 0.65) }
         if sensing && s.blinkRate > 22 && s.attention < 0.6 { return (.tired, 0.55) }
         if s.stress < 0.3 && (s.posture == .reclined || s.posture == .lyingDown) { return (.calm, 0.7) }
