@@ -347,7 +347,10 @@ struct StackHome: View {
                             let scale = isTop ? (touching ? 1.02 : 1) : 1 - (d - progress) * 0.05
                             let fanAngle = isTop ? 0 : fan[min(depth, fan.count - 1)] * Double(1 - progress)
                             StackCard(article: a[i], color: colours[i % colours.count], serif: i % colours.count != 0, height: cardH, parallax: isTop ? drag : .zero)
-                                .onTapGesture { if isTop { opened = a[i] } else { withAnimation(.snappy(duration: 0.35)) { index = i } } }
+                                .onTapGesture {
+                                    if isTop { UserDefaults.standard.set("cards", forKey: "readerFormat"); opened = a[i] }
+                                    else { withAnimation(.snappy(duration: 0.35)) { index = i } }
+                                }
                                 .frame(height: cardH)
                                 .scaleEffect(scale, anchor: .top)
                                 .rotation3DEffect(.degrees(isTop ? Double(-drag.height / 40) : 0), axis: (x: 1, y: 0, z: 0), perspective: 0.6)
