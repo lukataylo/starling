@@ -61,7 +61,8 @@ final class Generator {
     /// Featured stories: the live "adapt" resolves to the pre-generated edition that matches the mood, instantly and offline.
     func bundledAdapt(_ article: Article, state: UserState) -> Edition? {
         guard let set = bundledEditions[article.id] else { return nil }
-        let calmish = state.label == .calm || state.label == .tired || state.timeOfDay == .evening || state.timeOfDay == .night
+        // Daytime defaults to the focused (light) edition; the calm (dusk) edition is for evening, night, or a tired reader.
+        let calmish = state.label == .tired || state.timeOfDay == .evening || state.timeOfDay == .night
         return set[calmish ? "preset:calm" : "preset:focused"] ?? set.values.first
     }
 

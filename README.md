@@ -1,25 +1,39 @@
 # Starling
 
-A news reader whose pages are generated at runtime around the person reading them. Built in one day for the Architect x Corgi designathon (London, 6 September 2026). Brief: *"The interface is never finished"* — build something where the UI is generated, adapted or evolved at runtime, with a live demo, two distinct generations of the same UI, and the human in control.
+![Starling: one story, a UI built for you](docs/starling-onepager.png)
 
-This document describes what the app does and the generative ruleset it runs, for review.
+**One story. A UI built for you.** A native iOS news reader that generates the words and the layout of every story around the person reading it, right now: their attention, pulse, movement, time of day, and the sources they chose.
 
-## What the app does
+Built in one day at the Architect x Corgi designathon (London, 6 September 2026) for the brief *"The interface is never finished"*. Repo: this one. Team: Luka Dadiani, with a teammate on the ruleset, and Claude Code doing the typing.
 
-1. **The reader picks sources.** Eight built-in RSS feeds (BBC, Guardian, FT, Verge, NYT, Ars Technica, Hacker News, Wired). Live fetch with a bundled snapshot of 22 articles as an offline fallback.
-2. **The phone senses the reader.** Every signal is real hardware, none are simulated:
-   - **Attention** from ARKit face tracking: gaze ray intersected with the phone plane, head pose, blink rate.
-   - **Heart rate** from three sources in priority order: a live stream from the Starling Apple Watch app (a mind-and-body HealthKit workout session, one reading every few seconds over WatchConnectivity), HealthKit samples the Watch syncs on its own, and camera rPPG from the forehead in the same ARKit frames.
-   - **Context** from CoreMotion: walking / stationary / automotive, posture from the gravity vector (upright, reclined, lying down, flat on a table), plus time of day from the clock.
-3. **A state is predicted.** Stress is fused from heart rate over a personal baseline and blink rate; a label (calm, focused, tense, tired, distracted) is derived with a confidence. Low-confidence signals are marked as such and the model is told to ignore them.
-4. **Each article is rewritten and re-laid-out** by a language model that returns a strict JSON *Edition*: the text (density, tone, block structure) **and** the page design (typeface, type scale, palette, accent, margins, format). The app renders the Edition through a fixed design genome.
-5. **The human stays in control.** The page never swaps on its own. When the state changes and holds for a few seconds, the app quietly generates an alternative and offers it through one button at the bottom of the page. The reader can keep the current version, say "not how I feel" and correct the state, flip between cards and text without regenerating, switch to Calm / Focused / Full / Original views, and see exactly what the phone sensed. Every correction and "keep" is stored as feedback and included in later prompts, so the interface evolves per reader.
+## For the judges
 
-### Declared mocks and limits
+**What a static UI cannot do here.** The page you get for a story does not exist until you open it. The model returns an *Edition*: the rewritten text (density, tone, block structure) **and** the page design (layout archetype, typeface, palette, scale, format) chosen from a fixed genome, justified in one sentence you can read. Two readers, or one reader at two moments, get two different pages of the same story.
 
-- The **calm** and **focused** views for the 12 bundled example articles are pre-generated (with two hero images each, one per mood) so they are instant offline. Everything else is generated live.
-- Camera heart rate shows "calibrating" until confidence is above 0.4 rather than a guessed number. No HRV is shown; at 30fps it would be quantisation noise.
-- The API key is in the app for the demo. The production shape is the same call from an edge function.
+**How the brief maps**
+
+| Brief | Where it is in Starling |
+|---|---|
+| **Compose** — generated live, not picked from a template | Every Edition is a fresh JSON spec rendered through the genome (`Starling/Generation/Edition.swift`, `DesignGenome.swift`). Five short-edition archetypes and an article layout; cards one and two are generated posters with the type in the image. |
+| **Adapt** — per user, device, task, moment | ARKit gaze and blink → attention; Apple Watch or fingertip camera → pulse; CoreMotion → walking / posture; clock → time of day. All real hardware, fused into a state the prompt consumes. |
+| **Evolve** — mutate through feedback, survivors stay | Keep, Regenerate, "Not how I feel" and the layout rules you edit are stored and injected into every later prompt. Regenerate is told the previous edition and must not repeat it. |
+| **Systematise** — genome: fixed rules, variable expression | A closed vocabulary (palettes, typefaces, scales, blocks, layouts) the model must choose from; eleven rules of judgement; per-state layout rules editable in Settings. Anything outside the vocabulary is rejected by the schema. |
+| **Demo live** | Everything runs on the phone in your hand. Twenty sample stories ship with pre-generated editions and 80+ posters so the first opens are instant and offline; every other story generates live. |
+| **Show two generations** | Tap the pill → CALM / FOCUSED, or press Regenerate, or open Compare from the ellipsis. |
+| **Human in control** | The page never swaps on its own. Adaptation is proposed; you switch, keep, correct, regenerate, or read the original. |
+
+**Declared mocks and limits.** The twenty sample stories' editions and posters are pre-generated (same pipeline, run offline) so the demo does not depend on cafe wifi; nothing else is canned. Camera pulse shows "calibrating" until it is confident rather than a made-up number. The Apple Watch companion streams live heart rate when paired; the fingertip measurement is the phone-only path. The API keys are in the app for the demo; the production shape is the same calls from an edge function.
+
+**Two-minute judge run-through**
+
+1. Open a story from the tile home. You get a short edition with a stat callout and headed fact boxes, in the skin the model chose for your state.
+2. Tap the bottom-left button for cards: generated posters first, then one idea per card.
+3. Tap the state pill (top) → the raw telemetry, then CALM or FOCUSED to see the same story regenerated for another mood.
+4. Ellipsis → Regenerate: a visibly different arrangement of the same system.
+5. Tap the phone icon: Starling calls you, greets you by name, tells you the story in two sentences and hands over. Interrupt it.
+6. Settings → Layout rules: type an instruction ("when I'm tense, only cards") and reopen a story.
+
+**Novelty · Works · Shippable.** Structure, content and design exist only because they were generated for this person in this moment. A judge can complete every step above uncoached. The pipeline is a schema-constrained model call plus an image call, both cacheable per (story, state); the sensors are standard iOS APIs; an overnight pre-generation task already exists. Cost and latency are the honest open questions and they are on the ledger below.
 
 ## The generative ruleset
 
