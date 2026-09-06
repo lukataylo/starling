@@ -21,7 +21,6 @@ struct ReaderView: View {
     @State private var pendingSince: Date?
     @State private var formatOverride: EditionFormat?
     @State private var cardPage = 0
-    @State private var dockExpanded = false
     @State private var showCall = false
     private let stableAfter: TimeInterval = 5
 
@@ -74,6 +73,9 @@ struct ReaderView: View {
                     Button { keep() } label: { Label(isKept ? "Kept" : "Keep", systemImage: isKept ? "bookmark.fill" : "bookmark") }
                     Button { Task { await regenerate() } } label: { Label(isRegenerating ? "Regenerating…" : "Regenerate", systemImage: "arrow.clockwise") }
                     Button { showSignals = true } label: { Label("Not how I feel", systemImage: "face.smiling") }
+                    Divider()
+                    Button { mode = .longform } label: { Label("Adapted (full)", systemImage: "text.book.closed") }
+                    Button { mode = .original } label: { Label("Original article", systemImage: "doc.plaintext") }
                     Divider()
                     Button { showCompare = true } label: { Label("Compare generations", systemImage: "rectangle.split.2x1") }
                     Button { showWhy = true } label: { Label("Why this version", systemImage: "info.circle") }
@@ -239,39 +241,14 @@ struct ReaderView: View {
     }
 
     @ViewBuilder private var dock: some View {
-        VStack(spacing: 8) {
-            HStack(alignment: .bottom) {
-                ModeFab(symbol: effectiveFormat == .cards ? "text.alignleft" : "rectangle.on.rectangle",
-                        label: effectiveFormat == .cards ? "Short" : "Cards",
-                        theme: theme) { flipFormat() }
-                Spacer()
-                Button {
-                    withAnimation(.snappy(duration: 0.25)) { dockExpanded.toggle() }
-                } label: {
-                    HStack(spacing: 6) {
-                        if !dockExpanded { Text(modeTitle).font(Identity.grotesk(11, .semibold)) }
-                        Image(systemName: dockExpanded ? "chevron.down" : "chevron.up").font(.system(size: 11, weight: .bold))
-                    }
-                    .padding(.horizontal, 12).padding(.vertical, 6)
-                    .background(theme.surface, in: Capsule())
-                    .overlay(Capsule().strokeBorder(theme.ink.opacity(0.2)))
-                    .foregroundStyle(theme.ink)
-                }
-                .buttonStyle(.plain)
-            }
-            if dockExpanded {
-            HStack(spacing: 4) {
-                segment("Cards", on: effectiveFormat == .cards && mode != .longform && mode != .original) { if mode == .longform || mode == .original { mode = .adapted }; formatOverride = .cards }
-                segment("Short", on: effectiveFormat == .text && mode != .longform && mode != .original) { if mode == .longform || mode == .original { mode = .adapted }; formatOverride = .text }
-                segment("Adapted", on: mode == .longform) { mode = .longform }
-                segment("Original", on: mode == .original) { mode = .original }
-            }
-            .padding(4)
-            .background(theme.surface, in: RoundedRectangle(cornerRadius: 8))
-            }
+        HStack {
+            ModeFab(symbol: effectiveFormat == .cards ? "text.alignleft" : "rectangle.on.rectangle",
+                    label: effectiveFormat == .cards ? "Short" : "Cards",
+                    theme: theme) { flipFormat() }
+            Spacer()
         }
-        .padding(.horizontal, 16).padding(.top, 4).padding(.bottom, 6)
-        .background(dockExpanded ? theme.palette.background : Color.clear)
+        .padding(.horizontal, 16).padding(.top, 6).padding(.bottom, 4)
+        .background(theme.palette.background)
     }
 
     private var modeTitle: String {
