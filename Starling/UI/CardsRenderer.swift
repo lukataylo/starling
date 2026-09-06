@@ -146,6 +146,10 @@ struct CardsRenderer: View {
                     .font(theme.font(38, weight: theme.heavy)).tracking(-1).lineSpacing(0)
                     .fixedSize(horizontal: false, vertical: true)
                 Spacer()
+                if UserDefaults.standard.bool(forKey: "devMode"), let p = posters.first ?? nil {
+                    Text("mood \(mood) · poster_\(PosterPrompts.key(p, mood: mood)) · bundled \(hasBundledPosters ? "yes" : "no") · \(UIImage(named: "poster_" + PosterPrompts.key(p, mood: mood)) == nil ? "not in bundle" : "in bundle")")
+                        .font(.system(size: 9, design: .monospaced)).foregroundStyle(Identity.ink.opacity(0.6))
+                }
                 HStack(spacing: 8) {
                     if !hasBundledPosters, posters.first != nil, !imageGen.isFailed(prompt: posters[0]!, mood: mood) {
                         ProgressView().tint(theme.ink).scaleEffect(0.8)
