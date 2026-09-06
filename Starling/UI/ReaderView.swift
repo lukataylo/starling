@@ -15,6 +15,7 @@ struct ReaderView: View {
     @State private var pendingState: UserState?
     @State private var pendingSince: Date?
     @State private var formatOverride: EditionFormat?
+    @State private var trayExpanded = true
     private let stableAfter: TimeInterval = 5
 
     enum Mode { case adapted, longform, original }
@@ -27,11 +28,12 @@ struct ReaderView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
-                header
+                modePicker
                 content
             }
         }
         .background(pageBackground.ignoresSafeArea())
+        .safeAreaInset(edge: .bottom) { tray }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .principal) { StateChip(compact: true) }
@@ -88,9 +90,37 @@ struct ReaderView: View {
 
     private var effectiveFormat: EditionFormat { formatOverride ?? currentEdition?.format ?? .text }
 
+    private var modePicker: some View {
+        Picker("View", selection: $mode) {
+            Text("Adapted").tag(Mode.adapted)
+            Text("Full").tag(Mode.longform)
+            Text("Original").tag(Mode.original)
+        }
+        .pickerStyle(.segmented)
+        .padding(.horizontal, 16).padding(.top, 6)
+        .onChange(of: mode) { _, m in
+            if m == .longform, longform == nil { Task { await readFull() } }
+        }
+    }
+
+    @ViewBuilder private var tray: some View {
+        VStack(spacing: 8) {
+            if mode == .adapted, let p = pendingState, p.bucket != pageState.bucket {
+                StateChangeProposal(from: pageState, to: p,
+                                    ready: generator.edition(for: article, intent: .adapt, state: p) != nil,
+                                    onSwitch: { switchTo(p) },
+                                    onDismiss: { pendingState = nil; pendingSince = nil })
+            }
+            header
+        }
+        .padding(.horizontal, 12).padding(.bottom, 6)
+        .background(.clear)
+    }
+
     @ViewBuilder private var header: some View {
         if mode == .adapted, let e = adapted {
             ProposalBanner(edition: e,
+                           expanded: $trayExpanded,
                            format: Binding(get: { effectiveFormat }, set: { formatOverride = $0 }),
                            onReadFull: { Task { await readFull() } },
                            onKeep: {
@@ -99,22 +129,6 @@ struct ReaderView: View {
                            },
                            onNotMe: { showStatePicker = true },
                            onWhy: { showWhy = true })
-            .padding(.horizontal, 12).padding(.top, 8)
-            if let p = pendingState, let since = pendingSince, Date().timeIntervalSince(since) >= 0, p.bucket != pageState.bucket {
-                StateChangeProposal(from: pageState, to: p,
-                                    ready: generator.edition(for: article, intent: .adapt, state: p) != nil,
-                                    onSwitch: { switchTo(p) },
-                                    onDismiss: { pendingState = nil; pendingSince = nil })
-                .padding(.horizontal, 12)
-            }
-        } else if mode != .adapted {
-            HStack {
-                Label(mode == .longform ? "Full story, designed for now" : "Original article", systemImage: mode == .longform ? "text.book.closed" : "doc.plaintext")
-                    .font(.caption.weight(.semibold))
-                Spacer()
-                Button("Back to adapted") { mode = .adapted }.font(.caption)
-            }
-            .padding(.horizontal, 16).padding(.top, 8)
         }
     }
 

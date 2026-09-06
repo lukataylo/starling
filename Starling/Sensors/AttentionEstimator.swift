@@ -26,6 +26,7 @@ final class AttentionEstimator {
     private var startTime: TimeInterval?
     private var lastSeen: TimeInterval = 0
     private(set) var recentHits: [SIMD2<Float>] = []   // for calibration
+    private var offScreenSince: TimeInterval?
 
     func process(anchor: ARFaceAnchor?, camera: ARCamera, timestamp: TimeInterval) -> AttentionSample? {
         if startTime == nil { startTime = timestamp }
@@ -71,6 +72,12 @@ final class AttentionEstimator {
                 gazeOK = ang < (25 * .pi / 180)
             }
             onScreen = gazeOK
+            // Self-correction: if a calibrated centre says "off screen" for 20s while the face is
+            // tracked and facing the phone, the calibration was wrong. Drop it and use the angular test.
+            if gazeCenter != nil && facing && !gazeOK {
+                if offScreenSince == nil { offScreenSince = timestamp }
+                if timestamp - (offScreenSince ?? timestamp) > 20 { gazeCenter = nil; recentHits.removeAll(); offScreenSince = nil }
+            } else { offScreenSince = nil }
 
             // Blinks
             let bl = (anchor.blendShapes[.eyeBlinkLeft]?.floatValue ?? 0 + (anchor.blendShapes[.eyeBlinkRight]?.floatValue ?? 0)) / 2
@@ -99,12 +106,12 @@ final class AttentionEstimator {
         }
 
         bits.append(bit)
-        if bits.count > 60 { bits.removeFirst(bits.count - 60) }
+        if bits.count > 30 { bits.removeFirst(bits.count - 30) }
         blinkTimes.removeAll { timestamp - $0 > 60 }
 
         guard frameCount % 15 == 0 else { return nil }
         let raw = Double(bits.filter { $0 }.count) / Double(max(1, bits.count))
-        attention = 0.7 * attention + 0.3 * raw
+        attention = 0.5 * attention + 0.5 * raw
         let elapsed = max(15, timestamp - (startTime ?? timestamp))
         let blinkRate = Double(blinkTimes.count) * (60 / min(60, elapsed))
         let tracked = anchor?.isTracked == true || timestamp - lastSeen <= 1.5

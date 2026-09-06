@@ -19,7 +19,9 @@ struct StateChip: View {
                         Label("calibrating", systemImage: "heart")
                     }
                     if s.sensingEnabled && hub.cameraSupported {
-                        Label("\(Int(s.attention * 100))%", systemImage: s.faceDetected ? "eye" : "eye.slash")
+                        Image(systemName: !s.faceDetected ? "eye.slash" : (s.attention >= 0.5 ? "eye.fill" : "eye"))
+                            .foregroundStyle(!s.faceDetected ? Color.secondary : (s.attention >= 0.5 ? Color.primary : Color.orange))
+                            .accessibilityLabel(s.faceDetected ? "eyes on screen \(Int(s.attention * 100))%" : "no face")
                     }
                     Label(motionText(s), systemImage: motionSymbol(s))
                 }
