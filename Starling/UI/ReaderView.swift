@@ -36,7 +36,7 @@ struct ReaderView: View {
         }
     }
     private var theme: Theme {
-        if let e = currentEdition, e.resolvedLayout == .zine { return Theme(paletteName: .night, accentName: .sage, scale: .large, typeface: .sans) }
+        if let e = currentEdition, e.resolvedLayout == .zine, mode != .longform { return Theme(paletteName: .night, accentName: .sage, scale: .large, typeface: .sans) }
         return currentEdition.map(Theme.forEdition) ?? hub.theme
     }
     private var effectiveFormat: EditionFormat {
@@ -140,19 +140,14 @@ struct ReaderView: View {
             } else {
                 ScrollView {
                     VStack(spacing: 0) {
-                        switch e.resolvedLayout {
-                        case .quick:
-                            QuickEditionView(edition: e, article: article, hero: heroImage,
+                        if mode == .longform || (e.resolvedLayout == .article && mode != .adapted) {
+                            articleSwitcher
+                            ArticleView(edition: e, article: article, hero: heroImage)
+                        } else {
+                            ShortEditionView(edition: e, article: article, hero: heroImage,
                                              pendingText: pendingChange != nil ? "New version available" : nil,
                                              onPending: { showSignals = true },
                                              onReadFull: { mode = .longform })
-                        case .article:
-                            articleSwitcher
-                            ArticleView(edition: e, article: article, hero: heroImage)
-                        case .poster: PosterLayout(edition: e, article: article)
-                        case .dossier: DossierLayout(edition: e, article: article)
-                        case .split: SplitLayout(edition: e, article: article, hero: heroImage)
-                        case .zine: ZineLayout(edition: e, article: article)
                         }
                     }
                     .id(e.id)

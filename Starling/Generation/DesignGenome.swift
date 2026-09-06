@@ -94,14 +94,14 @@ enum DesignGenome {
     - palette: dawn (warm cream + amber), day (white + ink), focus (high contrast), dusk (deep warm greys), night (near-black, dim warm text), calm (sage and sand, low contrast)
     - accent: amber, coral, sage, sky, slate, plum
     - margins: tight, normal, wide
-    - layout, six visually distinct page archetypes:
-      quick — compressed briefing: heavy headline, ruled two-column grid of keyFacts, one big stat, short paragraphs.
-      article — calm and literary: serif headline, standfirst, image with caption, pull quote with a thin rule, section headings, long body.
-      poster — one screen, almost no body: the stat or posterHeadline set enormous on a solid accent field, one line under it, then three one-line keyFacts. For glance density.
-      dossier — numbered sections: each keyFacts item and paragraph becomes a section with a big numeral in the margin and a mono label; a timeline block fits well here.
-      split — two-tone page: the top half is a solid colour block with the headline reversed out of it and the stat, the bottom half is the facts as a ruled list and one paragraph.
-      zine — dark page, uppercase condensed headline in the accent colour, facts as an oversized bulleted list, a pull quote in italics, loud and fast.
-      Pick the archetype that fits the state and the story; when asked to regenerate, never reuse the previous archetype.
+    - layout. Short editions (glance, brief, standard) always use the boxed briefing system — ruled fact boxes with uppercase headings and a bold number callout — in one of five arrangements:
+      quick — hero strip, headline, serif standfirst, 2×2 ruled grid, stat row under it.
+      poster — the stat first as a huge solid callout block, then the headline, then the grid.
+      dossier — numbered boxes (01–04) with big numerals, stat as a circle badge.
+      split — a solid colour header block with the headline reversed out and the number inside it, thick-ruled grid below.
+      zine — dark ground, acid rules and headings, the stat enormous in acid.
+      Longform uses layout article — calm and literary: serif headline, standfirst, image with caption, pull quote, section headings, long body.
+      Every short edition MUST include a stat block (a real number from the story: a price, a percentage, a count, a date, a duration) and 4 keyFacts written as "HEADING — text". Pick the arrangement that fits the state; when asked to regenerate, never reuse the previous arrangement.
     - format: text (one flowing page) or cards (one idea per swipeable card, each block becomes a card; suggest cards when the reader is walking, standing, or on transport, and text when they are sitting or lying down — the reader can flip this)
     - blocks: headline, dek, keyFacts (items, max 4; each item is "HEADING — text": a 1–3 word uppercase heading such as THE IDEA, WHY NOW, WHAT CHANGES, THE CATCH, then an em dash, then one or two short sentences), paragraph, pullQuote, imageCard (symbol = an SF Symbol name, caption, imagePrompt), stat (text = a big figure, caption = one short line), timeline (items, each "time — event"), takeaway, readFullPrompt
     - imageCard: use one when a picture or a simple diagram explains the story better than words — a map, a before/after, a simple flow, a scene. Put a concrete one-sentence description in imagePrompt (what to draw, which elements, no more than three labels). In cards format include one imageCard as its own card. At most two per edition. Set imagePrompt to null only when the article's own photo is enough.
