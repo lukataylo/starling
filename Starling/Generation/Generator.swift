@@ -38,7 +38,7 @@ final class Generator {
 
     /// Warm the cache for the first few visible stories so tapping one is instant.
     func prefetch(_ articles: [Article], state: UserState, sources: [FeedSource], feeds: FeedStore) {
-        guard ClaudeClient.apiKey != nil else { return }
+        guard LLMClient.apiKey != nil else { return }
         for a in articles.prefix(3) {
             let k = key(a, .adapt, state)
             if editions[k] != nil || inflight[k] != nil { continue }
@@ -67,7 +67,7 @@ final class Generator {
         let task = Task<Edition?, Never> {
             let start = Date()
             do {
-                let (edition, usage) = try await ClaudeClient.generate(userMessage: prompt)
+                let (edition, usage) = try await LLMClient.generate(userMessage: prompt)
                 self.lastLatency = Date().timeIntervalSince(start)
                 self.lastUsage = usage.map { "\($0.key)=\($0.value)" }.sorted().joined(separator: " ")
                 self.editions[k] = edition

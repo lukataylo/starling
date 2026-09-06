@@ -13,6 +13,7 @@ struct Edition: Codable, Hashable, Identifiable {
     let palette: PaletteName
     let accent: AccentName
     let margins: Margins
+    let format: EditionFormat
     let estimatedReadSeconds: Int
     let blocks: [Block]
 
@@ -33,7 +34,7 @@ enum EditionSchema {
     static let json: [String: Any] = [
         "type": "object",
         "additionalProperties": false,
-        "required": ["stateSummary", "rationale", "density", "tone", "pace", "typeScale", "typeface", "headlineWeight", "palette", "accent", "margins", "estimatedReadSeconds", "blocks"],
+        "required": ["stateSummary", "rationale", "density", "tone", "pace", "typeScale", "typeface", "headlineWeight", "palette", "accent", "margins", "format", "estimatedReadSeconds", "blocks"],
         "properties": [
             "stateSummary": ["type": "string"],
             "rationale": ["type": "string"],
@@ -46,6 +47,7 @@ enum EditionSchema {
             "palette": e(PaletteName.allCases.map(\.rawValue)),
             "accent": e(AccentName.allCases.map(\.rawValue)),
             "margins": e(Margins.allCases.map(\.rawValue)),
+            "format": e(EditionFormat.allCases.map(\.rawValue)),
             "estimatedReadSeconds": ["type": "integer"],
             "blocks": [
                 "type": "array",

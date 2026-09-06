@@ -14,7 +14,7 @@ struct StateChip: View {
                 Divider().frame(height: 12)
                 Group {
                     if let bpm = s.bpm, s.bpmConfidence >= 0.4 {
-                        Label("\(Int(bpm))", systemImage: s.pulseSource == .watch ? "applewatch" : "camera")
+                        Label(s.pulseSource == .watch && hub.watchIsLive ? "\(Int(bpm)) live" : "\(Int(bpm))", systemImage: s.pulseSource == .watch ? "applewatch" : "camera")
                     } else if s.sensingEnabled && hub.cameraSupported {
                         Label("calibrating", systemImage: "heart")
                     }

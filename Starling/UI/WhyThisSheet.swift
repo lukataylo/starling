@@ -59,7 +59,7 @@ struct WhyThisSheet: View {
                 }
                 if let l = generator.lastLatency {
                     Section("Generation") {
-                        LabeledContent("Model", value: ClaudeClient.model)
+                        LabeledContent("Model", value: LLMClient.model)
                         LabeledContent("Last latency", value: String(format: "%.1fs", l))
                         Text(generator.lastUsage).font(.caption2).foregroundStyle(.secondary)
                     }

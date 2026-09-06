@@ -20,28 +20,20 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
-	<key>NSCameraUsageDescription</key>
-	<string>Starling uses the front camera to estimate your attention and pulse so it can adapt the article to you. Camera frames never leave the device.</string>
 	<key>NSHealthShareUsageDescription</key>
-	<string>Starling reads your heart rate from Apple Watch to sense how calm or tense you are while reading.</string>
-	<key>NSMotionUsageDescription</key>
-	<string>Starling uses motion to know whether you're sitting, walking or lying down.</string>
-	<key>OPENAI_API_KEY</key>
-	<string>$(OPENAI_API_KEY)</string>
-	<key>UILaunchScreen</key>
-	<dict/>
+	<string>Starling reads your heart rate during a session so the article on your iPhone can adapt to how you feel.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>Starling runs a workout session to sample heart rate continuously while you read.</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
-	<key>UIUserInterfaceStyle</key>
-	<string>Automatic</string>
+	<key>WKApplication</key>
+	<true/>
+	<key>WKCompanionAppBundleIdentifier</key>
+	<string>com.lukadadiani.starling</string>
+	<key>WKRunsIndependentlyOfCompanionApp</key>
+	<false/>
 </dict>
 </plist>

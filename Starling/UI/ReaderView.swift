@@ -10,13 +10,19 @@ struct ReaderView: View {
     @State private var showWhy = false
     @State private var showCompare = false
     @State private var showStatePicker = false
-    @State private var pinnedBucket: String?   // "Keep this" freezes the edition while reading
+    /// The state the page on screen was generated for. The page never swaps on its own.
+    @State private var shownState: UserState?
+    @State private var pendingState: UserState?
+    @State private var pendingSince: Date?
+    @State private var formatOverride: EditionFormat?
+    private let stableAfter: TimeInterval = 5
 
     enum Mode { case adapted, longform, original }
 
-    private var state: UserState { hub.state }
-    private var adapted: Edition? { generator.edition(for: article, intent: .adapt, state: state) }
-    private var longform: Edition? { generator.edition(for: article, intent: .longform, state: state) }
+    private var liveState: UserState { hub.state }
+    private var pageState: UserState { shownState ?? liveState }
+    private var adapted: Edition? { generator.edition(for: article, intent: .adapt, state: pageState) }
+    private var longform: Edition? { generator.edition(for: article, intent: .longform, state: pageState) }
 
     var body: some View {
         ScrollView {
@@ -33,7 +39,7 @@ struct ReaderView: View {
                 Menu {
                     Button { showCompare = true } label: { Label("Compare generations", systemImage: "rectangle.split.2x1") }
                     Button { mode = .original } label: { Label("Original article", systemImage: "doc.plaintext") }
-                    Button { Task { await regenerate() } } label: { Label("Regenerate now", systemImage: "arrow.clockwise") }
+                    Button { Task { await regenerate() } } label: { Label("Regenerate for now", systemImage: "arrow.clockwise") }
                     Link(destination: article.link) { Label("Open in Safari", systemImage: "safari") }
                 } label: { Image(systemName: "ellipsis.circle") }
             }
@@ -49,12 +55,21 @@ struct ReaderView: View {
         .task {
             article = await feeds.loadBody(for: article)
             bodyLoaded = true
-            await generator.generate(article: article, intent: .adapt, state: state, sources: feeds.enabledSources)
+            shownState = liveState
+            await generator.generate(article: article, intent: .adapt, state: liveState, sources: feeds.enabledSources)
         }
-        .onChange(of: state.bucket) { _, _ in
-            // Live state changed: propose a new generation unless the reader pinned this one.
-            guard bodyLoaded, mode == .adapted, pinnedBucket == nil else { return }
-            Task { await generator.generate(article: article, intent: .adapt, state: state, sources: feeds.enabledSources) }
+        .onChange(of: liveState.bucket) { _, _ in
+            // Live state moved. Don't swap the page: wait until it is stable, prefetch, then propose.
+            guard bodyLoaded, mode == .adapted, let shown = shownState else { return }
+            if liveState.bucket == shown.bucket { pendingState = nil; pendingSince = nil; return }
+            pendingState = liveState
+            pendingSince = .now
+            let candidate = liveState
+            Task {
+                try? await Task.sleep(for: .seconds(stableAfter))
+                guard pendingState?.bucket == candidate.bucket else { return }
+                await generator.generate(article: article, intent: .adapt, state: candidate, sources: feeds.enabledSources)
+            }
         }
     }
 
@@ -71,14 +86,27 @@ struct ReaderView: View {
         return Color(.systemBackground)
     }
 
+    private var effectiveFormat: EditionFormat { formatOverride ?? currentEdition?.format ?? .text }
+
     @ViewBuilder private var header: some View {
         if mode == .adapted, let e = adapted {
             ProposalBanner(edition: e,
+                           format: Binding(get: { effectiveFormat }, set: { formatOverride = $0 }),
                            onReadFull: { Task { await readFull() } },
-                           onKeep: { pinnedBucket = state.bucket; generator.addFeedback("At \(state.timeOfDay.label) while \(state.motion.rawValue) I liked: \(e.density.rawValue), \(e.palette.rawValue), \(e.typeface.rawValue)") },
+                           onKeep: {
+                               pendingState = nil
+                               generator.addFeedback("At \(pageState.timeOfDay.label) while \(pageState.motion.rawValue) I kept: \(e.density.rawValue), \(e.palette.rawValue), \(e.typeface.rawValue), \(effectiveFormat.rawValue)")
+                           },
                            onNotMe: { showStatePicker = true },
                            onWhy: { showWhy = true })
             .padding(.horizontal, 12).padding(.top, 8)
+            if let p = pendingState, let since = pendingSince, Date().timeIntervalSince(since) >= 0, p.bucket != pageState.bucket {
+                StateChangeProposal(from: pageState, to: p,
+                                    ready: generator.edition(for: article, intent: .adapt, state: p) != nil,
+                                    onSwitch: { switchTo(p) },
+                                    onDismiss: { pendingState = nil; pendingSince = nil })
+                .padding(.horizontal, 12)
+            }
         } else if mode != .adapted {
             HStack {
                 Label(mode == .longform ? "Full story, designed for now" : "Original article", systemImage: mode == .longform ? "text.book.closed" : "doc.plaintext")
@@ -94,8 +122,11 @@ struct ReaderView: View {
         switch mode {
         case .adapted:
             if let e = adapted {
-                EditionRenderer(edition: e, onReadFull: { Task { await readFull() } })
-                    .transition(.opacity)
+                if effectiveFormat == .cards {
+                    CardsRenderer(edition: e, onReadFull: { Task { await readFull() } }).id(e.id)
+                } else {
+                    EditionRenderer(edition: e, onReadFull: { Task { await readFull() } }).id(e.id)
+                }
             } else {
                 generatingOrError(intent: .adapt)
             }
@@ -111,7 +142,7 @@ struct ReaderView: View {
     }
 
     @ViewBuilder private func generatingOrError(intent: GenerationIntent) -> some View {
-        let status = generator.status(for: article, intent: intent, state: state)
+        let status = generator.status(for: article, intent: intent, state: pageState)
         VStack(alignment: .leading, spacing: 12) {
             if case .failed(let why) = status {
                 Label("Couldn't adapt this story", systemImage: "exclamationmark.triangle").font(.headline)
@@ -125,7 +156,7 @@ struct ReaderView: View {
             } else {
                 HStack(spacing: 10) {
                     ProgressView()
-                    Text(bodyLoaded ? "Writing this for \(state.timeOfDay.label), \(state.label.rawValue)…" : "Fetching the story…")
+                    Text(bodyLoaded ? "Writing this for \(pageState.timeOfDay.label), \(pageState.label.rawValue)…" : "Fetching the story…")
                         .font(.subheadline).foregroundStyle(.secondary)
                 }
                 .padding(.top, 8)
@@ -149,22 +180,72 @@ struct ReaderView: View {
         .padding()
     }
 
+    private func switchTo(_ s: UserState) {
+        withAnimation(.easeInOut(duration: 0.35)) {
+            shownState = s
+            pendingState = nil
+            pendingSince = nil
+            formatOverride = nil
+        }
+        Task { await generator.generate(article: article, intent: .adapt, state: s, sources: feeds.enabledSources) }
+    }
+
     private func readFull() async {
         mode = .longform
-        await generator.generate(article: article, intent: .longform, state: state, sources: feeds.enabledSources)
+        await generator.generate(article: article, intent: .longform, state: pageState, sources: feeds.enabledSources)
     }
 
     private func regenerate() async {
-        pinnedBucket = nil
         let intent: GenerationIntent = mode == .longform ? .longform : .adapt
         if mode == .original { mode = .adapted }
-        await generator.generate(article: article, intent: intent, state: state, sources: feeds.enabledSources, force: true)
+        shownState = liveState
+        pendingState = nil
+        await generator.generate(article: article, intent: intent, state: liveState, sources: feeds.enabledSources, force: true)
     }
 
     private func correctState(to label: ReaderLabel) {
         hub.labelOverride = label
-        generator.addFeedback("When the app guessed '\(state.label.rawValue)' at \(state.timeOfDay.label) I actually felt '\(label.rawValue)'.")
-        pinnedBucket = nil
-        Task { await generator.generate(article: article, intent: .adapt, state: hub.state, sources: feeds.enabledSources, force: true) }
+        generator.addFeedback("When the app guessed '\(pageState.label.rawValue)' at \(pageState.timeOfDay.label) I actually felt '\(label.rawValue)'.")
+        Task {
+            let s = hub.state
+            shownState = s
+            pendingState = nil
+            await generator.generate(article: article, intent: .adapt, state: s, sources: feeds.enabledSources, force: true)
+        }
+    }
+}
+
+/// "Your state changed" — a proposal, never an automatic swap.
+struct StateChangeProposal: View {
+    let from: UserState
+    let to: UserState
+    let ready: Bool
+    let onSwitch: () -> Void
+    let onDismiss: () -> Void
+
+    var body: some View {
+        HStack(spacing: 10) {
+            Image(systemName: to.label.symbol)
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Now \(describe(to))").font(.caption.weight(.semibold))
+                Text(ready ? "A version for this moment is ready." : "Preparing a version for this moment…").font(.caption2).foregroundStyle(.secondary)
+            }
+            Spacer()
+            Button("Switch", action: onSwitch).disabled(!ready)
+            Button { onDismiss() } label: { Image(systemName: "xmark") }
+        }
+        .font(.caption)
+        .buttonStyle(.bordered).buttonBorderShape(.capsule).controlSize(.mini)
+        .padding(10)
+        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 12))
+    }
+
+    private func describe(_ s: UserState) -> String {
+        var parts: [String] = []
+        if s.motion != from.motion { parts.append(s.motion == .stationary ? "still" : s.motion.rawValue) }
+        if s.posture != from.posture && s.motion == .stationary { parts.append(s.posture.rawValue) }
+        if s.label != from.label { parts.append(s.label.rawValue) }
+        if s.timeOfDay != from.timeOfDay { parts.append(s.timeOfDay.label) }
+        return parts.isEmpty ? "a different moment" : parts.joined(separator: ", ")
     }
 }

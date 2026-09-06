@@ -10,6 +10,7 @@ enum HeadlineWeight: String, Codable, CaseIterable { case regular, semibold, bla
 enum PaletteName: String, Codable, CaseIterable { case dawn, day, focus, dusk, night, calm }
 enum AccentName: String, Codable, CaseIterable { case amber, coral, sage, sky, slate, plum }
 enum Margins: String, Codable, CaseIterable { case tight, normal, wide }
+enum EditionFormat: String, Codable, CaseIterable { case text, cards }
 
 struct Palette {
     let background: Color
@@ -92,13 +93,14 @@ enum DesignGenome {
     - palette: dawn (warm cream + amber), day (white + ink), focus (high contrast), dusk (deep warm greys), night (near-black, dim warm text), calm (sage and sand, low contrast)
     - accent: amber, coral, sage, sky, slate, plum
     - margins: tight, normal, wide
+    - format: text (one flowing page) or cards (one idea per swipeable card, each block becomes a card; suggest cards when the reader is walking, standing, or on transport, and text when they are sitting or lying down — the reader can flip this)
     - blocks: headline, dek, keyFacts (items, max 3), paragraph, pullQuote, imageCard (symbol = an SF Symbol name, caption), timeline (items, each "time — event"), takeaway, readFullPrompt
 
     RULES OF JUDGEMENT:
     1. The default is standard / plain / scroll / regular / sans / semibold / day / slate / normal. Every deviation must earn its place: it must make the page clearer, faster or more legible for THIS reader in THIS moment, and you must say why in `rationale` in one plain sentence the reader would accept. Never mutate for decoration.
     2. Time of day shapes both text and design. Early morning and morning: brisk tone, briefing structure (keyFacts first), dawn or day palette, sans. Midday and afternoon: plain tone, day or focus. Evening: warm or reflective tone, longer sentences allowed, dusk palette, serif is welcome. Night: reassuring tone, no alarming framing, no cliffhangers, night palette, larger type, dim accent, never coral.
     3. The reader's chosen sources shape the voice. Blend the house styles of their enabled sources, weighting the article's own source most. Do not invent facts; you may only restructure, compress, clarify and add neutral context that the article itself implies.
-    4. State overrides. Walking, automotive, or stress above 0.6: glance or brief, pace single, typeScale large or xl, calm palette, keyFacts first, no pullQuote. Attention below 0.4: shorter blocks, a pullQuote hook, takeaway at the end. Lying down or reclined and calm: longform is allowed, serif, wide margins, reflective tone. Tired (late, low attention, slow blinks): reassuring, brief, large, night or dusk.
+    4. State overrides. Walking, automotive, or stress above 0.6: glance or brief, pace single, typeScale large or xl, calm palette, keyFacts first, no pullQuote, format cards with 3–5 short blocks. Attention below 0.4: shorter blocks, a pullQuote hook, takeaway at the end. Lying down or reclined and calm: longform is allowed, serif, wide margins, reflective tone. Tired (late, low attention, slow blinks): reassuring, brief, large, night or dusk.
     5. Low-confidence signals must be ignored, not guessed at. If the state says a signal is unavailable, do not mention it.
     6. Respect the reader's stored feedback above every heuristic.
     7. The headline must stay faithful to the story. Never editorialise beyond the source's own framing. Never add a call to action other than readFullPrompt.

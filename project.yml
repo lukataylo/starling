@@ -25,6 +25,8 @@ targets:
       - path: Starling
         excludes:
           - "**/.DS_Store"
+    dependencies:
+      - target: StarlingWatch
     entitlements:
       path: Starling/Starling.entitlements
       properties:
@@ -43,8 +45,36 @@ targets:
         NSHealthShareUsageDescription: "Starling reads your heart rate from Apple Watch to sense how calm or tense you are while reading."
         NSAppTransportSecurity:
           NSAllowsArbitraryLoads: true
-        ANTHROPIC_API_KEY: "$(ANTHROPIC_API_KEY)"
+        OPENAI_API_KEY: "$(OPENAI_API_KEY)"
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.lukadadiani.starling
         INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
+  StarlingWatch:
+    type: application
+    platform: watchOS
+    deploymentTarget: "10.0"
+    sources:
+      - path: StarlingWatch
+    entitlements:
+      path: StarlingWatch/StarlingWatch.entitlements
+      properties:
+        com.apple.developer.healthkit: true
+        com.apple.developer.healthkit.access: []
+    info:
+      path: StarlingWatch/Info.plist
+      properties:
+        CFBundleDisplayName: Starling
+        WKApplication: true
+        WKCompanionAppBundleIdentifier: com.lukadadiani.starling
+        WKRunsIndependentlyOfCompanionApp: false
+        NSHealthShareUsageDescription: "Starling reads your heart rate during a session so the article on your iPhone can adapt to how you feel."
+        NSHealthUpdateUsageDescription: "Starling runs a workout session to sample heart rate continuously while you read."
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait, UIInterfaceOrientationPortraitUpsideDown]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.lukadadiani.starling.watchkitapp
+        SWIFT_VERSION: "5.0"
+        SWIFT_STRICT_CONCURRENCY: minimal
+        WATCHOS_DEPLOYMENT_TARGET: "10.0"
+        TARGETED_DEVICE_FAMILY: "4"

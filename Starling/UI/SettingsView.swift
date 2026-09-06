@@ -4,7 +4,7 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(SignalHub.self) private var hub
     @Environment(Generator.self) private var generator
-    @AppStorage("anthropicKeyOverride") private var keyOverride = ""
+    @AppStorage("apiKeyOverride") private var keyOverride = ""
     @AppStorage("modelOverride") private var modelOverride = ""
     @State private var useClockOverride = false
     @State private var clock = Date()
@@ -25,10 +25,10 @@ struct SettingsView: View {
                             .onChange(of: clock) { _, d in hub.clockOverride = d }
                     }
                 }
-                Section("Anthropic API key") {
-                    SecureField("sk-ant-…", text: $keyOverride)
+                Section("OpenAI API key") {
+                    SecureField("sk-…", text: $keyOverride)
                     Text(bundledKeyStatus).font(.caption).foregroundStyle(.secondary)
-                    TextField("Model (blank = claude-opus-5)", text: $modelOverride)
+                    TextField("Model (blank = \(LLMClient.defaultModel))", text: $modelOverride)
                         .autocorrectionDisabled().textInputAutocapitalization(.never)
                 }
                 Section {
@@ -47,7 +47,7 @@ struct SettingsView: View {
     }
 
     private var bundledKeyStatus: String {
-        let bundled = (Bundle.main.infoDictionary?["ANTHROPIC_API_KEY"] as? String) ?? ""
+        let bundled = (Bundle.main.infoDictionary?["OPENAI_API_KEY"] as? String) ?? ""
         return bundled.isEmpty ? "No key bundled from Secrets.xcconfig; enter one above." : "A key is bundled from Secrets.xcconfig; leave blank to use it."
     }
 }

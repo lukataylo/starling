@@ -8,8 +8,19 @@ struct EditionRenderer: View {
     private var palette: Palette { DesignGenome.palette(edition.palette) }
     private var accent: Color { DesignGenome.accent(edition.accent, palette: edition.palette) }
     private var design: Font.Design { DesignGenome.design(edition.typeface) }
-    private var m: (body: CGFloat, headline: CGFloat, lineSpacing: CGFloat) { DesignGenome.metrics(edition.typeScale) }
+    private var m: (body: CGFloat, headline: CGFloat, lineSpacing: CGFloat) {
+        let base = DesignGenome.metrics(edition.typeScale)
+        return (base.body * scale, base.headline * scale, base.lineSpacing * scale)
+    }
     private var pad: CGFloat { DesignGenome.padding(edition.margins) }
+
+    /// Shared block renderer used by both the page and the cards.
+    static func blockView(_ b: Edition.Block, edition: Edition, scale: CGFloat = 1, onReadFull: (() -> Void)?) -> some View {
+        var r = EditionRenderer(edition: edition, onReadFull: onReadFull)
+        r.scale = scale
+        return r.render(b)
+    }
+    var scale: CGFloat = 1
 
     var body: some View {
         VStack(alignment: .leading, spacing: m.lineSpacing * 2.2) {
@@ -26,7 +37,7 @@ struct EditionRenderer: View {
     }
 
     @ViewBuilder
-    private func render(_ b: Edition.Block) -> some View {
+    func render(_ b: Edition.Block) -> some View {
         switch b.type {
         case .headline:
             Text(b.text ?? "")

@@ -3,6 +3,7 @@ import SwiftUI
 /// Adaptation is a proposal, not a trap.
 struct ProposalBanner: View {
     let edition: Edition
+    @Binding var format: EditionFormat
     let onReadFull: () -> Void
     let onKeep: () -> Void
     let onNotMe: () -> Void
@@ -21,11 +22,24 @@ struct ProposalBanner: View {
             }
             Text(edition.rationale).font(.caption).foregroundStyle(palette.secondary)
             HStack(spacing: 8) {
+                Picker("Format", selection: $format) {
+                    Label("Cards", systemImage: "rectangle.on.rectangle").tag(EditionFormat.cards)
+                    Label("Text", systemImage: "text.alignleft").tag(EditionFormat.text)
+                }
+                .pickerStyle(.segmented)
+                .frame(width: 150)
+                Spacer()
                 Button("Read full", action: onReadFull)
+                Button(action: onWhy) { Image(systemName: "info.circle") }
+            }
+            .font(.caption.weight(.medium))
+            .buttonStyle(.bordered)
+            .buttonBorderShape(.capsule)
+            .controlSize(.mini)
+            .tint(accent)
+            HStack(spacing: 8) {
                 Button("Keep this", action: onKeep)
                 Button("Not how I feel", action: onNotMe)
-                Spacer()
-                Button(action: onWhy) { Image(systemName: "info.circle") }
             }
             .font(.caption.weight(.medium))
             .buttonStyle(.bordered)

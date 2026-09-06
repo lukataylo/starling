@@ -59,8 +59,7 @@ struct UserState: Codable, Equatable {
     /// Quantised key so small sensor jitter doesn't refetch a generation.
     var bucket: String {
         let s = stress < 0.33 ? "lo" : (stress < 0.66 ? "mid" : "hi")
-        let a = attention < 0.4 ? "away" : "on"
-        return "\(timeOfDay.rawValue)|\(motion.rawValue)|\(posture.rawValue)|\(s)|\(a)|\(label.rawValue)"
+        return "\(timeOfDay.rawValue)|\(motion.rawValue)|\(posture.rawValue)|\(s)|\(label.rawValue)"
     }
 
     /// Compact JSON + honesty hints for the model.

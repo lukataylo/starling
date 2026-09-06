@@ -51,6 +51,8 @@ final class SignalHub {
     private var watchBPM: Double?
     private var watchAt: Date?
     private var stressEMA: Double = 0
+    private var candidateLabel: ReaderLabel?
+    private var candidateSince = Date()
 
     init() {
         isSensingEnabled = UserDefaults.standard.object(forKey: "sensingEnabled") as? Bool ?? true
@@ -69,7 +71,7 @@ final class SignalHub {
         ticker = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             Task { @MainActor in self?.tick() }
         }
-        watch = WatchPulseSource { [weak self] bpm, at in self?.ingestWatchPulse(bpm: bpm, at: at) }
+        watch = WatchPulseSource { [weak self] bpm, at, live in self?.ingestWatchPulse(bpm: bpm, at: at, live: live) }
         watch?.start()
         if isSensingEnabled { startCamera() } else { phase = .live }
     }
@@ -141,8 +143,15 @@ final class SignalHub {
         cameraBPM = bpm; cameraConf = confidence
         recompute()
     }
-    func ingestWatchPulse(bpm: Double, at: Date) {
+    private(set) var watchIsLive = false
+    private var lastLiveAt: Date?
+    func ingestWatchPulse(bpm: Double, at: Date, live: Bool) {
+        // Never let an older HealthKit sync overwrite a fresher live reading.
+        if let existing = watchAt, at < existing { return }
         watchBPM = bpm; watchAt = at
+        if live { lastLiveAt = .now }
+        watchIsLive = lastLiveAt.map { Date().timeIntervalSince($0) < 15 } ?? false
+        if !calibrationDone, calibBPMs.count < 5 { calibBPMs.append(bpm) }
         recompute()
     }
     func setPhase(_ p: Phase) { phase = p }
@@ -182,7 +191,16 @@ final class SignalHub {
         s.stress = stressEMA
 
         let (label, conf) = StatePredictor.predict(s)
-        if let o = labelOverride { s.label = o; s.labelConfidence = 1 } else { s.label = label; s.labelConfidence = conf }
+        if let o = labelOverride {
+            s.label = o; s.labelConfidence = 1
+        } else if label == state.label {
+            s.label = label; s.labelConfidence = conf; candidateLabel = nil
+        } else {
+            // Hysteresis: a new label has to hold for 4s before the page reacts to it.
+            if candidateLabel != label { candidateLabel = label; candidateSince = .now }
+            if Date().timeIntervalSince(candidateSince) >= 4 { s.label = label; s.labelConfidence = conf; candidateLabel = nil }
+            else { s.label = state.label; s.labelConfidence = state.labelConfidence }
+        }
         if s != state { state = s }
     }
 }
