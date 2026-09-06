@@ -1,297 +1,266 @@
 {
-  "https:\/\/www.bbc.co.uk\/news\/articles\/c6248nvqy8po?at_medium=RSS&at_campaign=rss" : {
+  "https:\/\/arstechnica.com\/science\/2026\/09\/farmed-salmon-may-not-be-as-nutritious-as-it-once-was-new-research-suggests\/" : {
     "preset:calm" : {
       "accent" : "slate",
       "blocks" : [
         {
-          "text" : "US envoys head to Kyiv",
+          "text" : "Farmed salmon’s changing nutrition",
           "type" : "headline"
         },
         {
-          "caption" : "Drones reported in one attack",
-          "text" : "108",
+          "caption" : "Of salmon eaten worldwide is farmed",
+          "text" : "Nearly 70%",
           "type" : "stat"
         },
         {
-          "text" : "US envoys Steve Witkoff and Jared Kushner arrived in Kyiv after three hours of talks with Vladimir Putin in Moscow. The discussions focused on possible next steps towards ending the war, but details remain unclear.",
-          "type" : "paragraph"
-        },
-        {
           "items" : [
-            "An announcement is expected in the coming weeks.",
-            "Ukraine says it needs peace and security guarantees.",
-            "Russia and Ukraine continued exchanging strikes overnight."
+            "THE FINDING — A new USDA-led study found that farmed salmon contained considerably less omega-3 fatty acid than older nutritional figures suggest.",
+            "THE LIMIT — The sample was too small to justify changing dietary guidance; the researchers call for a broader, representative study.",
+            "THE MECHANISM — Feed has shifted from small marine fish toward crops and oils such as soy and canola.",
+            "THE TRADE-OFF — That may reduce pressure on forage fish while increasing land-use and emissions impacts."
           ],
           "type" : "keyFacts"
         },
         {
-          "caption" : "The diplomatic talks continue alongside attacks.",
+          "text" : "Farmed salmon production tripled between 2000 and 2020, as health advice and marketing helped make it a global staple. But the feed used to produce more fish has changed as oceans have yielded fewer small species. The result is a possible nutritional decline, alongside new environmental costs on land.",
+          "type" : "paragraph"
+        },
+        {
+          "caption" : "The share of Norwegian salmon feed ingredients from marine sources",
+          "text" : "90% marine-based in 1990; about 23% by 2020",
+          "type" : "stat"
+        },
+        {
+          "caption" : "How the feed shift changes the trade-off",
+          "imagePrompt" : "A simple flow diagram showing small marine fish and crop ingredients feeding farmed salmon, with two arrows labeled omega-3 and land impact.",
+          "symbol" : "arrow.triangle.2.circlepath",
+          "type" : "imageCard"
+        },
+        {
+          "caption" : "Laura Lee Cascada, Aquaculture Accountability Project",
+          "text" : "“It’s trading one problem—marine exploitation—for another—land exploitation.”",
+          "type" : "pullQuote"
+        },
+        {
+          "text" : "The study does not show that salmon has stopped being nutritious, nor that official advice should immediately change. It shows that the numbers behind familiar advice may no longer describe today’s farmed fish—and that producing more protein can shift, rather than remove, environmental pressure.",
           "type" : "takeaway"
         },
         {
-          "text" : "Read the full story",
+          "text" : "Read the full reporting for the study’s limits, feed data and debate over offshore farming.",
           "type" : "readFullPrompt"
         }
       ],
-      "density" : "brief",
-      "estimatedReadSeconds" : 60,
+      "density" : "standard",
+      "estimatedReadSeconds" : 180,
       "format" : "cards",
       "headlineWeight" : "semibold",
+      "layout" : "article",
       "margins" : "wide",
       "pace" : "scroll",
       "palette" : "dusk",
-      "posterHeadline" : "US envoys head to Kyiv",
-      "rationale" : "You are calm and reclined this evening, so the story uses spacious cards and reflective context while keeping the facts clear and direct.",
-      "stateSummary" : "reclined, calm, evening",
+      "posterHeadline" : "Farmed Salmon’s Nutrition Shifts",
+      "rationale" : "You are calm and reclined, so this uses spacious evening cards that let the evidence and its limits unfold without rushing you.",
+      "stateSummary" : "reclined, calm, evening focus",
       "tone" : "reflective",
-      "typeScale" : "large",
+      "typeScale" : "regular",
       "typeface" : "serif"
     },
     "preset:focused" : {
       "accent" : "slate",
       "blocks" : [
         {
-          "text" : "US envoys head to Kyiv after Putin talks",
+          "text" : "Farmed salmon’s omega-3 edge may be shrinking",
           "type" : "headline"
         },
         {
-          "caption" : "Drones reported in overnight attack",
-          "text" : "108",
+          "caption" : "Of salmon eaten is farmed",
+          "text" : "Nearly 70%",
           "type" : "stat"
         },
         {
           "items" : [
-            "Steve Witkoff and Jared Kushner held three hours of talks with Vladimir Putin in Moscow.",
-            "The envoys are now in Kyiv for their first visit to Ukraine’s capital as negotiators.",
-            "The US says an announcement could come in the coming weeks, but details remain unclear."
+            "THE FINDING — A new USDA-led study found that omega-3 levels in farmed salmon have fallen considerably.",
+            "THE LIMIT — The sample was too small to justify changing dietary guidance; researchers call for a broader study.",
+            "THE MECHANISM — Feed has shifted from small marine fish toward soy, canola and other land-grown ingredients.",
+            "THE TRADE-OFF — Pressure on small fish has eased, but crop-based feed brings land-use and emissions concerns."
           ],
           "type" : "keyFacts"
         },
         {
-          "caption" : "The route between the two capitals is unclear",
-          "imagePrompt" : "Draw a simple map showing Moscow and Kyiv, with a dotted route between them and one label: closed Ukrainian airspace.",
-          "symbol" : "map",
-          "type" : "imageCard"
-        },
-        {
-          "text" : "Russia and Ukraine continued exchanging strikes overnight. Ukraine reported attacks on an oil refinery, an airfield and two air-defence systems in Russia. Russia launched 108 drones and small cruise missiles at Ukraine; Ukrainian authorities said 82 drones and six missiles were downed.",
+          "text" : "Farmed salmon production tripled from 2000 to 2020. As demand rose, feed makers increasingly replaced marine ingredients with crops and oils. That may help reduce pressure on forage fish, but it also changes the nutritional profile consumers were encouraged to seek—and can shift environmental costs onto farmland and forests.",
           "type" : "paragraph"
         },
         {
-          "text" : "The next stage depends on whether broad statements become specific proposals, including security guarantees for Ukraine and the issues both sides say must be addressed in a peace deal.",
+          "text" : "In Norway, marine-based feed ingredients fell from 90% in 1990 to about 23% in 2020.",
+          "type" : "pullQuote"
+        },
+        {
+          "text" : "The study does not show that farmed salmon has stopped being nutritious, or that existing advice should immediately change. It shows that older omega-3 assumptions may no longer describe today’s fish, while the industry’s environmental trade-offs remain unresolved.",
           "type" : "takeaway"
         },
         {
-          "caption" : "Read the full report for more detail",
+          "text" : "Read the full report and the debate over offshore salmon farming.",
           "type" : "readFullPrompt"
         }
       ],
       "density" : "brief",
-      "estimatedReadSeconds" : 55,
+      "estimatedReadSeconds" : 60,
       "format" : "cards",
-      "headlineWeight" : "semibold",
-      "margins" : "normal",
+      "headlineWeight" : "black",
+      "layout" : "quick",
+      "margins" : "tight",
       "pace" : "scroll",
-      "palette" : "focus",
-      "posterHeadline" : "US envoys head to Kyiv",
-      "rationale" : "You are focused and stationary this morning, so short fact-first cards make the developing negotiations quick to scan without losing essential context.",
+      "palette" : "day",
+      "posterHeadline" : "Farmed salmon’s omega-3 edge shrinks",
+      "rationale" : "You are focused and upright, so this uses a compact, high-information card sequence that makes the study’s evidence and limits easy to scan.",
       "stateSummary" : "focused, stationary, morning",
       "tone" : "brisk",
       "typeScale" : "regular",
       "typeface" : "sans"
     }
   },
-  "https:\/\/www.bbc.co.uk\/news\/articles\/cew9dq9we5eo?at_medium=RSS&at_campaign=rss" : {
+  "https:\/\/arstechnica.com\/space\/2026\/09\/after-8-years-europes-bepicolombo-mission-is-on-final-approach-to-mercury\/" : {
     "preset:calm" : {
-      "accent" : "amber",
+      "accent" : "sky",
       "blocks" : [
         {
-          "text" : "Dover protest disrupted port",
+          "text" : "BepiColombo Nears Mercury",
           "type" : "headline"
         },
         {
-          "caption" : "Hours of disruption at Dover",
-          "text" : "4.5 hours",
+          "caption" : "Time since launch in 2018",
+          "text" : "8 years",
           "type" : "stat"
         },
         {
-          "text" : "Council leader Kevin Mills said police were slow to respond when hundreds of masked protesters blocked roads near the Port of Dover on Saturday.",
-          "type" : "paragraph"
-        },
-        {
           "items" : [
-            "The protest ran from 07:00 to about 11:30 BST.",
-            "Road closures caused miles of tailbacks and blocked access to the port.",
-            "Kent Police said no arrests were made and called it spontaneous."
+            "THE MILESTONE — BepiColombo has entered the final stretch of its journey to Mercury.",
+            "THE ROUTE — It used plasma propulsion and flybys of Earth, Venus and Mercury to change its velocity and trajectory.",
+            "THE NEXT STEP — On its next encounter later this year, the spacecraft is expected to be moving slowly enough for Mercury's gravity to capture it into orbit.",
+            "THE CATCH — Reaching Mercury and entering orbit requires more energy, or delta-v, than sending a spacecraft on a flyby to Pluto."
           ],
           "type" : "keyFacts"
         },
         {
-          "caption" : "A simple map showing protesters blocking roads around Dover, with traffic queues leading to the port and Preston marked.",
-          "imagePrompt" : "A simple map showing protesters blocking roads around Dover, with traffic queues leading to the port and Preston marked.",
-          "symbol" : "map",
+          "caption" : "Estimated mission cost",
+          "text" : "Nearly $2bn",
+          "type" : "stat"
+        },
+        {
+          "caption" : "A route shaped by gravity and propulsion",
+          "imagePrompt" : "Draw a simple Solar System route showing Earth, Venus, Mercury and BepiColombo's looping path, with labels for plasma propulsion and flybys.",
+          "symbol" : "circle.grid.cross",
           "type" : "imageCard"
         },
         {
-          "text" : "Mills said several agencies were caught unprepared. Business Secretary Jonathan Reynolds said officers dealt with the protest swiftly. Kent Police has not yet commented on the criticism or who organised the demonstration.",
-          "type" : "paragraph"
-        },
-        {
-          "text" : "Hope Not Hate said the Patriot Platform network arranged the protest. Far-right activists Tommy Robinson and Danny Thomas praised it online. Restore Britain leader Rupert Lowe also backed the demonstrators, while condemning the use of balaclavas.",
-          "type" : "paragraph"
-        },
-        {
-          "text" : "The disruption affected travellers, businesses and local residents. Mills said the response should be reviewed, including reports that protesters parked vehicles in nearby Preston.",
+          "text" : "The long route is the point: Mercury is close to the Sun, but its speed and gravity make orbital arrival unusually demanding. BepiColombo's final approach is the payoff from years of carefully timed manoeuvres, not a straight trip inward.",
           "type" : "takeaway"
         },
         {
-          "caption" : "Read the full BBC News report",
+          "text" : "Read the full account of BepiColombo's final approach and the mechanics of reaching Mercury.",
           "type" : "readFullPrompt"
         }
       ],
       "density" : "brief",
-      "estimatedReadSeconds" : 70,
+      "estimatedReadSeconds" : 60,
       "format" : "cards",
       "headlineWeight" : "semibold",
+      "layout" : "article",
       "margins" : "wide",
       "pace" : "scroll",
       "palette" : "dusk",
-      "posterHeadline" : "Dover protest disrupted port",
-      "rationale" : "You are calm and reclined this evening, so the cards use spacious larger type and measured context to make a complex account easy to follow.",
+      "posterHeadline" : "BepiColombo Nears Mercury",
+      "rationale" : "You are settled and calm this evening, so the cards use spacious type and a reflective structure to explain the mission's long, technical route without rushing you.",
       "stateSummary" : "reclined, evening, calm",
       "tone" : "reflective",
       "typeScale" : "large",
       "typeface" : "serif"
     },
     "preset:focused" : {
-      "accent" : "slate",
+      "accent" : "sky",
       "blocks" : [
         {
-          "text" : "Dover protest disrupted port",
+          "text" : "BepiColombo nears Mercury",
           "type" : "headline"
         },
         {
-          "caption" : "Protest lasted about four and a half hours",
-          "text" : "4.5 hours",
+          "caption" : "Its interplanetary journey since launch",
+          "text" : "8 years",
           "type" : "stat"
         },
         {
           "items" : [
-            "Hundreds of masked men blocked roads near Dover’s port on Saturday.",
-            "The protest ran from 07:00 to about 11:30 BST, causing long tailbacks.",
-            "Dover council leader Kevin Mills said police were slow to respond; Kent Police has not commented."
+            "THE MISSION — ESA leads the mission, with contributions from Japan and the United States. Its cost is nearly $2 billion.",
+            "THE ROUTE — Since 2018, the spacecraft has used plasma propulsion and flybys of Earth, Venus and Mercury to shed speed and adjust its path.",
+            "THE NEXT STEP — On its next Mercury encounter, BepiColombo should be moving slowly enough for Mercury's gravity to capture it into orbit.",
+            "THE CATCH — Reaching Mercury takes more energy than sending a spacecraft on a flyby to Pluto."
           ],
           "type" : "keyFacts"
         },
         {
-          "caption" : "What happened",
-          "text" : "Access to the Port of Dover was blocked for hours. Vehicles were also reportedly left in nearby Preston before protesters arrived. No arrests were made, and police described the demonstration as spontaneous.",
-          "type" : "paragraph"
+          "caption" : "The mission’s reported price tag",
+          "text" : "Nearly $2 billion",
+          "type" : "stat"
         },
         {
-          "caption" : "Who is being linked to it",
-          "text" : "Hope Not Hate said the Patriot Platform network organised the protest. Police have not commented on who was behind it. Far-right activists Tommy Robinson and Danny Thomas praised the demonstration online.",
-          "type" : "paragraph"
+          "caption" : "A spiral route uses propulsion and planetary flybys to reach Mercury.",
+          "imagePrompt" : "Draw a simple Solar System route from Earth past Venus and Mercury, with three labels: Earth, Venus, Mercury.",
+          "symbol" : "globe.europe.africa",
+          "type" : "imageCard"
         },
         {
-          "caption" : "The response",
-          "text" : "Mills said agencies were caught unprepared and called for a review. Business Secretary Jonathan Reynolds condemned what he called intimidatory behaviour, while saying peaceful protest remains essential.",
+          "text" : "Mercury is difficult to reach because a spacecraft must lose substantial speed and energy to enter orbit around the Sun’s innermost planet.",
           "type" : "takeaway"
-        },
-        {
-          "caption" : "Read the full BBC report for more detail.",
-          "type" : "readFullPrompt"
         }
       ],
       "density" : "brief",
-      "estimatedReadSeconds" : 55,
+      "estimatedReadSeconds" : 60,
       "format" : "cards",
-      "headlineWeight" : "semibold",
-      "margins" : "normal",
-      "pace" : "scroll",
+      "headlineWeight" : "black",
+      "layout" : "quick",
+      "margins" : "tight",
+      "pace" : "single",
       "palette" : "focus",
-      "posterHeadline" : "Dover protest disrupted port",
-      "rationale" : "You asked for the focused card view, so this uses short fact-first cards and larger type to make the disruption and competing claims easy to scan.",
-      "stateSummary" : "focused, upright, morning",
+      "posterHeadline" : "BepiColombo Nears Mercury",
+      "rationale" : "You are focused and stationary, so a high-contrast morning briefing can make the mission’s route and orbital challenge clear at a glance.",
+      "stateSummary" : "focused, stationary, morning",
       "tone" : "brisk",
       "typeScale" : "large",
       "typeface" : "sans"
     }
   },
-  "https:\/\/www.bbc.co.uk\/news\/articles\/crer948xq00o?at_medium=RSS&at_campaign=rss" : {
+  "https:\/\/www.theverge.com\/games\/990691\/competitive-pokemon-champions-mobile-tournament-accessibility" : {
     "preset:calm" : {
-      "accent" : "amber",
-      "blocks" : [
-        {
-          "text" : "JLR job cuts expected",
-          "type" : "headline"
-        },
-        {
-          "caption" : "Possible jobs affected, not confirmed",
-          "text" : "4,000",
-          "type" : "stat"
-        },
-        {
-          "text" : "• JLR has opened a voluntary redundancy programme for salaried and management staff.\n• Ministers will meet JLR and Unite early next week.\n• JLR has not confirmed how many jobs may go.",
-          "type" : "keyFacts"
-        },
-        {
-          "caption" : "The company is recovering from a costly cyber attack.",
-          "text" : "JLR says the changes will simplify its business, improve efficiency and build resilience. A 2025 cyber attack halted manufacturing for several weeks and contributed to a 27% fall in production. Analysts estimate the total cost at £1.9bn.",
-          "type" : "paragraph"
-        },
-        {
-          "caption" : "What happens next",
-          "text" : "The government says it will discuss ways to mitigate job losses, but has ruled out a bailout. JLR has not excluded some compulsory redundancies.",
-          "type" : "takeaway"
-        }
-      ],
-      "density" : "brief",
-      "estimatedReadSeconds" : 45,
-      "format" : "cards",
-      "headlineWeight" : "semibold",
-      "margins" : "wide",
-      "pace" : "scroll",
-      "palette" : "dusk",
-      "posterHeadline" : "JLR job cuts expected",
-      "rationale" : "You are calm and reclined this evening, so the story uses spacious, readable cards with enough context without making the job losses feel more dramatic than the facts support.",
-      "stateSummary" : "reclined, calm evening reading",
-      "tone" : "reflective",
-      "typeScale" : "large",
-      "typeface" : "serif"
-    },
-    "preset:focused" : {
       "accent" : "slate",
       "blocks" : [
         {
-          "text" : "JLR job cuts expected",
+          "text" : "Competitive Pokémon needs a Switch",
           "type" : "headline"
         },
         {
-          "caption" : "Possible jobs affected, according to reports",
-          "text" : "4,000",
+          "caption" : "Champions downloads across platforms",
+          "text" : "25 million",
           "type" : "stat"
         },
         {
           "items" : [
-            "JLR has opened a voluntary redundancy programme for salaried and management staff.",
-            "Business Secretary Jonathan Reynolds will meet JLR and Unite early next week.",
-            "The company has not confirmed how many jobs could be lost."
+            "THE GAP — Champions plays nearly identically on phones and Switch, but regional tournaments and above still require Switch hardware.",
+            "THE REASON — Pokémon producer Masaaki Hoshino cited Switch 2’s sharper graphics and the complexity of supporting many mobile devices.",
+            "THE WORKAROUND — Streamed matches can use tournament-provided hardware and replicated teams, according to the rules handbook.",
+            "THE STAKES — Players can build tournament-ready teams on mobile, but may reach Worlds without owning the device required to compete."
           ],
           "type" : "keyFacts"
         },
         {
-          "caption" : "JLR is recovering from a cyber attack that halted production for weeks.",
-          "imagePrompt" : "Draw a simple timeline from the September 2025 cyber attack to expected job cuts, with labels “attack”, “production halted”, and “cuts expected”.",
-          "symbol" : "exclamationmark.shield",
-          "type" : "imageCard"
+          "text" : "Mobile already gets players to the starting line. The odd part is that it may not get them to the biggest stage.",
+          "type" : "pullQuote"
         },
         {
-          "text" : "The government says it will discuss reducing job losses but will not provide a bailout. JLR employs about 30,000 people in the UK and reported a 27% production drop after the attack.",
+          "text" : "The game’s battle calculations run server-side, so cross-platform play works. Mobile is also used in high-level Pokémon Unite competition, suggesting the obstacle is tournament presentation and logistics rather than a fundamental technical barrier.",
           "type" : "paragraph"
         },
         {
-          "text" : "JLR says the programme is intended to simplify the business, improve efficiency and build resilience.",
+          "text" : "For a game that presents itself as inclusive and accessible, requiring a Switch at the top level creates a costly final hurdle. That matters more as competitive Pokémon grows beyond its former hotel-ballroom scale.",
           "type" : "takeaway"
         }
       ],
@@ -299,218 +268,221 @@
       "estimatedReadSeconds" : 60,
       "format" : "cards",
       "headlineWeight" : "semibold",
-      "margins" : "normal",
-      "pace" : "scroll",
-      "palette" : "day",
-      "posterHeadline" : "JLR job cuts expected",
-      "rationale" : "You asked for the focused cards view, so this uses facts and the key figure first for a quick morning read.",
-      "stateSummary" : "focused, upright, morning",
-      "tone" : "brisk",
-      "typeScale" : "regular",
-      "typeface" : "sans"
-    }
-  },
-  "https:\/\/www.theguardian.com\/music\/2026\/sep\/06\/femi-koleoso-ezra-collective-guest-editor-cultural-picks" : {
-    "preset:calm" : {
-      "accent" : "amber",
+      "layout" : "article",
+      "margins" : "wide",
+      "pace" : "single",
+      "palette" : "dusk",
+      "posterHeadline" : "Competitive Pokémon needs a Switch",
+      "rationale" : "You’re settled and calm, so this uses spacious cards, larger type and a reflective evening treatment to make the access argument easy to follow.",
+      "stateSummary" : "reclined, calm, evening",
+      "tone" : "reflective",
+      "typeScale" : "large",
+      "typeface" : "serif"
+    },
+    "preset:focused" : {
+      "accent" : "sky",
       "blocks" : [
         {
-          "text" : "On the other side of pain, hope",
+          "text" : "Competitive Pokémon Needs No Switch",
           "type" : "headline"
         },
         {
-          "caption" : "Ezra Collective’s Femi Koleoso on hope",
-          "text" : "2026",
+          "caption" : "Champions downloads across platforms",
+          "text" : "25 million",
           "type" : "stat"
         },
         {
-          "text" : "Femi Koleoso guest-edits the Guardian’s culture section, sharing a personal case for hope shaped by music, family and community.",
-          "type" : "dek"
-        },
-        {
           "items" : [
-            "Koleoso grew up in Enfield and began playing drums at church.",
-            "He describes hope as the possibility of renewal after pain.",
-            "His cultural picks include music, film and a celebration of steelpan."
+            "THE RULE — Mobile works for local tournaments, but regional events and Worlds still require Switch hardware.",
+            "THE GAP — The game is otherwise nearly identical and cross-platform."
           ],
+          "text" : "THE RULE — Mobile works for local tournaments, but regional events and Worlds still require Switch hardware. THE GAP — The game is otherwise nearly identical and cross-platform.",
           "type" : "keyFacts"
         },
         {
-          "caption" : "Music can carry pain into joy.",
-          "type" : "pullQuote"
-        },
-        {
-          "text" : "Koleoso connects his own journey — from a north London state-school education to life as Ezra Collective’s bandleader, drummer, DJ and broadcaster — with a wider belief in the power of hopeful stories. He finds that transformation in music born from hardship, including Fela Kuti, grime and calypso.",
+          "text" : "The explanation is mostly about presentation and logistics: Switch 2 looks sharper, while supporting many different phones could complicate events. But that leaves mobile players able to build a championship-ready team without being able to use it on the biggest stage.",
           "type" : "paragraph"
         },
         {
-          "caption" : "A few of the collective’s cultural picks",
+          "text" : "Mobile players can qualify for Worlds — then lack the hardware to compete there.",
+          "type" : "pullQuote"
+        },
+        {
+          "text" : "A simple compromise already exists: tournament organisers can provide hardware for streamed matches using a player’s team ID. Other competitive Pokémon games, including Pokémon Unite and Pokémon Go, also show that mobile competition is possible.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The game’s promise is accessibility. Requiring a Switch at the top level undercuts that promise, especially as the console becomes more expensive and millions of players may have started on phones.",
+          "type" : "takeaway"
+        },
+        {
+          "text" : "Read the full story for the tournament rules, technical explanation, and why mobile access matters to competitive Pokémon.",
+          "type" : "readFullPrompt"
+        }
+      ],
+      "density" : "brief",
+      "estimatedReadSeconds" : 60,
+      "format" : "cards",
+      "headlineWeight" : "black",
+      "layout" : "quick",
+      "margins" : "tight",
+      "pace" : "scroll",
+      "palette" : "focus",
+      "posterHeadline" : "Competitive Pokémon Needs No Switch",
+      "rationale" : "You are focused and reading on cards, so this uses a high-contrast briefing with large type and short, fast-scanning points.",
+      "stateSummary" : "focused, upright, morning",
+      "tone" : "brisk",
+      "typeScale" : "large",
+      "typeface" : "sans"
+    }
+  },
+  "https:\/\/www.theverge.com\/tech\/990436\/fairphone-6-plus-review" : {
+    "preset:calm" : {
+      "accent" : "sage",
+      "blocks" : [
+        {
+          "text" : "Fairphone 6 Plus makes repairability mainstream",
+          "type" : "headline"
+        },
+        {
+          "caption" : "A repairable midrange phone",
+          "text" : "$649",
+          "type" : "stat"
+        },
+        {
           "items" : [
-            "The Secret Agent — a film praised by TJ Koleoso",
-            "Rosa Passos: Recriação — Joe Armon-Jones’s album choice",
-            "Southbank Centre’s steelpan celebration — Femi Koleoso’s live pick"
+            "THE IDEA — Fairphone’s latest phone feels like a normal midrange Android device, while keeping its repairable, ethically minded design.",
+            "WHY NOW — Prices have climbed, making a five-year warranty and up to six OS upgrades easier to value.",
+            "THE CATCH — IP55 protection, no wireless charging, average speakers and merely adequate battery life remain tradeoffs."
           ],
           "type" : "keyFacts"
         },
         {
-          "text" : "Hope, for Koleoso, is not certainty that everything will be easy. It is the belief that joy and renewal can still follow pain, even when the route there is unclear.",
-          "type" : "takeaway"
+          "text" : "The important shift is that Fairphone’s sustainability pitch no longer requires accepting a dramatically worse phone. The 6 Plus runs smoothly for everyday tasks, uses a near-stock version of Android and avoids bloatware and gimmicky AI features.",
+          "type" : "paragraph"
         },
         {
-          "caption" : "Read the full guest edit and cultural picks",
-          "type" : "readFullPrompt"
+          "text" : "You are the AppleCare.",
+          "type" : "pullQuote"
+        },
+        {
+          "text" : "Twelve user-replaceable parts include the battery, screen, USB-C port and all three cameras. Fairphone charges $39.99 for a replacement battery and $89.99 for a display, while comparable repairs elsewhere can cost substantially more.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The phone’s Snapdragon 7S Gen 4 chip handles ordinary use well, though demanding games, some navigation and heavier camera bursts reveal its limits. The cameras are dependable rather than exceptional, and battery life is only average—but replacing the battery is designed to be simple.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "A modular back panel can add a wallet or grip, while Fairphone’s Moments switch offers minimalist focus modes. These touches are less seamless than magnetic accessories, but they make the phone feel deliberately useful rather than overstuffed.",
+          "type" : "paragraph"
+        },
+        {
+          "text" : "The Fairphone 6 Plus is no longer just an ethical compromise. It is a broadly capable phone whose repairability, long support period and lower repair costs give its relatively high price a practical case.",
+          "type" : "takeaway"
         }
       ],
       "density" : "brief",
       "estimatedReadSeconds" : 75,
       "format" : "cards",
       "headlineWeight" : "semibold",
+      "layout" : "article",
       "margins" : "wide",
       "pace" : "scroll",
       "palette" : "dusk",
-      "posterHeadline" : "Hope after pain",
-      "rationale" : "You are calm and reclined this evening, so these spacious cards let the personal story unfold at an unhurried, readable pace.",
+      "posterHeadline" : "Fairphone makes repairable mainstream",
+      "rationale" : "You are reading calmly in the evening, so the cards use spacious serif text and a reflective pace while keeping each idea brief enough to scan.",
       "stateSummary" : "reclined, evening, calm",
       "tone" : "reflective",
       "typeScale" : "large",
       "typeface" : "serif"
     },
     "preset:focused" : {
-      "accent" : "amber",
+      "accent" : "sky",
       "blocks" : [
         {
-          "text" : "Ezra Collective’s Femi Koleoso on hope",
+          "text" : "Fairphone 6 Plus reaches the mainstream",
           "type" : "headline"
         },
         {
-          "caption" : "A 75th-anniversary celebration of steelpan",
-          "text" : "75",
+          "caption" : "A repairable midrange phone",
+          "text" : "$649",
           "type" : "stat"
         },
         {
-          "caption" : "The musician guest-edits the Culture section",
-          "type" : "dek"
-        },
-        {
-          "items" : [
-            "Koleoso describes hope as belief in renewal after pain.",
-            "He connects hardship with the music it inspires, from Fela Kuti to grime and calypso.",
-            "Ezra Collective members share cultural picks spanning film, albums and live music."
-          ],
+          "text" : "THE IDEA — Fairphone’s latest phone feels like a normal midrange Android device, but keeps the company’s repairable design and ethical-materials focus.",
           "type" : "keyFacts"
         },
         {
-          "caption" : "Music can turn pain into shared joy",
+          "text" : "REPAIRS — Twelve parts are user-replaceable, including the battery, display, USB-C port, and cameras. A replacement battery costs $39.99; a display costs $89.99.",
+          "type" : "keyFacts"
+        },
+        {
+          "text" : "SUPPORT — The phone includes a five-year warranty and up to six OS upgrades. It supports T-Mobile and AT&T in the US, and worked for the reviewer on Verizon despite lacking certification.",
+          "type" : "keyFacts"
+        },
+        {
+          "text" : "THE CATCH — Battery life is merely adequate, the IP55 rating is below many rivals, and there is no wireless charging. The cameras and performance are competent rather than exceptional.",
+          "type" : "keyFacts"
+        },
+        {
+          "text" : "A phone that is simply fine is the point: its repairability no longer demands the major compromises Fairphone once required.",
           "type" : "pullQuote"
         },
         {
-          "text" : "For Koleoso, hope is not an insistence that the world is uncomplicated or that suffering can be wished away. It is the belief that joy may follow mourning, and that people can eventually find solid ground even when they cannot yet see how change will come. He finds that possibility most clearly in music: songs born from grief, poverty or oppression can become sources of movement, connection and celebration.",
-          "type" : "paragraph"
-        },
-        {
-          "caption" : "The guest editor’s cultural map",
-          "imagePrompt" : "Draw a simple route from pain to renewal through a microphone, a dancing crowd and a glowing horizon; label only “pain”, “music” and “joy”.",
-          "symbol" : "music.note.list",
-          "type" : "imageCard"
-        },
-        {
-          "text" : "The accompanying recommendations move between Brazilian cinema, Nigerian storytelling, adventurous albums and London’s Southbank Centre, where young steelpan bands brought different generations and cultures together.",
-          "type" : "paragraph"
-        },
-        {
-          "caption" : "Hope can make joy feel possible",
+          "text" : "The Fairphone 6 Plus is a strong choice if long-term repair costs and software support matter more to you than peak cameras, gaming power, or water resistance.",
           "type" : "takeaway"
         },
         {
-          "caption" : "Read the full guest editor’s letter and cultural picks",
+          "text" : "Read the full review for the complete test of performance, cameras, battery life, repairability, and focus-mode features.",
           "type" : "readFullPrompt"
         }
       ],
       "density" : "brief",
       "estimatedReadSeconds" : 60,
       "format" : "cards",
-      "headlineWeight" : "semibold",
-      "margins" : "normal",
+      "headlineWeight" : "black",
+      "layout" : "quick",
+      "margins" : "tight",
       "pace" : "scroll",
       "palette" : "focus",
-      "posterHeadline" : "Femi Koleoso on hope",
-      "rationale" : "You asked for the focused cards view, so this uses short, high-contrast blocks to make Koleoso’s argument and recommendations easy to scan.",
+      "posterHeadline" : "Fairphone finally feels mainstream",
+      "rationale" : "You are focused and upright this morning, so this card-based briefing puts the price, practical tradeoffs, and repair benefits within quick reach.",
       "stateSummary" : "focused, upright, morning",
       "tone" : "brisk",
       "typeScale" : "large",
       "typeface" : "sans"
     }
   },
-  "https:\/\/www.theguardian.com\/politics\/2026\/sep\/06\/london-mayor-contenders-race-unseat-sadiq-khan" : {
+  "https:\/\/www.theverge.com\/tech\/990873\/earth-garden-globe-field-recordings" : {
     "preset:calm" : {
-      "accent" : "slate",
+      "accent" : "sage",
       "blocks" : [
         {
-          "text" : "London mayoral race takes shape",
+          "text" : "Explore the globe in field recordings",
           "type" : "headline"
         },
         {
-          "caption" : "Labour leads latest London poll",
-          "text" : "33%",
+          "caption" : "Earth Garden uses recordings from Freesound.",
+          "text" : "Around the world through environmental sound",
           "type" : "stat"
         },
         {
           "items" : [
-            "Sadiq Khan has not said whether he will run again in 2028.",
-            "James Cleverly is seeking the Conservative nomination; Festus Akinbusoye is also standing.",
-            "Reform, Conservatives and Labour-linked candidates are positioning for a contest shaped by a divided right-wing vote."
+            "THE IDEA — Earth Garden works like Radio Garden, but with environmental audio instead of live radio. Rotate the globe and listen as the reticle reaches new places.",
+            "THE SOUND — Hear waves near remote Atlantic islands, crickets in Tanzania and rain on Manhattan streets.",
+            "THE CATCH — Freesound makes the collection broad, but clip quality and volume vary. Recordings are also concentrated in the US and Europe, especially the UK."
           ],
           "type" : "keyFacts"
         },
         {
-          "caption" : "The latest poll puts Labour ahead, with Conservatives and Reform level on 18%, Greens on 17% and Liberal Democrats on 9%.",
-          "type" : "paragraph"
+          "caption" : "A rotating globe links locations to field recordings.",
+          "imagePrompt" : "A dark globe with three subtle sound-wave markers: Atlantic shoreline, Tanzanian crickets, and Manhattan rain; label only Atlantic, Tanzania, Manhattan.",
+          "symbol" : "globe",
+          "type" : "imageCard"
         },
         {
-          "text" : "The contest is open, but Khan remains the candidate to beat.",
-          "type" : "takeaway"
-        }
-      ],
-      "density" : "brief",
-      "estimatedReadSeconds" : 60,
-      "format" : "cards",
-      "headlineWeight" : "semibold",
-      "margins" : "wide",
-      "pace" : "scroll",
-      "palette" : "dusk",
-      "posterHeadline" : "London mayoral race takes shape",
-      "rationale" : "You are relaxed and reclined this evening, so these spacious cards keep the race easy to follow while preserving its political context.",
-      "stateSummary" : "reclined, calm, evening",
-      "tone" : "reflective",
-      "typeScale" : "large",
-      "typeface" : "serif"
-    },
-    "preset:focused" : {
-      "accent" : "slate",
-      "blocks" : [
-        {
-          "caption" : "London mayoral race takes shape",
-          "type" : "headline"
-        },
-        {
-          "caption" : "Recent poll share for Labour’s mayoral candidate",
-          "text" : "33%",
-          "type" : "stat"
-        },
-        {
-          "caption" : "Several challengers are positioning themselves for 2028, while Sadiq Khan has not yet confirmed whether he will seek another term.",
-          "type" : "dek"
-        },
-        {
-          "items" : [
-            "James Cleverly is seeking the Conservative nomination.",
-            "Reform UK’s Laila Cunningham says she will not stand aside for the Tories.",
-            "Dawn Butler has indicated she would run if Khan does not seek another term."
-          ],
-          "type" : "keyFacts"
-        },
-        {
-          "caption" : "The right-of-centre vote may be split between the Conservatives and Reform UK, making Khan’s position stronger for now.",
+          "text" : "A small, soothing way to travel by ear—though the uneven recordings and geographic gaps are part of the experience.",
           "type" : "takeaway"
         }
       ],
@@ -518,14 +490,61 @@
       "estimatedReadSeconds" : 45,
       "format" : "cards",
       "headlineWeight" : "semibold",
+      "layout" : "article",
+      "margins" : "wide",
+      "pace" : "single",
+      "palette" : "dusk",
+      "posterHeadline" : "Explore Earth Through Sound",
+      "rationale" : "You are settled and calm, so this uses spacious cards, larger type and a warm evening palette for an easy listening-focused read.",
+      "stateSummary" : "reclined, calm, evening listening",
+      "tone" : "reflective",
+      "typeScale" : "large",
+      "typeface" : "serif"
+    },
+    "preset:focused" : {
+      "accent" : "sky",
+      "blocks" : [
+        {
+          "text" : "Explore the globe in field recordings",
+          "type" : "headline"
+        },
+        {
+          "caption" : "An interactive globe for environmental audio",
+          "text" : "Radio Garden, but for real-world sound",
+          "type" : "stat"
+        },
+        {
+          "items" : [
+            "THE IDEA — Earth Garden lets you explore a globe through field recordings from Freesound.",
+            "THE SOUNDS — Hear waves, crickets, rain and other environmental audio from locations around the world.",
+            "HOW IT WORKS — Rotate the globe or let it spin automatically; a reticle switches recordings as it reaches new points.",
+            "THE CATCH — Recording quality and volume vary, and the collection is concentrated in the US and Europe, especially the UK."
+          ],
+          "type" : "keyFacts"
+        },
+        {
+          "imagePrompt" : "A clean world globe with a glowing reticle moving between three labeled sound points: Atlantic waves, Tanzania crickets, Manhattan rain.",
+          "text" : "A globe you listen to, not just look at.",
+          "type" : "imageCard"
+        },
+        {
+          "text" : "Earth Garden is a small, soothing way to turn geographic browsing into active listening. It also offers optional generic ambient drones, though the underlying recordings can be uneven.",
+          "type" : "takeaway"
+        }
+      ],
+      "density" : "brief",
+      "estimatedReadSeconds" : 45,
+      "format" : "cards",
+      "headlineWeight" : "semibold",
+      "layout" : "quick",
       "margins" : "normal",
       "pace" : "single",
       "palette" : "day",
-      "posterHeadline" : "London mayoral race takes shape",
-      "rationale" : "You are focused and reading on cards this morning, so the page leads with the poll and keeps each political development to one quick, legible step.",
+      "posterHeadline" : "Explore Earth Through Sound",
+      "rationale" : "You are focused and reading on cards, so this version leads with the concept, gives the key number-free signal its own hook, and keeps each idea short.",
       "stateSummary" : "focused, stationary, morning",
       "tone" : "brisk",
-      "typeScale" : "large",
+      "typeScale" : "regular",
       "typeface" : "sans"
     }
   }

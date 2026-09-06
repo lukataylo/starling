@@ -4,7 +4,7 @@ import Observation
 @Observable @MainActor
 final class FeedStore {
     var enabledIDs: Set<String> {
-        didSet { UserDefaults.standard.set(Array(enabledIDs), forKey: "enabledFeeds") }
+        didSet { UserDefaults.standard.set(Array(enabledIDs), forKey: "enabledFeeds.v2") }
     }
     private(set) var articles: [Article] = []
     private(set) var isLoading = false
@@ -21,7 +21,7 @@ final class FeedStore {
     var featuredIDs: Set<String> { Set(featured.map(\.id)) }
 
     init() {
-        if let saved = UserDefaults.standard.array(forKey: "enabledFeeds") as? [String], !saved.isEmpty {
+        if let saved = UserDefaults.standard.array(forKey: "enabledFeeds.v2") as? [String], !saved.isEmpty {
             enabledIDs = Set(saved)
         } else {
             enabledIDs = FeedCatalog.defaultEnabled

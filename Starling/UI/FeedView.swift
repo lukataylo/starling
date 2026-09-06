@@ -13,20 +13,16 @@ struct FeedView: View {
     @State private var showSettings = false
     @State private var showSignals = false
     @State private var mode: HomeMode = .tiles
-    @State private var manualModeUntilMotionChanges = false
-    @State private var lastMoving = false
+    @State private var modeChosen = false
+    @State private var proposedMode: HomeMode?
+    @State private var proposalSince: Date?
 
     private var theme: Theme { hub.theme }
     private var moving: Bool { [.walking, .running, .automotive].contains(hub.state.motion) }
 
     var body: some View {
         NavigationStack {
-            Group {
-                if mode == .stack { StackHome(mode: $mode, onManual: { manualModeUntilMotionChanges = true }) }
-                else { TileHome(mode: $mode, showSources: $showSources, showSettings: $showSettings, showSignals: $showSignals, onManual: { manualModeUntilMotionChanges = true }) }
-            }
-            .background((mode == .stack ? Identity.night : theme.palette.background).ignoresSafeArea())
-            .environment(\.colorScheme, mode == .stack ? .dark : theme.palette.scheme)
+            homeContent
             .animation(.easeInOut(duration: 0.35), value: mode)
             .toolbar(.hidden, for: .navigationBar)
             .navigationDestination(for: Article.self) { article in ReaderView(article: article) }
@@ -39,13 +35,34 @@ struct FeedView: View {
             .onChange(of: hub.phase) { _, p in if p == .live { prefetch() } }
             .onChange(of: hub.state.bucket) { _, _ in prefetch() }
             .onChange(of: hub.state.bucket, initial: true) { _, _ in
-                // The per-state rules decide the home layout (stack when walking or tense by default). A manual choice sticks until motion changes.
-                let m = moving
-                if m != lastMoving { manualModeUntilMotionChanges = false; lastMoving = m }
-                guard !manualModeUntilMotionChanges else { return }
+                // The home opens in the mode the rules want, then never swaps on its own: a change is proposed and the reader taps Switch.
                 let wanted: HomeMode = rules.homeLayout(for: hub.state) == .stack ? .stack : .tiles
-                if wanted != mode { withAnimation { mode = wanted } }
+                if !modeChosen { mode = wanted; modeChosen = true; return }
+                if wanted != mode {
+                    if proposedMode != wanted { proposedMode = wanted; proposalSince = .now }
+                } else { proposedMode = nil }
             }
+            .safeAreaInset(edge: .bottom) { proposalBar }
+        }
+    }
+
+    @ViewBuilder private var homeContent: some View {
+        let bg: Color = mode == .stack ? Identity.night : theme.palette.background
+        let scheme: ColorScheme = mode == .stack ? .dark : theme.palette.scheme
+        Group {
+            if mode == .stack { StackHome(mode: $mode, onManual: { proposedMode = nil }) }
+            else { TileHome(mode: $mode, showSources: $showSources, showSettings: $showSettings, showSignals: $showSignals, onManual: { proposedMode = nil }) }
+        }
+        .background(bg.ignoresSafeArea())
+        .environment(\.colorScheme, scheme)
+    }
+
+    @ViewBuilder private var proposalBar: some View {
+        if let p = proposedMode, p != mode {
+            HomeModeProposal(target: p, dark: mode == .stack,
+                             onSwitch: { withAnimation { mode = p }; proposedMode = nil },
+                             onDismiss: { proposedMode = nil })
+            .padding(.horizontal, 16).padding(.bottom, 8)
         }
     }
 
@@ -96,7 +113,7 @@ struct TileHome: View {
                     Text("Starling").font(Identity.grotesk(56, .black)).tracking(-3.5).foregroundStyle(theme.ink)
                     Spacer()
                     HStack(spacing: 6) {
-                        RoundIconButton(symbol: "square.stack.3d.down.forward", theme: theme) { onManual(); mode = .stack }
+                        RoundIconButton(symbol: "square.stack.3d.down.forward", theme: theme) { onManual(); withAnimation { mode = .stack } }
                         RoundIconButton(symbol: "line.3.horizontal", theme: theme) { showSources = true }
                         RoundIconButton(symbol: "gearshape", theme: theme) { showSettings = true }
                     }
@@ -231,6 +248,7 @@ struct StackHome: View {
     @State private var index = 0
     @State private var drag: CGFloat = 0
     @State private var showSignals = false
+    @State private var opened: Article?
 
     private var colours: [Color] { [Identity.acid, Identity.cobalt, Identity.red] }
 
@@ -240,7 +258,7 @@ struct StackHome: View {
             HStack {
                 StatePill(theme: hub.theme) { showSignals = true }
                 Spacer()
-                RoundIconButton(symbol: "square.grid.2x2", theme: Theme(paletteName: .night, accentName: .sage, scale: .regular, typeface: .sans)) { onManual(); mode = .tiles }
+                RoundIconButton(symbol: "square.grid.2x2", theme: Theme(paletteName: .night, accentName: .sage, scale: .regular, typeface: .sans)) { onManual(); withAnimation { mode = .tiles } }
             }
             .padding(.horizontal, 16).padding(.top, 6)
             if a.isEmpty {
@@ -251,10 +269,8 @@ struct StackHome: View {
                     ZStack {
                         ForEach(Array((0..<min(4, a.count)).reversed()), id: \.self) { depth in
                             let i = (index + depth) % a.count
-                            NavigationLink(value: a[i]) {
-                                StackCard(article: a[i], color: colours[i % colours.count], serif: i % colours.count != 0)
-                            }
-                            .buttonStyle(.plain)
+                            StackCard(article: a[i], color: colours[i % colours.count], serif: i % colours.count != 0)
+                            .onTapGesture { if depth == 0 { opened = a[i] } }
                             .frame(height: h)
                             .offset(y: CGFloat(depth) * -36 + (depth == 0 ? drag : 0))
                             .scaleEffect(1 - CGFloat(depth) * 0.02, anchor: .top)
@@ -264,7 +280,7 @@ struct StackHome: View {
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
                     .padding(.horizontal, 16)
-                    .gesture(DragGesture(minimumDistance: 12).onChanged { v in drag = min(0, v.translation.height) * 0.6 }
+                    .highPriorityGesture(DragGesture(minimumDistance: 10).onChanged { v in drag = min(0, v.translation.height) * 0.6 }
                         .onEnded { v in
                             if v.translation.height < -70 { withAnimation(.snappy(duration: 0.3)) { index = (index + 1) % a.count; drag = 0 } }
                             else if v.translation.height > 70 { withAnimation(.snappy(duration: 0.3)) { index = (index - 1 + a.count) % a.count; drag = 0 } }
@@ -276,6 +292,30 @@ struct StackHome: View {
             }
         }
         .sheet(isPresented: $showSignals) { SignalSheet(theme: hub.theme) }
+        .navigationDestination(item: $opened) { ReaderView(article: $0) }
+    }
+}
+
+/// "You're walking — switch to cards?" A proposal, never an automatic swap.
+struct HomeModeProposal: View {
+    let target: HomeMode
+    let dark: Bool
+    let onSwitch: () -> Void
+    let onDismiss: () -> Void
+    var body: some View {
+        HStack(spacing: 10) {
+            Image(systemName: target == .stack ? "figure.walk" : "figure.seated.side").font(.system(size: 14, weight: .semibold))
+            Text(target == .stack ? "Looks like you're on the move. Switch to cards?" : "You've settled. Switch to the tile view?")
+                .font(Identity.grotesk(12, .semibold)).lineLimit(2)
+            Spacer(minLength: 6)
+            Button("Switch", action: onSwitch).font(Identity.grotesk(12, .bold)).padding(.horizontal, 12).padding(.vertical, 8).background(Identity.acid, in: Capsule()).foregroundStyle(Identity.ink)
+            Button(action: onDismiss) { Image(systemName: "xmark").font(.system(size: 12, weight: .bold)) }.frame(width: 32, height: 32)
+        }
+        .padding(.leading, 14).padding(.trailing, 6).padding(.vertical, 8)
+        .background(dark ? Color(white: 0.14) : Color.white, in: RoundedRectangle(cornerRadius: 10))
+        .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(Identity.rule.opacity(dark ? 0 : 1)))
+        .foregroundStyle(dark ? Identity.warmWhite : Identity.ink)
+        .buttonStyle(.plain)
     }
 }
 
@@ -318,7 +358,7 @@ struct StackCard: View {
             .background(Identity.ink)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .background(color)
+        .background(LinearGradient(colors: [color, color.opacity(0.92), color.mix(with: .black, by: 0.35)], startPoint: .top, endPoint: .bottom))
         .clipShape(RoundedRectangle(cornerRadius: 10))
     }
 }

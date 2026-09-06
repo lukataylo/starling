@@ -2,6 +2,8 @@ import Foundation
 
 enum FeedCatalog {
     static let all: [FeedSource] = [
+        FeedSource(id: "economist", name: "The Economist", url: URL(string: "https://www.economist.com/latest/rss.xml")!,
+                   style: "authoritative, witty, economically literate, argues a position in plain prose", symbol: "building.2"),
         FeedSource(id: "bbc", name: "BBC News", url: URL(string: "https://feeds.bbci.co.uk/news/rss.xml")!,
                    style: "neutral, short declarative sentences, facts before interpretation", symbol: "globe.europe.africa"),
         FeedSource(id: "guardian", name: "The Guardian", url: URL(string: "https://www.theguardian.com/uk/rss")!,
@@ -21,5 +23,5 @@ enum FeedCatalog {
     ]
 
     static func source(_ id: String) -> FeedSource? { all.first { $0.id == id } }
-    static let defaultEnabled: Set<String> = ["bbc", "guardian", "verge"]
+    static let defaultEnabled: Set<String> = ["economist", "verge", "ars"]
 }
