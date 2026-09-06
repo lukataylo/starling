@@ -66,7 +66,7 @@ struct FeedView: View {
         let scheme: ColorScheme = mode == .stack ? .dark : theme.palette.scheme
         Group {
             if mode == .stack { StackHome() }
-            else { TileHome(showSources: showSources, showSettings: showSettings, showSignals: showSignals, showBookmarks: showBookmarks) }
+            else { TileHome(sheet: $sheet) }
         }
         .background(bg.ignoresSafeArea())
         .environment(\.colorScheme, scheme)
@@ -140,10 +140,7 @@ struct StoryArt: View {
 struct TileHome: View {
     @Environment(FeedStore.self) private var feeds
     @Environment(SignalHub.self) private var hub
-    @Binding var showSources: Bool
-    @Binding var showSettings: Bool
-    @Binding var showSignals: Bool
-    @Binding var showBookmarks: Bool
+    @Binding var sheet: FeedView.HomeSheet?
     private var theme: Theme { hub.theme }
 
     var body: some View {
@@ -153,14 +150,14 @@ struct TileHome: View {
                     Text("Starling").font(Identity.grotesk(56, .black)).tracking(-3.5).foregroundStyle(theme.ink)
                     Spacer()
                     HStack(spacing: 6) {
-                        RoundIconButton(symbol: "bookmark", theme: theme) { showBookmarks = true }
-                        RoundIconButton(symbol: "line.3.horizontal", theme: theme) { showSources = true }
-                        RoundIconButton(symbol: "gearshape", theme: theme) { showSettings = true }
+                        RoundIconButton(symbol: "bookmark", theme: theme) { sheet = .bookmarks }
+                        RoundIconButton(symbol: "line.3.horizontal", theme: theme) { sheet = .sources }
+                        RoundIconButton(symbol: "gearshape", theme: theme) { sheet = .settings }
                     }
                     .padding(.top, 10)
                 }
                 .padding(.horizontal, 16).padding(.top, 4)
-                StatePill(theme: theme) { showSignals = true }.padding(.horizontal, 16).padding(.top, 2)
+                StatePill(theme: theme) { sheet = .signals }.padding(.horizontal, 16).padding(.top, 2)
 
                 if !feeds.failedSourceIDs.isEmpty {
                     Text((feeds.usedSnapshot ? "Couldn't reach some sources · showing saved stories" : "Couldn't reach some sources").uppercased())

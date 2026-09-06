@@ -10,6 +10,7 @@ struct SettingsView: View {
     @AppStorage("apiKeyOverride") private var keyOverride = ""
     @AppStorage("modelOverride") private var modelOverride = ""
     @AppStorage("elevenAgentID") private var elevenAgentID = ""
+    @AppStorage("devMode") private var devMode = false
     @AppStorage(Appearance.key) private var appearance = Appearance.system.rawValue
     @State private var useClockOverride = false
     @State private var clock = Date()
@@ -60,9 +61,13 @@ struct SettingsView: View {
                 } header: { Text("Overnight pre-generation") } footer: {
                     Text("While charging on wifi, Starling pre-renders the top stories from each of your sources for the states you're most often in (\(overnight.commonStates(hub: hub).map(\.name).joined(separator: ", "))), plus their posters, so the morning feed opens instantly.")
                 }
+                Section {
+                    NavigationLink("State readout") { SignalSheet(theme: hub.theme) }
+                    NavigationLink("Live signals") { SensorDebugView() }
+                    Toggle("Developer mode", isOn: $devMode)
+                } header: { Text("Sensing") } footer: { Text("Developer mode makes the state pill tappable to open the readout from anywhere.") }
                 Section("The interface is never finished") {
                     NavigationLink("Layout rules per state") { LayoutRulesView() }
-                    NavigationLink("Live signals") { SensorDebugView() }
                 }
                 Section {
                     Button("Clear generated editions") { generator.clearCache() }

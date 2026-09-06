@@ -155,6 +155,7 @@ struct RoundIconButton: View {
                 .frame(width: 40, height: 40)
                 .background(filled ? theme.ink : Color.clear, in: Circle())
                 .overlay(Circle().strokeBorder(theme.ink.opacity(filled ? 0 : 0.9), lineWidth: 1.2))
+                .contentShape(Circle())
         }
         .buttonStyle(.plain)
     }
@@ -168,9 +169,11 @@ struct StatePill: View {
     var suffix: String? = nil
     let action: () -> Void
 
+    @AppStorage("devMode") private var devMode = false
+
     var body: some View {
         let s = hub.state
-        Button(action: action) {
+        Button(action: { if devMode { action() } }) {
             HStack(spacing: 6) {
                 Text(text(s)).font(Identity.grotesk(12, .semibold)).tracking(-0.2).lineLimit(1)
                 if badge { Circle().fill(Identity.ink).frame(width: 6, height: 6) }
@@ -180,11 +183,21 @@ struct StatePill: View {
             .foregroundStyle(Identity.ink)
         }
         .buttonStyle(.plain)
+        .allowsHitTesting(devMode)
     }
 
     func text(_ s: UserState) -> String {
-        var parts = [s.label.rawValue.capitalized]
-        if s.sensingEnabled && s.faceDetected { parts.append("\(Int(s.attention * 100))%") }
+        var parts: [String] = []
+        if s.sensingEnabled && hub.cameraSupported {
+            if !s.faceDetected { parts.append("Away") }
+            else { parts.append(s.attention >= 0.5 ? "Looking" : "Not looking") }
+        }
+        switch s.label {
+        case .calm: parts.append("Calm")
+        case .tense: parts.append("Tense")
+        case .tired: parts.append("Tired")
+        case .focused, .distracted: if parts.isEmpty { parts.append(s.label == .focused ? "Focused" : "Distracted") }
+        }
         if let bpm = s.bpm, s.bpmConfidence >= 0.3 { parts.append("\(Int(bpm)) bpm") }
         switch s.motion {
         case .walking: parts.append("Walking")

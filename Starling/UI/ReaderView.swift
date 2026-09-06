@@ -249,18 +249,17 @@ struct ReaderView: View {
                     label: inCards ? "Short" : "Cards",
                     theme: theme) { flipFormat() }
             Spacer()
-            // Right: depth cycle Short → Long → Original, hidden while in cards.
+            // Right: three-state depth toggle Short · Long · Original, hidden while in cards.
             if !inCards {
                 let inOriginal = mode == .original
-                ModeFab(symbol: inLong ? "doc.plaintext" : (inOriginal ? "text.alignleft" : "text.book.closed"),
-                        label: inLong ? "Original" : (inOriginal ? "Short" : "Long"),
-                        theme: theme) {
-                    withAnimation(.snappy(duration: 0.3)) {
-                        if inLong { mode = .original }
-                        else if inOriginal { mode = .adapted; formatOverride = .text }
-                        else { mode = .longform }
-                    }
+                HStack(spacing: 2) {
+                    depthSegment("Short", on: !inLong && !inOriginal) { mode = .adapted; formatOverride = .text }
+                    depthSegment("Long", on: inLong) { mode = .longform }
+                    depthSegment("Original", on: inOriginal) { mode = .original }
                 }
+                .padding(4)
+                .background(theme.ink, in: Capsule())
+                .shadow(color: .black.opacity(0.18), radius: 10, y: 4)
                 .transition(.scale.combined(with: .opacity))
             }
         }
@@ -299,6 +298,16 @@ struct ReaderView: View {
     }
 
     /// The bottom-left fab: one tap flips cards ↔ short.
+    private func depthSegment(_ title: String, on: Bool, action: @escaping () -> Void) -> some View {
+        Button { withAnimation(.snappy(duration: 0.3)) { action() } } label: {
+            Text(title).font(Identity.grotesk(12, .bold)).tracking(-0.2)
+                .padding(.horizontal, 12).frame(height: 40)
+                .background(on ? theme.palette.background : Color.clear, in: Capsule())
+                .foregroundStyle(on ? theme.ink : theme.palette.background.opacity(0.85))
+        }
+        .buttonStyle(.plain)
+    }
+
     private func flipFormat() {
         withAnimation(.snappy(duration: 0.3)) {
             let toText = effectiveFormat == .cards
