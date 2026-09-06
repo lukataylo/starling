@@ -18,8 +18,30 @@ final class Generator {
         didSet { UserDefaults.standard.set(feedback, forKey: "readerFeedback") }
     }
 
+    /// Pre-generated editions and hero images for the bundled example articles.
+    private let bundledEditions: [String: [String: Edition]]
+    private let bundledMedia: [String: [String: String]]
+
     init() {
         feedback = UserDefaults.standard.stringArray(forKey: "readerFeedback") ?? []
+        if let url = Bundle.main.url(forResource: "editions", withExtension: "json"), let data = try? Data(contentsOf: url) {
+            bundledEditions = (try? JSONDecoder().decode([String: [String: Edition]].self, from: data)) ?? [:]
+        } else { bundledEditions = [:] }
+        if let url = Bundle.main.url(forResource: "media", withExtension: "json"), let data = try? Data(contentsOf: url) {
+            bundledMedia = (try? JSONDecoder().decode([String: [String: String]].self, from: data)) ?? [:]
+        } else { bundledMedia = [:] }
+    }
+
+    func bundled(_ article: Article, _ intent: GenerationIntent) -> Edition? {
+        bundledEditions[article.id]?[intent.cacheKey]
+    }
+
+    /// Bundled hero image name for an article, matched to the edition's mood.
+    func heroImageName(for article: Article, edition: Edition?) -> String? {
+        guard let m = bundledMedia[article.id] else { return nil }
+        let calmPalettes: Set<PaletteName> = [.calm, .dusk, .night, .dawn]
+        let mood = (edition.map { calmPalettes.contains($0.palette) } ?? false) ? "calm" : "focused"
+        return m[mood] ?? m.values.first
     }
 
     /// Enabled sources shape the voice, so they are part of the cache key.
@@ -50,7 +72,7 @@ final class Generator {
     }
 
     func edition(for article: Article, intent: GenerationIntent, state: UserState) -> Edition? {
-        editions[key(article, intent, state)]
+        editions[key(article, intent, state)] ?? bundled(article, intent)
     }
 
     func status(for article: Article, intent: GenerationIntent, state: UserState) -> Status {
@@ -61,6 +83,7 @@ final class Generator {
     func generate(article: Article, intent: GenerationIntent, state: UserState, sources: [FeedSource], force: Bool = false) async -> Edition? {
         let k = key(article, intent, state)
         if !force, let e = editions[k] { return e }
+        if !force, let e = bundled(article, intent) { return e }
         if let t = inflight[k] { return await t.value }
         let prompt = PromptBuilder.userMessage(article: article, sources: sources, state: state, intent: intent, feedback: feedback)
         status[k] = .generating

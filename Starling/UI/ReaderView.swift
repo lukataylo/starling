@@ -4,6 +4,7 @@ struct ReaderView: View {
     @Environment(FeedStore.self) private var feeds
     @Environment(Generator.self) private var generator
     @Environment(SignalHub.self) private var hub
+    @Environment(HeroImageStore.self) private var heroes
     @State var article: Article
     @State private var bodyLoaded = false
     @State private var mode: Mode = .adapted
@@ -15,10 +16,10 @@ struct ReaderView: View {
     @State private var pendingState: UserState?
     @State private var pendingSince: Date?
     @State private var formatOverride: EditionFormat?
-    @State private var trayExpanded = true
+    @State private var showProposal = false
     private let stableAfter: TimeInterval = 5
 
-    enum Mode { case adapted, longform, original }
+    enum Mode: Hashable { case adapted, preset(GenerationIntent.Preset), longform, original }
 
     private var liveState: UserState { hub.state }
     private var pageState: UserState { shownState ?? liveState }
@@ -55,6 +56,7 @@ struct ReaderView: View {
             Button("Cancel", role: .cancel) {}
         }
         .task {
+            heroes.load(article.imageURL)
             article = await feeds.loadBody(for: article)
             bodyLoaded = true
             shownState = liveState
@@ -78,9 +80,15 @@ struct ReaderView: View {
     private var currentEdition: Edition? {
         switch mode {
         case .adapted: return adapted
+        case .preset(let p): return generator.edition(for: article, intent: .preset(p), state: pageState)
         case .longform: return longform
         case .original: return nil
         }
+    }
+
+    private var heroImage: UIImage? {
+        if let name = generator.heroImageName(for: article, edition: currentEdition), let img = UIImage(named: name) { return img }
+        return heroes.image(for: article.imageURL)
     }
 
     private var pageBackground: Color {
@@ -91,44 +99,73 @@ struct ReaderView: View {
     private var effectiveFormat: EditionFormat { formatOverride ?? currentEdition?.format ?? .text }
 
     private var modePicker: some View {
-        Picker("View", selection: $mode) {
-            Text("Adapted").tag(Mode.adapted)
-            Text("Full").tag(Mode.longform)
-            Text("Original").tag(Mode.original)
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 8) {
+                modeChip("Now", .adapted, symbol: "sparkles")
+                modeChip("Calm", .preset(.calm), symbol: "leaf")
+                modeChip("Focused", .preset(.focused), symbol: "scope")
+                modeChip("Full", .longform, symbol: "text.book.closed")
+                modeChip("Original", .original, symbol: "doc.plaintext")
+            }
+            .padding(.horizontal, 16)
         }
-        .pickerStyle(.segmented)
-        .padding(.horizontal, 16).padding(.top, 6)
+        .padding(.top, 6)
         .onChange(of: mode) { _, m in
-            if m == .longform, longform == nil { Task { await readFull() } }
+            switch m {
+            case .longform: if longform == nil { Task { await readFull() } }
+            case .preset(let p):
+                if generator.edition(for: article, intent: .preset(p), state: pageState) == nil {
+                    Task { await generator.generate(article: article, intent: .preset(p), state: pageState, sources: feeds.enabledSources) }
+                }
+            default: break
+            }
         }
+    }
+
+    private func modeChip(_ title: String, _ m: Mode, symbol: String) -> some View {
+        let selected = mode == m
+        return Button {
+            withAnimation(.snappy(duration: 0.25)) { mode = m }
+        } label: {
+            Label(title, systemImage: symbol)
+                .font(.caption.weight(.semibold))
+                .padding(.horizontal, 12).padding(.vertical, 7)
+                .background(selected ? Color.accentColor : Color.secondary.opacity(0.15), in: Capsule())
+                .foregroundStyle(selected ? Color.white : Color.primary)
+        }
+        .buttonStyle(.plain)
+    }
+
+    private var pendingChange: UserState? {
+        guard mode == .adapted, let p = pendingState, p.bucket != pageState.bucket else { return nil }
+        return p
     }
 
     @ViewBuilder private var tray: some View {
-        VStack(spacing: 8) {
-            if mode == .adapted, let p = pendingState, p.bucket != pageState.bucket {
-                StateChangeProposal(from: pageState, to: p,
-                                    ready: generator.edition(for: article, intent: .adapt, state: p) != nil,
-                                    onSwitch: { switchTo(p) },
-                                    onDismiss: { pendingState = nil; pendingSince = nil })
-            }
-            header
-        }
-        .padding(.horizontal, 12).padding(.bottom, 6)
-        .background(.clear)
-    }
-
-    @ViewBuilder private var header: some View {
         if mode == .adapted, let e = adapted {
-            ProposalBanner(edition: e,
-                           expanded: $trayExpanded,
-                           format: Binding(get: { effectiveFormat }, set: { formatOverride = $0 }),
-                           onReadFull: { Task { await readFull() } },
-                           onKeep: {
-                               pendingState = nil
-                               generator.addFeedback("At \(pageState.timeOfDay.label) while \(pageState.motion.rawValue) I kept: \(e.density.rawValue), \(e.palette.rawValue), \(e.typeface.rawValue), \(effectiveFormat.rawValue)")
-                           },
-                           onNotMe: { showStatePicker = true },
-                           onWhy: { showWhy = true })
+            HStack {
+                Spacer()
+                ProposalButton(edition: e,
+                               updateReady: pendingChange.map { generator.edition(for: article, intent: .adapt, state: $0) != nil } ?? false,
+                               action: { showProposal = true })
+                Spacer()
+            }
+            .padding(.bottom, 4)
+            .sheet(isPresented: $showProposal) {
+                ProposalSheet(edition: e,
+                              format: Binding(get: { effectiveFormat }, set: { formatOverride = $0 }),
+                              pending: pendingChange,
+                              pendingReady: pendingChange.map { generator.edition(for: article, intent: .adapt, state: $0) != nil } ?? false,
+                              onSwitch: { if let p = pendingChange { switchTo(p) } },
+                              onDismissPending: { pendingState = nil; pendingSince = nil },
+                              onReadFull: { Task { await readFull() } },
+                              onKeep: {
+                                  pendingState = nil
+                                  generator.addFeedback("At \(pageState.timeOfDay.label) while \(pageState.motion.rawValue) I kept: \(e.density.rawValue), \(e.palette.rawValue), \(e.typeface.rawValue), \(effectiveFormat.rawValue)")
+                              },
+                              onNotMe: { showStatePicker = true },
+                              onWhy: { showWhy = true })
+            }
         }
     }
 
@@ -137,16 +174,26 @@ struct ReaderView: View {
         case .adapted:
             if let e = adapted {
                 if effectiveFormat == .cards {
-                    CardsRenderer(edition: e, onReadFull: { Task { await readFull() } }).id(e.id)
+                    CardsRenderer(edition: e, hero: heroImage, onReadFull: { Task { await readFull() } }).id(e.id)
                 } else {
-                    EditionRenderer(edition: e, onReadFull: { Task { await readFull() } }).id(e.id)
+                    EditionRenderer(edition: e, hero: heroImage, onReadFull: { Task { await readFull() } }).id(e.id)
                 }
             } else {
                 generatingOrError(intent: .adapt)
             }
+        case .preset(let p):
+            if let e = generator.edition(for: article, intent: .preset(p), state: pageState) {
+                if e.format == .cards {
+                    CardsRenderer(edition: e, hero: heroImage, onReadFull: { Task { await readFull() } }).id(e.id)
+                } else {
+                    EditionRenderer(edition: e, hero: heroImage, onReadFull: { Task { await readFull() } }).id(e.id)
+                }
+            } else {
+                generatingOrError(intent: .preset(p))
+            }
         case .longform:
             if let e = longform {
-                EditionRenderer(edition: e)
+                EditionRenderer(edition: e, hero: heroImage)
             } else {
                 generatingOrError(intent: .longform)
             }
@@ -210,7 +257,8 @@ struct ReaderView: View {
     }
 
     private func regenerate() async {
-        let intent: GenerationIntent = mode == .longform ? .longform : .adapt
+        var intent: GenerationIntent = .adapt
+        if case .preset(let p) = mode { intent = .preset(p) } else if mode == .longform { intent = .longform }
         if mode == .original { mode = .adapted }
         shownState = liveState
         pendingState = nil

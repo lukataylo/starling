@@ -3,6 +3,7 @@ import SwiftUI
 /// The same Edition as swipeable cards: one block per card. For walking, standing, transport.
 struct CardsRenderer: View {
     let edition: Edition
+    var hero: UIImage? = nil
     var onReadFull: (() -> Void)? = nil
     @State private var page = 0
 
@@ -28,8 +29,18 @@ struct CardsRenderer: View {
                 ForEach(Array(cards.enumerated()), id: \.offset) { i, blocks in
                     VStack(alignment: .leading, spacing: 18) {
                         Spacer(minLength: 0)
+                        if i == 0, let hero {
+                            Image(uiImage: hero).resizable().aspectRatio(contentMode: .fill)
+                                .frame(maxWidth: .infinity).frame(height: 150).clipShape(RoundedRectangle(cornerRadius: 16))
+                        }
                         ForEach(Array(blocks.enumerated()), id: \.offset) { _, b in
-                            EditionRenderer.blockView(b, edition: edition, scale: 1.15, onReadFull: onReadFull)
+                            if b.type == .imageCard, let hero {
+                                Image(uiImage: hero).resizable().aspectRatio(contentMode: .fill)
+                                    .frame(maxWidth: .infinity).frame(height: 220).clipShape(RoundedRectangle(cornerRadius: 16))
+                                if let c = b.caption { Text(c).font(.caption).foregroundStyle(palette.secondary) }
+                            } else {
+                                EditionRenderer.blockView(b, edition: edition, scale: 1.15, onReadFull: onReadFull)
+                            }
                         }
                         Spacer(minLength: 0)
                         HStack {

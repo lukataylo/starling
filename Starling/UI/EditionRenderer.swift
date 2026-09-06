@@ -3,6 +3,7 @@ import SwiftUI
 /// Renders an Edition through the genome. Applies palette and typeface to the whole page.
 struct EditionRenderer: View {
     let edition: Edition
+    var hero: UIImage? = nil
     var onReadFull: (() -> Void)? = nil
 
     private var palette: Palette { DesignGenome.palette(edition.palette) }
@@ -22,11 +23,30 @@ struct EditionRenderer: View {
     }
     var scale: CGFloat = 1
 
+    /// Where the hero goes: the first imageCard, else right after the headline/dek.
+    private var heroIndex: Int? {
+        guard hero != nil else { return nil }
+        if let i = edition.blocks.firstIndex(where: { $0.type == .imageCard }) { return i }
+        var i = 0
+        while i < edition.blocks.count, edition.blocks[i].type == .headline || edition.blocks[i].type == .dek { i += 1 }
+        return i
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: m.lineSpacing * 2.2) {
-            ForEach(Array(edition.blocks.enumerated()), id: \.offset) { _, block in
-                render(block)
+            ForEach(Array(edition.blocks.enumerated()), id: \.offset) { i, block in
+                if i == heroIndex, let hero {
+                    if block.type == .imageCard {
+                        heroView(hero, caption: block.caption)
+                    } else {
+                        heroView(hero, caption: nil)
+                        render(block)
+                    }
+                } else {
+                    render(block)
+                }
             }
+            if let hi = heroIndex, hi == edition.blocks.count, let hero { heroView(hero, caption: nil) }
         }
         .padding(.horizontal, pad)
         .padding(.vertical, pad * 0.8)
@@ -120,6 +140,21 @@ struct EditionRenderer: View {
                 .background(palette.card, in: RoundedRectangle(cornerRadius: 12))
             }
             .buttonStyle(.plain)
+        }
+    }
+
+    func heroView(_ img: UIImage, caption: String?) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Image(uiImage: img)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(maxWidth: .infinity)
+                .frame(height: 190 * scale)
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .saturation(edition.palette == .night ? 0.6 : 1)
+            if let caption, !caption.isEmpty {
+                Text(caption).font(.system(size: m.body * 0.85, design: design)).foregroundStyle(palette.secondary)
+            }
         }
     }
 

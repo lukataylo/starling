@@ -6,9 +6,11 @@ enum GenerationIntent: Hashable {
     case preset(Preset)        // "show me the couch version"
 
     enum Preset: String, CaseIterable, Hashable {
-        case commute, couch, focus
+        case calm, focused, commute, couch, focus
         var title: String {
             switch self {
+            case .calm: return "Calm"
+            case .focused: return "Focused"
             case .commute: return "Commute"
             case .couch: return "Couch"
             case .focus: return "Focus"
@@ -16,6 +18,8 @@ enum GenerationIntent: Hashable {
         }
         var stateText: String {
             switch self {
+            case .calm: return "motion: stationary, posture: reclined, attention: 0.85, blink_rate_per_min: 9, heart_rate_bpm: 62 (source: watch, confidence 0.95), stress_estimate: 0.10, predicted_state: calm (reader asked for the calm version)"
+            case .focused: return "motion: stationary, posture: upright, attention: 0.96, blink_rate_per_min: 12, heart_rate_bpm: 74 (source: watch, confidence 0.95), stress_estimate: 0.30, predicted_state: focused (reader asked for the focused version)"
             case .commute: return "motion: walking, posture: upright, attention: 0.45, stress_estimate: 0.65, predicted_state: tense (reader asked for the commute version)"
             case .couch: return "motion: stationary, posture: reclined, attention: 0.9, stress_estimate: 0.1, predicted_state: calm (reader asked for the couch version)"
             case .focus: return "motion: stationary, posture: upright, attention: 0.95, stress_estimate: 0.25, predicted_state: focused (reader asked for the focus version)"
