@@ -30,9 +30,26 @@ final class Newsreader {
         return k.isEmpty ? nil : k
     }
 
+    private(set) var lastAuthorError: String?
+
+    /// Build the spoken narrative from a bundled edition, no API needed (instant, offline).
+    func authorLocally(article: Article, from edition: Edition) {
+        let dek = edition.blocks.first { $0.type == .dek }?.text
+        let paras = edition.blocks.filter { $0.type == .paragraph || $0.type == .takeaway }.compactMap(\.text)
+        let facts = edition.blocks.filter { $0.type == .keyFacts }.flatMap { $0.items ?? [] }.map { $0.components(separatedBy: " — ").last ?? $0 }
+        var body = [dek].compactMap { $0 } + paras
+        if body.count < 3 { body += facts }
+        narratives[article.id] = ([edition.headline] + body).joined(separator: " ")
+        let hook = dek ?? paras.first.map { String($0.split(separator: ".").prefix(1).joined()) + "." } ?? edition.headline
+        openings[article.id] = "\(edition.posterHeadline ?? edition.headline). \(hook) Want the full rundown, or just the bits that matter?"
+    }
+
     // MARK: Stage 1 — story authoring (prefetched the moment an article opens)
-    func author(article: Article, sources: [FeedSource]) {
-        guard narratives[article.id] == nil, !authoring.contains(article.id), let key = LLMClient.apiKey else { return }
+    func author(article: Article, sources: [FeedSource], fallback: Edition? = nil) {
+        guard narratives[article.id] == nil, !authoring.contains(article.id) else { return }
+        // Sample stories: author from the bundled edition immediately; no network, no credits.
+        if let fallback { authorLocally(article: article, from: fallback); return }
+        guard let key = LLMClient.apiKey else { lastAuthorError = "No OpenAI key"; return }
         authoring.insert(article.id)
         Task {
             defer { authoring.remove(article.id) }
@@ -46,18 +63,21 @@ final class Newsreader {
                 "response_format": ["type": "json_object"],
                 "messages": [["role": "system", "content": system], ["role": "user", "content": "TITLE: \(article.title)\nSOURCE: \(FeedCatalog.source(article.sourceID)?.name ?? "")\n\n" + (article.body ?? [article.summary]).joined(separator: "\n\n")]]]
             req.httpBody = try? JSONSerialization.data(withJSONObject: body)
-            guard let (data, _) = try? await URLSession.shared.data(for: req),
-                  let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+            guard let (data, resp) = try? await URLSession.shared.data(for: req) else { lastAuthorError = "Network error"; return }
+            guard let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else { lastAuthorError = "Bad response"; return }
+            if let err = (json["error"] as? [String: Any])?["message"] as? String { lastAuthorError = err; return }
+            guard (resp as? HTTPURLResponse)?.statusCode ?? 0 < 300,
                   let text = ((json["choices"] as? [[String: Any]])?.first?["message"] as? [String: Any])?["content"] as? String,
                   let parsed = try? JSONSerialization.jsonObject(with: Data(text.utf8)) as? [String: Any],
-                  let narrative = parsed["narrative"] as? String else { return }
+                  let narrative = parsed["narrative"] as? String else { lastAuthorError = "Couldn't read the story"; return }
+            lastAuthorError = nil
             narratives[article.id] = narrative
             openings[article.id] = (parsed["opening"] as? String) ?? String(narrative.split(separator: ".").prefix(2).joined(separator: ".")) + "."
         }
     }
 
     // MARK: Stage 2 — the call
-    func startCall(article: Article, state: UserState, currentVersion: String, sources: [FeedSource]) async {
+    func startCall(article: Article, state: UserState, currentVersion: String, sources: [FeedSource], fallback: Edition? = nil) async {
         guard callState != .live, callState != .connecting else { return }
         transcript = []; proposal = nil
         let agent = Self.agentID
@@ -65,10 +85,10 @@ final class Newsreader {
         // Make sure the narrative exists; author now if the prefetch hasn't landed.
         if narratives[article.id] == nil {
             callState = .authoring
-            author(article: article, sources: sources)
-            for _ in 0..<60 { if narratives[article.id] != nil { break }; try? await Task.sleep(for: .milliseconds(500)) }
+            author(article: article, sources: sources, fallback: fallback)
+            for _ in 0..<40 { if narratives[article.id] != nil || lastAuthorError != nil { break }; try? await Task.sleep(for: .milliseconds(500)) }
         }
-        guard let narrative = narratives[article.id] else { callState = .failed("Couldn't author the story for voice."); return }
+        guard let narrative = narratives[article.id] else { callState = .failed(lastAuthorError.map { "OpenAI: " + String($0.prefix(90)) } ?? "Couldn't author the story for voice."); return }
         callState = .connecting
         let name = (UserDefaults.standard.string(forKey: "readerName") ?? "").trimmingCharacters(in: .whitespaces)
         let vars: [String: String] = [

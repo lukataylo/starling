@@ -79,7 +79,7 @@ struct ReaderView: View {
                 RoundIconButton(symbol: isKept ? "bookmark.fill" : "bookmark", theme: theme, filled: isKept) { keep() }
                 RoundIconButton(symbol: "phone.fill", theme: theme, filled: newsreader.callState == .live) {
                     showCall = true
-                    if newsreader.callState != .live { Task { await newsreader.startCall(article: article, state: liveState, currentVersion: modeTitle, sources: feeds.enabledSources) } }
+                    if newsreader.callState != .live { Task { await newsreader.startCall(article: article, state: liveState, currentVersion: modeTitle, sources: feeds.enabledSources, fallback: generator.bundled(article, .longform) ?? generator.bundledAdapt(article, state: liveState)) } }
                 }
                 Menu {
                     Button { keep() } label: { Label(isKept ? "Kept" : "Keep", systemImage: isKept ? "bookmark.fill" : "bookmark") }
@@ -140,7 +140,7 @@ struct ReaderView: View {
             heroes.load(article.imageURL)
             bodyLoaded = true
             // Stage 1 of the voice pipeline starts the moment the story opens, so tapping Call is only the handshake.
-            newsreader.author(article: article, sources: feeds.enabledSources)
+            newsreader.author(article: article, sources: feeds.enabledSources, fallback: generator.bundled(article, .longform) ?? generator.bundledAdapt(article, state: liveState))
             newsreader.onApplyVersion = { kind in applyVersion(kind) }
             if newsreader.callState == .live { await newsreader.moveTo(article: article, currentVersion: modeTitle) }
             shownState = liveState
