@@ -77,7 +77,7 @@ struct Theme {
     }
 
     static func forEdition(_ e: Edition) -> Theme {
-        let quick = e.resolvedLayout == .quick
+        let quick = [.quick, .poster, .split, .zine].contains(e.resolvedLayout)
         return Theme(paletteName: e.palette, accentName: e.accent, scale: quick ? .large : e.typeScale, typeface: e.typeface == .serif ? .serif : .sans)
     }
 }

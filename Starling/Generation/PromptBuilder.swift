@@ -37,7 +37,7 @@ enum GenerationIntent: Hashable {
 }
 
 enum PromptBuilder {
-    static func userMessage(article: Article, sources: [FeedSource], state: UserState, intent: GenerationIntent, feedback: [String], rulesText: String? = nil, regenerate: Bool = false) -> String {
+    static func userMessage(article: Article, sources: [FeedSource], state: UserState, intent: GenerationIntent, feedback: [String], rulesText: String? = nil, regenerate: Bool = false, previous: Edition? = nil) -> String {
         let own = FeedCatalog.source(article.sourceID)
         var s = ""
         s += "READER STATE:\n"
@@ -55,7 +55,11 @@ enum PromptBuilder {
         for src in sources { s += "- \(src.name): \(src.style)\n" }
         if let own { s += "\nTHIS ARTICLE'S SOURCE: \(own.name) — \(own.style)\n" }
         if let rulesText, !rulesText.isEmpty { s += "\n" + rulesText + "\n" }
-        if regenerate { s += "\nREGENERATE: the reader asked for a different take on the same story for the same state. Choose a noticeably different combination of layout, palette, typeface and structure from the vocabulary that still fits the state, and rewrite the prose freshly. Do not repeat the previous edition.\n" }
+        if regenerate {
+            s += "\nREGENERATE: the reader asked for a different take on the same story for the same state. Choose a DIFFERENT layout archetype, a different palette and a different typeface from the previous edition, restructure the blocks, and rewrite the prose freshly."
+            if let p = previous { s += " PREVIOUS EDITION (do not repeat): layout \(p.resolvedLayout.rawValue), palette \(p.palette.rawValue), typeface \(p.typeface.rawValue), density \(p.density.rawValue), format \(p.format.rawValue), blocks \(p.blocks.map { $0.type.rawValue }.joined(separator: ","))." }
+            s += "\n"
+        }
         if !feedback.isEmpty {
             s += "\nREADER FEEDBACK (highest priority):\n" + feedback.map { "- " + $0 }.joined(separator: "\n") + "\n"
         }

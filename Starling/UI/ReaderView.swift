@@ -19,6 +19,7 @@ struct ReaderView: View {
     @State private var pendingSince: Date?
     @State private var formatOverride: EditionFormat?
     @State private var cardPage = 0
+    @State private var dockExpanded = true
     private let stableAfter: TimeInterval = 5
 
     private var liveState: UserState { hub.state }
@@ -34,7 +35,10 @@ struct ReaderView: View {
         case .original: return nil
         }
     }
-    private var theme: Theme { currentEdition.map(Theme.forEdition) ?? hub.theme }
+    private var theme: Theme {
+        if let e = currentEdition, e.resolvedLayout == .zine { return Theme(paletteName: .night, accentName: .sage, scale: .large, typeface: .sans) }
+        return currentEdition.map(Theme.forEdition) ?? hub.theme
+    }
     private var effectiveFormat: EditionFormat {
         if mode == .longform || mode == .original { return .text }
         return formatOverride ?? currentEdition?.format ?? .text
@@ -136,14 +140,19 @@ struct ReaderView: View {
             } else {
                 ScrollView {
                     VStack(spacing: 0) {
-                        if !theme.isQuick { articleSwitcher }
-                        if theme.isQuick {
+                        switch e.resolvedLayout {
+                        case .quick:
                             QuickEditionView(edition: e, article: article, hero: heroImage,
                                              pendingText: pendingChange != nil ? "New version available" : nil,
                                              onPending: { showSignals = true },
                                              onReadFull: { mode = .longform })
-                        } else {
+                        case .article:
+                            articleSwitcher
                             ArticleView(edition: e, article: article, hero: heroImage)
+                        case .poster: PosterLayout(edition: e, article: article)
+                        case .dossier: DossierLayout(edition: e, article: article)
+                        case .split: SplitLayout(edition: e, article: article, hero: heroImage)
+                        case .zine: ZineLayout(edition: e, article: article)
                         }
                     }
                     .id(e.id)
@@ -221,6 +230,23 @@ struct ReaderView: View {
 
     @ViewBuilder private var dock: some View {
         VStack(spacing: 8) {
+            HStack {
+                Spacer()
+                Button {
+                    withAnimation(.snappy(duration: 0.25)) { dockExpanded.toggle() }
+                } label: {
+                    HStack(spacing: 6) {
+                        if !dockExpanded { Text(modeTitle).font(Identity.grotesk(11, .semibold)) }
+                        Image(systemName: dockExpanded ? "chevron.down" : "chevron.up").font(.system(size: 11, weight: .bold))
+                    }
+                    .padding(.horizontal, 12).padding(.vertical, 6)
+                    .background(theme.surface, in: Capsule())
+                    .overlay(Capsule().strokeBorder(theme.ink.opacity(0.2)))
+                    .foregroundStyle(theme.ink)
+                }
+                .buttonStyle(.plain)
+            }
+            if dockExpanded {
             HStack(spacing: 4) {
                 segment("Cards", on: effectiveFormat == .cards && mode != .longform && mode != .original) { if mode == .longform || mode == .original { mode = .adapted }; formatOverride = .cards }
                 segment("Text", on: effectiveFormat == .text && mode != .longform && mode != .original) { if mode == .longform || mode == .original { mode = .adapted }; formatOverride = .text }
@@ -237,9 +263,18 @@ struct ReaderView: View {
                 outlined(isRegenerating ? "Regenerating…" : "Regenerate", "arrow.clockwise") { Task { await regenerate() } }
                 outlined("Not how I feel", "face.smiling") { showSignals = true }
             }
+            }
         }
-        .padding(.horizontal, 16).padding(.top, 8).padding(.bottom, 6)
-        .background(theme.palette.background)
+        .padding(.horizontal, 16).padding(.top, 4).padding(.bottom, 6)
+        .background(dockExpanded ? theme.palette.background : Color.clear)
+    }
+
+    private var modeTitle: String {
+        switch mode {
+        case .original: return "Original"
+        case .longform: return "Full Story"
+        default: return effectiveFormat == .cards ? "Cards" : "Text"
+        }
     }
 
     private func segment(_ title: String, on: Bool, action: @escaping () -> Void) -> some View {
