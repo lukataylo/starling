@@ -75,18 +75,31 @@ struct FeedView: View {
 func readTime(_ a: Article) -> String { "\(max(1, max(a.wordCount, 120) / 220)) MIN" }
 func sourceName(_ a: Article) -> String { (FeedCatalog.source(a.sourceID)?.name ?? "").uppercased() }
 
-/// Story art: bundled generated hero, else the publisher's image.
+/// Resolve art for a story: bundled hero, the publisher's image, or a pre-generated poster.
+@MainActor
+func storyArt(_ article: Article, generator: Generator, heroes: HeroImageStore, images: ImageGenerator) -> UIImage? {
+    if let img = generator.heroImageName(for: article, edition: nil).flatMap(UIImage.init(named:)) { return img }
+    if let img = heroes.image(for: article.imageURL) { return img }
+    for m in ["focused", "calm"] {
+        if let e = generator.bundled(article, .preset(m == "calm" ? .calm : .focused)),
+           let p = PosterPrompts.prompts(edition: e, title: article.title, summary: article.summary, sourceName: FeedCatalog.source(article.sourceID)?.name ?? "Starling", mood: m).first ?? nil,
+           let img = images.imageAnyMood(prompt: p, mood: m) { return img }
+    }
+    return nil
+}
+
 struct StoryArt: View {
     @Environment(HeroImageStore.self) private var heroes
     @Environment(Generator.self) private var generator
+    @Environment(ImageGenerator.self) private var images
     let article: Article
     var mono = false
     var body: some View {
         Group {
-            if let img = generator.heroImageName(for: article, edition: nil).flatMap(UIImage.init(named:)) ?? heroes.image(for: article.imageURL) {
+            if let img = storyArt(article, generator: generator, heroes: heroes, images: images) {
                 Color.clear.overlay(Image(uiImage: img).resizable().aspectRatio(contentMode: .fill)).saturation(mono ? 0 : 1)
             } else {
-                Color.clear
+                Identity.ink
             }
         }
         .clipped()
@@ -157,10 +170,14 @@ struct TileHome: View {
 
 /// Full-width lead: dramatic photo, headline over a warm-white band at the bottom.
 struct LeadTile: View {
+    @Environment(HeroImageStore.self) private var heroes
+    @Environment(Generator.self) private var generator
+    @Environment(ImageGenerator.self) private var images
     let article: Article
     var body: some View {
+        let hasArt = storyArt(article, generator: generator, heroes: heroes, images: images) != nil
         VStack(spacing: 0) {
-            StoryArt(article: article).frame(height: 200)
+            if hasArt { StoryArt(article: article).frame(height: 200) }
             VStack(alignment: .leading, spacing: 8) {
                 HStack(spacing: 8) {
                     Text(sourceName(article)).font(Identity.grotesk(10, .bold)).tracking(1.2)
@@ -169,12 +186,16 @@ struct LeadTile: View {
                 }
                 .foregroundStyle(Identity.ink)
                 HStack(alignment: .bottom) {
-                    Text(article.title).font(Identity.grotesk(26, .heavy)).tracking(-0.8).lineSpacing(-2).lineLimit(3).foregroundStyle(Identity.ink)
+                    Text(article.title).font(Identity.grotesk(hasArt ? 26 : 34, .heavy)).tracking(hasArt ? -0.8 : -1.4).lineSpacing(-2).lineLimit(hasArt ? 3 : 4).foregroundStyle(Identity.ink)
                     Spacer(minLength: 12)
                     ArrowDot(light: false)
                 }
+                if !hasArt, !article.summary.isEmpty {
+                    Text(article.summary).font(Identity.serif(16)).lineSpacing(3).lineLimit(3).foregroundStyle(Identity.ink).padding(.top, 4)
+                }
             }
-            .padding(14)
+            .padding(hasArt ? 14 : 18)
+            .frame(minHeight: hasArt ? 0 : 200, alignment: .bottomLeading)
             .background(Identity.warmWhite)
         }
         .overlay(Rectangle().strokeBorder(Identity.rule, lineWidth: 1))
@@ -192,7 +213,7 @@ struct HalfTile: View {
                 color
                 Circle().fill(Identity.ink.opacity(0.8)).frame(width: 110, height: 110).offset(x: 60, y: -110)
             } else {
-                StoryArt(article: article, mono: true).overlay(Color.black.opacity(0.35))
+                StoryArt(article: article, mono: true).overlay(Color.black.opacity(0.3))
             }
             VStack(alignment: .leading, spacing: 6) {
                 HStack(spacing: 6) {
@@ -212,12 +233,26 @@ struct HalfTile: View {
 }
 
 /// Wide deep-red tile with abstract art and oversized black type.
+struct WideArt: View {
+    @Environment(HeroImageStore.self) private var heroes
+    @Environment(Generator.self) private var generator
+    @Environment(ImageGenerator.self) private var images
+    let article: Article
+    var body: some View {
+        if let img = storyArt(article, generator: generator, heroes: heroes, images: images) {
+            HStack { Spacer(); Color.clear.overlay(Image(uiImage: img).resizable().aspectRatio(contentMode: .fill)).frame(width: 150, height: 150).clipShape(Circle()).offset(x: 20, y: -20).opacity(0.9) }
+        } else {
+            HStack { Spacer(); Circle().fill(Identity.ink.opacity(0.85)).frame(width: 150, height: 150).offset(x: 40, y: -30) }
+        }
+    }
+}
+
 struct WideTile: View {
     let article: Article
     var body: some View {
         ZStack(alignment: .bottomLeading) {
             Identity.red
-            HStack { Spacer(); StoryArt(article: article).frame(width: 150, height: 150).clipShape(Circle()).offset(x: 20, y: -20).opacity(0.9) }
+            WideArt(article: article)
             VStack(alignment: .leading, spacing: 6) {
                 HStack(spacing: 6) {
                     Text(sourceName(article)).font(Identity.grotesk(9, .bold)).tracking(1.2)

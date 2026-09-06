@@ -33,7 +33,7 @@ struct CardsRenderer: View {
     private var posters: [String?] { Self.posterPrompts(edition: edition, article: article, mood: mood) }
     private func poster(_ i: Int) -> UIImage? {
         guard i < posters.count, let p = posters[i] else { return nil }
-        return imageGen.image(prompt: p, mood: mood)
+        return imageGen.imageAnyMood(prompt: p, mood: mood)
     }
 
     var body: some View {
@@ -59,8 +59,7 @@ struct CardsRenderer: View {
         .background(theme.palette.background)
         .environment(\.colorScheme, theme.palette.scheme)
         .task {
-            for p in posters { if let p { imageGen.request(prompt: p, mood: mood) } }
-            imageGen.request(prompt: coverPrompt, mood: mood)
+            for p in posters { if let p, imageGen.imageAnyMood(prompt: p, mood: mood) == nil { imageGen.request(prompt: p, mood: mood) } }
         }
     }
 
@@ -157,7 +156,7 @@ struct ImageCardFill: View {
     private var theme: Theme { Theme.forEdition(edition) }
     var body: some View {
         Group {
-            if let p = block.imagePrompt, !p.isEmpty, let img = imageGen.image(prompt: p, mood: mood) {
+            if let p = block.imagePrompt, !p.isEmpty, let img = imageGen.imageAnyMood(prompt: p, mood: mood) {
                 Color.clear.overlay(Image(uiImage: img).resizable().aspectRatio(contentMode: .fill))
             } else if let p = block.imagePrompt, !p.isEmpty, !imageGen.isFailed(prompt: p, mood: mood) {
                 ZStack {

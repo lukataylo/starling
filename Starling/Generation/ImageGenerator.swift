@@ -33,6 +33,11 @@ final class ImageGenerator {
 
     func isFailed(prompt: String, mood: String) -> Bool { failed.contains(Self.key(prompt, mood: mood)) }
 
+    /// Look up under the given mood, then the other one — pre-generated posters may be keyed by the preset's mood.
+    func imageAnyMood(prompt: String, mood: String) -> UIImage? {
+        image(prompt: prompt, mood: mood) ?? image(prompt: prompt, mood: mood == "calm" ? "focused" : "calm")
+    }
+
     static func coverPrompt(headline: String, summary: String) -> String { PosterPrompts.coverPrompt(headline: headline, summary: summary) }
     static func style(for mood: String) -> String { mood == "calm" ? styleCalm : styleFocused }
 
