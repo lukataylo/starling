@@ -11,6 +11,7 @@ enum PaletteName: String, Codable, CaseIterable { case dawn, day, focus, dusk, n
 enum AccentName: String, Codable, CaseIterable { case amber, coral, sage, sky, slate, plum }
 enum Margins: String, Codable, CaseIterable { case tight, normal, wide }
 enum EditionFormat: String, Codable, CaseIterable { case text, cards }
+enum EditionLayout: String, Codable, CaseIterable { case quick, article }
 
 struct Palette {
     let background: Color
@@ -93,12 +94,13 @@ enum DesignGenome {
     - palette: dawn (warm cream + amber), day (white + ink), focus (high contrast), dusk (deep warm greys), night (near-black, dim warm text), calm (sage and sand, low contrast)
     - accent: amber, coral, sage, sky, slate, plum
     - margins: tight, normal, wide
+    - layout: quick (compressed, poster-like page: heavy grotesk headline, ruled two-column info grid of keyFacts, a big stat, short paragraphs) or article (calm, spacious, literary: serif headline and body, standfirst, pull quote with a thin rule, section headings)
     - format: text (one flowing page) or cards (one idea per swipeable card, each block becomes a card; suggest cards when the reader is walking, standing, or on transport, and text when they are sitting or lying down — the reader can flip this)
     - blocks: headline, dek, keyFacts (items, max 4; each item is "HEADING — text": a 1–3 word uppercase heading such as THE IDEA, WHY NOW, WHAT CHANGES, THE CATCH, then an em dash, then one or two short sentences), paragraph, pullQuote, imageCard (symbol = an SF Symbol name, caption, imagePrompt), stat (text = a big figure, caption = one short line), timeline (items, each "time — event"), takeaway, readFullPrompt
     - imageCard: use one when a picture or a simple diagram explains the story better than words — a map, a before/after, a simple flow, a scene. Put a concrete one-sentence description in imagePrompt (what to draw, which elements, no more than three labels). In cards format include one imageCard as its own card. At most two per edition. Set imagePrompt to null only when the article's own photo is enough.
 
     RULES OF JUDGEMENT:
-    1. The default is standard / plain / scroll / regular / sans / semibold / day / slate / normal. Every deviation must earn its place: it must make the page clearer, faster or more legible for THIS reader in THIS moment, and you must say why in `rationale` in one plain sentence the reader would accept. Never mutate for decoration.
+    1. The default is standard / plain / scroll / regular / sans / semibold / day / slate / normal / layout article. Every deviation must earn its place: it must make the page clearer, faster or more legible for THIS reader in THIS moment, and you must say why in `rationale` in one plain sentence the reader would accept. Never mutate for decoration.
     2. Rendering, not selection. You render one article. Which articles the reader sees at all is decided upstream by their chosen sources and topics — a calmer or lower-stress state is never a reason to omit, downweight or soften a story.
     3. Time of day shapes both text and design. Early morning and morning: brisk tone, briefing structure (keyFacts first), dawn or day palette, sans. Midday and afternoon: plain tone, day or focus. Evening: warm or reflective tone, longer sentences allowed, dusk palette, serif is welcome. Night: reassuring tone, no alarming framing, no cliffhangers, night palette, larger type, dim accent, never coral.
     4. The reader's chosen sources shape the voice. Blend the house styles of their enabled sources, weighting the article's own source most. Do not invent facts; you may only restructure, compress, clarify and add neutral context that the article itself implies.

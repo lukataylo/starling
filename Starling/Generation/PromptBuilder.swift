@@ -37,7 +37,7 @@ enum GenerationIntent: Hashable {
 }
 
 enum PromptBuilder {
-    static func userMessage(article: Article, sources: [FeedSource], state: UserState, intent: GenerationIntent, feedback: [String]) -> String {
+    static func userMessage(article: Article, sources: [FeedSource], state: UserState, intent: GenerationIntent, feedback: [String], rulesText: String? = nil) -> String {
         let own = FeedCatalog.source(article.sourceID)
         var s = ""
         s += "READER STATE:\n"
@@ -54,6 +54,7 @@ enum PromptBuilder {
         s += "\nENABLED SOURCES (their house styles shape the voice):\n"
         for src in sources { s += "- \(src.name): \(src.style)\n" }
         if let own { s += "\nTHIS ARTICLE'S SOURCE: \(own.name) — \(own.style)\n" }
+        if let rulesText, !rulesText.isEmpty { s += "\n" + rulesText + "\n" }
         if !feedback.isEmpty {
             s += "\nREADER FEEDBACK (highest priority):\n" + feedback.map { "- " + $0 }.joined(separator: "\n") + "\n"
         }

@@ -53,6 +53,9 @@ final class Generator {
 
     /// Enabled sources shape the voice, so they are part of the cache key.
     var sourceSignature: String = ""
+    var rulesSignature: String = ""
+    /// Provided by the app so prompts carry the reader's editable layout rules.
+    var rulesTextProvider: ((UserState) -> String)? = nil
 
     func key(_ article: Article, _ intent: GenerationIntent, _ state: UserState) -> Key {
         var bucket: String
@@ -61,7 +64,7 @@ final class Generator {
         case .longform: bucket = state.timeOfDay.rawValue + "|" + (state.stress > 0.6 ? "hi" : "lo")
         case .preset: bucket = state.timeOfDay.rawValue
         }
-        bucket += "|" + sourceSignature + "|fb\(feedback.count)"
+        bucket += "|" + sourceSignature + "|" + rulesSignature + "|fb\(feedback.count)"
         return Key(articleID: article.id, intent: intent.cacheKey, bucket: bucket)
     }
 
@@ -111,7 +114,7 @@ final class Generator {
         if !force, intent == .adapt, let e = bundledAdapt(article, state: state) { return e }
         if !force, let e = bundled(article, intent) { return e }
         if let t = inflight[k] { return await t.value }
-        let prompt = PromptBuilder.userMessage(article: article, sources: sources, state: state, intent: intent, feedback: feedback)
+        let prompt = PromptBuilder.userMessage(article: article, sources: sources, state: state, intent: intent, feedback: feedback, rulesText: rulesTextProvider?(state))
         status[k] = .generating
         let task = Task<Edition?, Never> {
             let start = Date()

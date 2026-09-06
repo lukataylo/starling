@@ -31,7 +31,8 @@ struct SettingsView: View {
                     TextField("Model (blank = \(LLMClient.defaultModel))", text: $modelOverride)
                         .autocorrectionDisabled().textInputAutocapitalization(.never)
                 }
-                Section {
+                Section("The interface is never finished") {
+                    NavigationLink("Layout rules per state") { LayoutRulesView() }
                     NavigationLink("Live signals") { SensorDebugView() }
                 }
                 Section {

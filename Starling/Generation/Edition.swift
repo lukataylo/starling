@@ -5,6 +5,10 @@ struct Edition: Codable, Hashable, Identifiable {
     let stateSummary: String
     let rationale: String
     var posterHeadline: String? = nil
+    var layout: EditionLayout? = nil
+
+    /// Quick (compressed, poster-like) or article (spacious, literary). Bundled editions without the field derive it from density.
+    var resolvedLayout: EditionLayout { layout ?? ((density == .glance || density == .brief) ? .quick : .article) }
     let density: Density
     let tone: Tone
     let pace: Pace
@@ -36,11 +40,12 @@ enum EditionSchema {
     static let json: [String: Any] = [
         "type": "object",
         "additionalProperties": false,
-        "required": ["stateSummary", "rationale", "posterHeadline", "density", "tone", "pace", "typeScale", "typeface", "headlineWeight", "palette", "accent", "margins", "format", "estimatedReadSeconds", "blocks"],
+        "required": ["stateSummary", "rationale", "posterHeadline", "layout", "density", "tone", "pace", "typeScale", "typeface", "headlineWeight", "palette", "accent", "margins", "format", "estimatedReadSeconds", "blocks"],
         "properties": [
             "stateSummary": ["type": "string"],
             "rationale": ["type": "string"],
             "posterHeadline": ["type": "string"],
+            "layout": e(EditionLayout.allCases.map(\.rawValue)),
             "density": e(Density.allCases.map(\.rawValue)),
             "tone": e(Tone.allCases.map(\.rawValue)),
             "pace": e(Pace.allCases.map(\.rawValue)),

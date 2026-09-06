@@ -8,6 +8,7 @@ struct FeedView: View {
     @Environment(SignalHub.self) private var hub
     @Environment(HeroImageStore.self) private var heroes
     @Environment(ImageGenerator.self) private var imageGen
+    @Environment(StateRules.self) private var rules
     @State private var showSources = false
     @State private var showSettings = false
     @State private var showSignals = false
@@ -37,11 +38,13 @@ struct FeedView: View {
             .onChange(of: feeds.lastRefresh) { _, _ in prefetch(); feeds.articles.prefix(12).forEach { heroes.load($0.imageURL) } }
             .onChange(of: hub.phase) { _, p in if p == .live { prefetch() } }
             .onChange(of: hub.state.bucket) { _, _ in prefetch() }
-            .onChange(of: moving, initial: true) { _, m in
-                // Walking flips the home into the card stack; standing still returns to tiles. A manual choice sticks until motion changes.
+            .onChange(of: hub.state.bucket, initial: true) { _, _ in
+                // The per-state rules decide the home layout (stack when walking or tense by default). A manual choice sticks until motion changes.
+                let m = moving
                 if m != lastMoving { manualModeUntilMotionChanges = false; lastMoving = m }
                 guard !manualModeUntilMotionChanges else { return }
-                withAnimation { mode = m ? .stack : .tiles }
+                let wanted: HomeMode = rules.homeLayout(for: hub.state) == .stack ? .stack : .tiles
+                if wanted != mode { withAnimation { mode = wanted } }
             }
         }
     }

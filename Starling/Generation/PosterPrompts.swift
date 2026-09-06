@@ -33,7 +33,9 @@ enum PosterPrompts {
     static func prompts(edition: Edition, title: String, summary: String, sourceName: String, mood: String) -> [String?] {
         let subject = String(summary.prefix(160))
         let headline = edition.posterHeadline ?? edition.headline.split(separator: " ").prefix(6).joined(separator: " ")
-        let p0 = poster(kind: .headline, big: headline, line: sourceName, subject: subject, mood: mood)
+        // Broadcaster names trip the image safety filter as trademarks; use the state summary as the line for those.
+        let line = sourceName.localizedCaseInsensitiveContains("BBC") ? edition.stateSummary : sourceName
+        let p0 = poster(kind: .headline, big: headline, line: line, subject: subject, mood: mood)
         var p1: String? = nil
         let rest = edition.blocks.filter { $0.type != .headline && $0.type != .dek }
         if let b = rest.first {

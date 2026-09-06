@@ -64,7 +64,7 @@ struct Theme {
     }
 
     static func forEdition(_ e: Edition) -> Theme {
-        let quick = e.density == .glance || e.density == .brief
+        let quick = e.resolvedLayout == .quick
         return Theme(paletteName: e.palette, accentName: e.accent, scale: quick ? .large : e.typeScale, typeface: quick ? .sans : .serif)
     }
 }

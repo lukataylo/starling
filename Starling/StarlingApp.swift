@@ -7,6 +7,7 @@ struct StarlingApp: App {
     @State private var hub = SignalHub()
     @State private var heroes = HeroImageStore()
     @State private var imageGen = ImageGenerator()
+    @State private var rules = StateRules()
     @Environment(\.scenePhase) private var scenePhase
 
     var body: some Scene {
@@ -17,7 +18,12 @@ struct StarlingApp: App {
                 .environment(hub)
                 .environment(heroes)
                 .environment(imageGen)
-                .task { hub.start() }
+                .environment(rules)
+                .task {
+                    generator.rulesTextProvider = { [rules] s in rules.promptText(for: s) }
+                    generator.rulesSignature = rules.signature
+                    hub.start()
+                }
                 .onChange(of: scenePhase) { _, p in
                     if p == .background { hub.pauseCamera() } else if p == .active { hub.resumeCamera() }
                 }
