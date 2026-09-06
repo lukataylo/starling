@@ -141,7 +141,8 @@ struct ShortEditionView: View {
     var pendingText: String? = nil
     var onPending: (() -> Void)? = nil
     var onReadFull: (() -> Void)? = nil
-    private var theme: Theme { Theme.forEdition(edition) }
+    var pageTheme: Theme? = nil
+    private var theme: Theme { pageTheme ?? Theme.forEdition(edition) }
     private var rule: Color { theme.ink }
 
     var body: some View {

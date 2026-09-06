@@ -184,12 +184,13 @@ struct ReaderView: View {
                 ScrollView {
                     VStack(spacing: 0) {
                         if mode == .longform || (e.resolvedLayout == .article && mode != .adapted) {
-                            ArticleView(edition: e, article: article, hero: heroImage)
+                            ArticleView(edition: e, article: article, hero: heroImage, pageTheme: theme)
                         } else {
                             ShortEditionView(edition: e, article: article, hero: heroImage,
                                              pendingText: pendingChange != nil ? "New version available" : nil,
                                              onPending: { showSignals = true },
-                                             onReadFull: { mode = .longform })
+                                             onReadFull: { mode = .longform },
+                                             pageTheme: theme)
                         }
                     }
                     .id(e.id)
