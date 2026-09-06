@@ -97,6 +97,15 @@ Built in `Starling/Generation/PromptBuilder.swift`:
 - **Why this version** sheet: the model's rationale, every raw signal with confidence, a picker to correct the state, thumbs up/down, and the list of everything the app has learned from the reader with a Forget-all button.
 - **Settings**: sensing on/off (adaptation then uses only time, motion and posture), a demo clock override, model choice, API key, and a live signals panel with the rPPG region thumbnail.
 
+## Added on the day (for the reviewer)
+
+- **Editorial identity.** Warm white, ink and acid green with cobalt and deep-red story tiles; grotesk for interface, serif for editorial. Home has two modes: a dense **tile feed** and a **card stack** (black, flat magazine-cover cards, swipe up for next). The home opens in whichever mode the per-state rules want and then never swaps on its own; a change is *proposed* in a bar with a Switch button.
+- **Layout is promptable per state.** `layout: quick | article` joined the genome. Settings → Layout rules holds an editable instruction and a home-mode choice for calm, focused, tense, tired, distracted and walking, plus a free-form instruction. The current state's rule is injected into the prompt verbatim and outranks the defaults; edits invalidate the cache. Quick edition = compressed poster-like page (heavy grotesk headline, ruled two-column info grid from `HEADING — text` key facts, a big stat); article = spacious serif page with standfirst, pull quote and section headings.
+- **Posters.** Cards one and two are fully generated images with the type baked in (gpt-image-2, high quality, portrait), styled from a reference by a vision-model-written prompt, tailored to the story and mood. Five featured stories from The Verge and Ars Technica ship with 24 pre-generated posters and calm/focused editions (`Starling/News/Snapshot`), so the first opens are instant and offline. Live stories draw theirs on demand (~80 s each) and show a typographic card until then. Broadcaster names in poster text trip the image safety filter, so the caption line falls back to the state summary for those.
+- **Fingertip pulse.** Signal sheet → Measure pulse: rear camera with the torch, 15 s, spectral estimate with confidence. A fingertip reading outranks weak face-rPPG estimates for three minutes and seeds the baseline. Face rPPG gates were loosened so it reports in ordinary light.
+- **Overnight pre-generation.** A `BGProcessingTask` (charging + wifi, earliest 02:00) pre-renders the top stories from each enabled source for the reader's most frequent states (from a per-minute state histogram) plus standing "morning commute" and "calm evening" categories, and queues their posters. Generated editions persist to disk. Settings has a Run now button and the last-run summary.
+- **Watch companion** (`StarlingWatch/`) streams live heart rate from a mind-and-body workout session; it did not pair reliably on the day, hence the fingertip fallback.
+
 ## Code map
 
 ```
