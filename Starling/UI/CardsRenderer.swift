@@ -40,12 +40,12 @@ struct CardsRenderer: View {
     private var tileSet: [Color] {
         let base: [Color]
         switch edition.palette {
-        case .day:   base = [Identity.cobalt, Identity.red, Identity.ink, Identity.acid]
-        case .focus: base = [Identity.ink, Identity.acid, Identity.cobalt, Identity.red]
-        case .dawn:  base = [Self.amber, Identity.ink, Identity.red, Identity.acid]
+        case .day:   base = [Identity.cobalt, Identity.ink, Identity.acid, Self.amber]
+        case .focus: base = [Identity.ink, Identity.acid, Identity.cobalt, Self.amber]
+        case .dawn:  base = [Self.amber, Identity.ink, Identity.acid, Identity.cobalt]
         case .calm:  base = [Self.moss, Identity.ink, Identity.acid, Identity.cobalt]
-        case .dusk:  base = [Identity.red, Identity.cobalt, Identity.ink, Identity.acid]
-        case .night: base = [Identity.ink, Identity.cobalt, Identity.acid, Identity.red]
+        case .dusk:  base = [Identity.cobalt, Self.moss, Identity.ink, Identity.acid]
+        case .night: base = [Identity.ink, Identity.cobalt, Identity.acid, Self.moss]
         }
         let accentIndex = AccentName.allCases.firstIndex(of: edition.accent) ?? 0
         let shift = (Self.stableHash(edition.rationale) + accentIndex) % base.count
